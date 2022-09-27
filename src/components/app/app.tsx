@@ -6,7 +6,6 @@ import { ProductPage } from '../../pages/product/product';
 import HistoryRouter from '../history-router/history-router';
 import browserHistory from './browser-history';
 
-
 function App(): JSX.Element {
   return (
     <HistoryRouter history={browserHistory}>
