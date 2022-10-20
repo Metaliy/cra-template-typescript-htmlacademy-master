@@ -1,12 +1,17 @@
-import { LogoComponent } from '../logo/logo';
+import { Link } from 'react-router-dom';
+import { HeaderNavigationComponent } from './header-navigation/header-navigation';
 import { SearchFormComponent } from './search-form/search-form';
 
 function HeaderComponent () {
   return (
     <header className="header" id="header">
       <div className="container">
-        <LogoComponent />
-        <HeaderComponent />
+        <Link className="header__logo" to="/catalog/page_1" aria-label="Переход на главную">
+          <svg width="100" height="36" aria-hidden="true">
+            <use xlinkHref="#icon-logo"></use>
+          </svg>
+        </Link>
+        <HeaderNavigationComponent />
         <div className="form-search">
           <SearchFormComponent />
         </div>
