@@ -420,6 +420,7 @@ body {
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 html {
@@ -1028,6 +1029,7 @@ button,
   visibility: visible;
   opacity: 1;
   pointer-events: auto;
+  overflow: hidden;
 }
 
 .modal--narrow .modal__content {
@@ -3624,7 +3626,6 @@ button,
   .slider-controls:active {
     color: #7575e2;
     background-color: #a2a2ff;
-    pointer-events: none;
   }
 
   .link:hover,

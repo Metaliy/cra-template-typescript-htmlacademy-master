@@ -5,6 +5,7 @@ import { AppRoute } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { BasketPage } from '../../pages/basket/basker';
 import { CatalogPage } from '../../pages/catalog/catalog';
+import { MainPage } from '../../pages/main/main';
 import { NotFoundPage } from '../../pages/not-found/not-found';
 import { ProductPage } from '../../pages/product/product';
 import { fetchCamerasAction } from '../../store/api-actions';
@@ -37,6 +38,10 @@ function App(): JSX.Element {
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={<MainPage/>}
+        />
         <Route
           path={AppRoute.Catalog}
           element={<CatalogPage/>}

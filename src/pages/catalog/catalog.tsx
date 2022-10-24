@@ -9,6 +9,7 @@ import { IconContainerComponent } from '../../components/icon-container/icon-con
 
 import { PaginationComponent } from '../../components/pagination/pagination';
 import { ProductCardListComponent } from '../../components/product-card-list/product-card-list';
+import { AppPageNames } from '../../consts/const';
 import { useAppSelector } from '../../hooks/hooks';
 import { getCameras } from '../../store/camera-data/selectors';
 
@@ -28,7 +29,7 @@ function CatalogPage():JSX.Element {
           <BannerComponent />
 
           <div className="page-content">
-            <BreadcrumbsComponent />
+            <BreadcrumbsComponent pageName={AppPageNames.Catalog} />
             <section className="catalog">
               <div className="container">
                 <h1 className="title title--h2">Каталог фото- и видеотехники</h1>

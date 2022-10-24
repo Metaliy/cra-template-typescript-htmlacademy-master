@@ -32,8 +32,6 @@ export const camerasData = createSlice({
         state.cameras = action.payload;
       })
       .addCase(fetchCamerasAction.rejected, (state) => {
-        // eslint-disable-next-line no-console
-        console.log('downloading error');
         state.isCamerasListLoading = false;
       })
       .addCase(fetchPromoCameraAction.pending, (state) => {
@@ -44,8 +42,6 @@ export const camerasData = createSlice({
         state.promoCamera = action.payload;
       })
       .addCase(fetchPromoCameraAction.rejected, (state) => {
-        // eslint-disable-next-line no-console
-        console.log('downloading error');
         state.isPromoCameraLoading = false;
       })
       .addCase(fetchSelectedCameraAction.pending, (state) => {
@@ -56,8 +52,6 @@ export const camerasData = createSlice({
         state.selectedCamera = action.payload;
       })
       .addCase(fetchSelectedCameraAction.rejected, (state) => {
-        // eslint-disable-next-line no-console
-        console.log('downloading error');
         state.isSelectedCameraLoading = false;
       })
       .addCase(fetchSimilarCamerasAction.pending, (state) => {
@@ -68,8 +62,6 @@ export const camerasData = createSlice({
         state.similarCameras = action.payload;
       })
       .addCase(fetchSimilarCamerasAction.rejected, (state) => {
-        // eslint-disable-next-line no-console
-        console.log('downloading error');
         state.isSimilarCamerasLoading = false;
       })
       .addCase(fetchCamerasReviewsAction.pending, (state) => {
@@ -80,8 +72,6 @@ export const camerasData = createSlice({
         state.reviewsList = action.payload;
       })
       .addCase(fetchCamerasReviewsAction.rejected, (state) => {
-        // eslint-disable-next-line no-console
-        console.log('downloading error');
         state.isReviewsListLoading = false;
       });
   }

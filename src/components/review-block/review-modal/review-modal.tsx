@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { fetchCamerasReviewsAction, postCameraReview } from '../../../store/api-actions';
@@ -19,12 +19,13 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
 
   const [isReviewSended, setIsReviewSended] = useState(false);
 
-  const { register, watch, handleSubmit, formState: { errors } } = useForm<PostReviewType>({defaultValues: {rating: 0}});
+  const { register, watch, handleSubmit, reset, formState: { errors } } = useForm<PostReviewType>({defaultValues: {rating: 0}});
   const onSubmit: SubmitHandler<PostReviewType> = (data) => {
     data.cameraId = cameraId;
     data.rating = Number(data.rating);
     dispatch(postCameraReview(data));
     setIsReviewSended(true);
+    reset();
   };
 
   const generateModalClass = (): string => {
@@ -44,16 +45,28 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
   };
 
   const closeAfterSuccessfulRevievSend = () => {
-    modalStatusHandler(!isOpen);
     setIsReviewSended(false);
     dispatch(fetchCamerasReviewsAction(cameraId));
+    modalStatusHandler(!isOpen);
   };
 
+  useEffect(() => {
+    const onEscButtonClick = (evt: { key: string; }) => {
+      if(evt.key === 'Escape') {
+        if (isReviewSended === true) {
+          closeAfterSuccessfulRevievSend();
+        }
+        modalStatusHandler(false);
+      }
+    };
+    window.addEventListener('keydown', onEscButtonClick);
+    return () => window.removeEventListener('keydown', onEscButtonClick);
+  }, [isReviewSended]);
 
   return (
     <div className={generateModalClass()}>
       <div className="modal__wrapper">
-        <div className="modal__overlay"></div>
+        <div className="modal__overlay" onClick={() => (isReviewSended ? closeAfterSuccessfulRevievSend() : modalStatusHandler(false))}></div>
         {!isReviewSended &&
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>

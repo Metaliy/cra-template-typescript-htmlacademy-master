@@ -1,8 +1,8 @@
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/const';
-import './not-found.css';
+import './main.css';
 
-function NotFoundPage () {
+function MainPage () {
   return (
     <>
       <header className="top-header">
@@ -26,11 +26,11 @@ function NotFoundPage () {
       <section className="error">
         <div className="error__content">
           <div className="error__message message">
-            <h1 className="message__title">404</h1>
-            <p className="message__text">Такой страницы не существует, но существует страница каталога, куда вы можете запросто попасть, нажав на кнопку ниже.</p>
+            <h1 className="message__title">Упс...</h1>
+            <p className="message__text">Главная страница сейчас в разработке, загляните позднее, а пока, можете посмотреть каталог камер</p>
           </div>
           <div className="error__nav e-nav">
-            <Link to={generatePath(AppRoute.Catalog, {id: 'page_1'})} target="_blanck" className="e-nav__link"></Link>
+            <Link to={generatePath(AppRoute.Catalog, {id: 'page_1'})} target="_blanck" className="e-nav-main__link"></Link>
           </div>
         </div>
       </section>
@@ -39,4 +39,4 @@ function NotFoundPage () {
   );
 }
 
-export {NotFoundPage};
+export {MainPage};

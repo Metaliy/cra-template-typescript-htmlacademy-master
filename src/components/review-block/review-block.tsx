@@ -15,7 +15,7 @@ type ReviewBlockComponentProps = {
 
 function ReviewBlockComponent({cameraId, modalStatusHandler, isReviewModalOpenStatus}:ReviewBlockComponentProps):JSX.Element {
 
-  const [visibleReviewCount, setVisibleReviewCount] = useState(VISIBLE_REVIEWS_COUNT);
+  const [visibleReviewCount, onSetVisibleReviewCount] = useState(VISIBLE_REVIEWS_COUNT);
 
   const dispatch = useAppDispatch();
 
@@ -48,7 +48,7 @@ function ReviewBlockComponent({cameraId, modalStatusHandler, isReviewModalOpenSt
           ))}
         </ul>
         <div className={visibleReviewCount >= sortedByDateReviewsList.length ? 'visually-hidden' : 'review-block__buttons'}>
-          <button className="btn btn--purple" type="button" onClick={ () =>setVisibleReviewCount(visibleReviewCount + VISIBLE_REVIEWS_COUNT)}>Показать больше отзывов
+          <button className="btn btn--purple" type="button" onClick={ () =>onSetVisibleReviewCount(visibleReviewCount + VISIBLE_REVIEWS_COUNT)}>Показать больше отзывов
           </button>
         </div>
       </div>

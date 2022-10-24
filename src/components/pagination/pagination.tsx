@@ -4,6 +4,7 @@ import { getCurrentPage } from '../../store/catalog-process/selectors';
 import { changePage } from '../../store/catalog-process/catalog-process';
 import { store } from '../../store';
 import { Link, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const pageCount = Math.ceil(CAMERAS_COUNT / ITEMS_PER_PAGE);
@@ -27,12 +28,10 @@ function PaginationComponent () {
 
   const id = Number(useParams().id?.replace(/.*page_/, ''));
 
-  // eslint-disable-next-line no-console
-  console.log(id, currentPage);
 
-  if(id !== currentPage && id) {
+  useEffect(() => {
     dispatch(changePage(id));
-  }
+  }, [id]);
 
 
   return (

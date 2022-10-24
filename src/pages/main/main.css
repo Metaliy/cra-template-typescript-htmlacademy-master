@@ -1,8 +1,6 @@
 
-/* Not Found page styles
-  ========================================================================== */
 
-  .top-header:before {
+.top-header:before {
     background-image: url(https://1.bp.blogspot.com/-gxsOcYWghHA/Xp_izTh4sFI/AAAAAAAAU8s/y637Fwg99qAuzW9na_NT_uApny8Vce95gCEwYBhgL/s1600/header-footer-gradient-bg.png);
 }
 .top-header:before {
@@ -170,7 +168,7 @@
   transition: color .25s ease;
 }
 
-.e-nav__link {
+.e-nav-main__link {
   height: 45px;
   line-height: 45px;
   width: 170px;
@@ -188,7 +186,7 @@
   overflow: hidden;
 }
 
-.e-nav__link:before {
+.e-nav-main__link:before {
   content: '';
   height: 200px;
   background: #212121;
@@ -202,32 +200,30 @@
           transform: rotate(50deg);
 }
 
-.e-nav__link:after {
+.e-nav-main__link:after {
   -webkit-transition: all .3s;
   transition: all .3s;
   z-index: 999;
   position: relative;
 }
 
-.e-nav__link:after {
+.e-nav-main__link:after {
   content: "Каталог";
 }
 
-.e-nav__link:hover:before {
+.e-nav-main__link:hover:before {
   top: -60px;
   right: -50px;
 }
 
-.e-nav__link:hover {
+.e-nav-main__link:hover {
   color: #fff;
 }
 
-.e-nav__link:nth-child(2):hover:after {
+.e-nav-main__link:nth-child(2):hover:after {
   color: #fff;
 }
-/* 2.1. END Section Error */
 
-/* 2.2. Social style */
 .error__social {
   position: absolute;
   top: 50%;
