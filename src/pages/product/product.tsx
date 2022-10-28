@@ -11,42 +11,38 @@ import { ProductTabsComponent } from '../../components/product-tabs/product-tabs
 import { RatingComponent } from '../../components/rating/rating';
 import { ReviewBlockComponent } from '../../components/review-block/review-block';
 import { ReviewModalComponent } from '../../components/review-block/review-modal/review-modal';
-import { AppPageNames, MAX_RATING } from '../../consts/const';
+import { AppPageNames, LoadingStatus, MAX_RATING } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchSelectedCameraAction, fetchSimilarCamerasAction } from '../../store/api-actions';
-import { getReviewsList, getSelectedCamera, getSelectedCameraLoadingStatus, getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../store/camera-data/selectors';
+import { fetchSelectedCameraAction } from '../../store/api-actions';
+import { getSelectedCamera, getSelectedCameraLoadingStatus } from '../../store/camera-data/selectors';
 import { getPriceWitchSpaces } from '../../utils/utils';
 import { RemoveScroll } from 'react-remove-scroll';
 
 export function ProductPage():JSX.Element {
 
   const {id} = useParams();
-
   const dispatch = useAppDispatch();
+  const productId = Number(id);
 
-  const isSelectedCameraLoading = useAppSelector(getSelectedCameraLoadingStatus);
-  const isSimilarCamerasListLoading = useAppSelector(getSimilarCamerasListLoadingStatus);
 
   useEffect(() => {
-    dispatch(fetchSelectedCameraAction(Number(id)));
-    dispatch(fetchSimilarCamerasAction(Number(id)));
-  }, [dispatch, id]);
+    dispatch(fetchSelectedCameraAction(productId));
+  }, [dispatch, productId]);
 
+  const selectedCamera = useAppSelector(getSelectedCamera);
 
-  const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, price, rating, vendorCode, category, type, level, description} = useAppSelector(getSelectedCamera);
-
-  const similarCamerasList = useAppSelector(getSimilarCameras);
 
   const [isReviewModalOpenStatus, setIsReviewModalOpen] = useState(false);
 
-  const reviewCount = useAppSelector(getReviewsList).length;
+  const isSelectedCameraLoading = useAppSelector(getSelectedCameraLoadingStatus);
 
 
-  if(isSelectedCameraLoading || isSimilarCamerasListLoading) {
+  if(isSelectedCameraLoading === LoadingStatus.Initial || isSelectedCameraLoading === LoadingStatus.Pending) {
     return (
       <LoaderComponent />
     );
   }
+
 
   return (
     <>
@@ -55,26 +51,26 @@ export function ProductPage():JSX.Element {
         <HeaderComponent/>
         <main>
           <div className="page-content">
-            <BreadcrumbsComponent pageName={AppPageNames.Product} productName={name} />
+            <BreadcrumbsComponent pageName={AppPageNames.Product} productName={selectedCamera.name} />
             <div className="page-content__section">
               <section className="product">
                 <div className="container">
                   <div className="product__img">
                     <picture>
-                      <source type="image/webp" srcSet={`../${previewImgWebp}, ../${previewImgWebp2x} 2x`}></source>
-                      <img src={previewImg} srcSet={`${previewImg2x} 2x`} width="560" height="480" alt="Ретрокамера Das Auge IV"></img>
+                      <source type="image/webp" srcSet={`../${selectedCamera.previewImgWebp}, ../${selectedCamera.previewImgWebp2x} 2x`}></source>
+                      <img src={selectedCamera.previewImg} srcSet={`${selectedCamera.previewImg2x} 2x`} width="560" height="480" alt="Ретрокамера Das Auge IV"></img>
                     </picture>
                   </div>
                   <div className="product__content">
-                    <h1 className="title title--h3">{name}</h1>
-                    <RatingComponent maxRating={MAX_RATING} rating={rating} reviewCount={reviewCount} />
-                    <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(price)} ₽</p>
+                    <h1 className="title title--h3">{selectedCamera.name}</h1>
+                    <RatingComponent maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
+                    <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(selectedCamera.price)} ₽</p>
                     <button className="btn btn--purple" type="button">
                       <svg width="24" height="16" aria-hidden="true">
                         <use xlinkHref="#icon-add-basket"></use>
                       </svg>Добавить в корзину
                     </button>
-                    <ProductTabsComponent vendorCode={vendorCode} category={category} type={type} level={level} description={description} />
+                    <ProductTabsComponent vendorCode={selectedCamera.vendorCode} category={selectedCamera.category} type={selectedCamera.type} level={selectedCamera.level} description={selectedCamera.description} />
                   </div>
                 </div>
               </section>
@@ -82,7 +78,7 @@ export function ProductPage():JSX.Element {
             <div className="page-content__section">
               <section className="product-similar">
                 <div className="container">
-                  <ProductSimilarSlider similarCamerasList={similarCamerasList} />
+                  <ProductSimilarSlider cameraId={productId} />
                 </div>
               </section>
             </div>
@@ -99,10 +95,10 @@ export function ProductPage():JSX.Element {
         <FocusLock returnFocus={{ preventScroll: false }}>
           {isReviewModalOpenStatus ?
             <RemoveScroll>
-              <ReviewModalComponent cameraId={Number(id)} isOpen={isReviewModalOpenStatus} modalStatusHandler={setIsReviewModalOpen}/>
+              <ReviewModalComponent cameraId={productId} isOpen={isReviewModalOpenStatus} modalStatusHandler={setIsReviewModalOpen}/>
             </RemoveScroll>
             :
-            <ReviewModalComponent cameraId={Number(id)} isOpen={isReviewModalOpenStatus} modalStatusHandler={setIsReviewModalOpen}/>}
+            <ReviewModalComponent cameraId={productId} isOpen={isReviewModalOpenStatus} modalStatusHandler={setIsReviewModalOpen}/>}
 
         </FocusLock>
         <FooterComponent />

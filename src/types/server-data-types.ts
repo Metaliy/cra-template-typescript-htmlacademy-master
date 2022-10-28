@@ -1,5 +1,5 @@
 export type CameraType = {
-  id: 1,
+  id: number,
   name: string,
   vendorCode: string,
   type: string,

@@ -1,5 +1,6 @@
 import {CameraType, PromoCameraType, ReviewType} from './server-data-types';
 import { store } from '../store/index.js';
+import { LoadingStatus } from '../consts/const';
 
 export type State = ReturnType<typeof store.getState>;
 
@@ -7,15 +8,15 @@ export type AppDispatch = typeof store.dispatch;
 
 export type CameraDataType = {
   cameras: CameraType[],
-  isCamerasListLoading: boolean,
+  isCamerasListLoading: LoadingStatus,
   promoCamera: PromoCameraType,
-  isPromoCameraLoading: boolean,
+  isPromoCameraLoading: LoadingStatus,
   selectedCamera: CameraType,
-  isSelectedCameraLoading: boolean,
+  isSelectedCameraLoading: LoadingStatus,
   similarCameras: CameraType[],
-  isSimilarCamerasLoading: boolean,
+  isSimilarCamerasLoading: LoadingStatus,
   reviewsList: ReviewType[],
-  isReviewsListLoading: boolean
+  isReviewsListLoading: LoadingStatus
 }
 
 export type CatalogProcessType = {

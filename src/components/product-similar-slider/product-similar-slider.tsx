@@ -1,21 +1,39 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { VISIBLE_CARD_COUNT } from '../../consts/const';
-import { CameraType } from '../../types/server-data-types';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { fetchSimilarCamerasAction } from '../../store/api-actions';
+import { getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../store/camera-data/selectors';
+import { LoaderComponent } from '../loading-screen/loading-screen';
 import { ProductCardComponent } from '../product-card/product-card';
 
 type ProductSimilarSliderProps = {
-  similarCamerasList: CameraType[]
+  cameraId: number
 }
 
-function ProductSimilarSlider ({similarCamerasList}:ProductSimilarSliderProps) {
+function ProductSimilarSlider ({cameraId}:ProductSimilarSliderProps) {
 
   const [visibleCardStartIndex, setVisibleCardIndex] = useState(0);
 
+  const dispatch = useAppDispatch();
+
+  const isSimilarCamerasListLoading = useAppSelector(getSimilarCamerasListLoadingStatus);
+
+  useEffect(() => {
+    dispatch(fetchSimilarCamerasAction(cameraId));
+  }, [dispatch, cameraId]);
+
+  const similarCamerasList = useAppSelector(getSimilarCameras);
 
   const visibleCardEndIndex = visibleCardStartIndex + VISIBLE_CARD_COUNT;
 
   if (!similarCamerasList) {
     return (null);
+  }
+
+  if(isSimilarCamerasListLoading) {
+    return (
+      <LoaderComponent />
+    );
   }
 
   return (

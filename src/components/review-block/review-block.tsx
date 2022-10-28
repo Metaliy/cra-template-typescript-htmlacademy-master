@@ -21,15 +21,16 @@ function ReviewBlockComponent({cameraId, modalStatusHandler, isReviewModalOpenSt
 
   const isReviewsListLoading = useAppSelector(getReviewsListLoadingStatus);
 
-  const reviewsList = useAppSelector(getReviewsList);
-
   useEffect(() => {
     dispatch(fetchCamerasReviewsAction(Number(cameraId)));
   }, [dispatch, cameraId]);
 
+  const reviewsList = useAppSelector(getReviewsList);
+
   const sortedByDateReviewsList = reviewsList.slice().sort((a, b) => (dayjs(a.createAt).isAfter(dayjs(b.createAt)) ? -1 : 1));
 
-  if(isReviewsListLoading) {
+
+  if(isReviewsListLoading || !reviewsList) {
     return (
       <LoaderComponent />
     );

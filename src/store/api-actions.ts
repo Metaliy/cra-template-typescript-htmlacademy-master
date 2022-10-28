@@ -99,9 +99,6 @@ export const postCameraReview = createAsyncThunk<void, PostReviewType, {
   'data/postCameraReview',
   async (review, {extra: api}) => {
     try {
-
-      // eslint-disable-next-line no-console
-      console.log(review);
       await api.post('/reviews', review);
     } catch (error) {
       toast.error(ToastMessages.PostError);

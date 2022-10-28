@@ -59,3 +59,10 @@ export enum ToastMessages {
   ReviewsLoadError = 'Произошла ошибка загрузки комментариев, попробуйте снова',
   PostError = 'Произошла ошибка отправки комментария, попробуйте снова',
 }
+
+export const enum LoadingStatus {
+  Initial = 'Initial',
+  Pending = 'Pending',
+  Fulfilled = 'Fulfilled',
+  Rejected = 'Rejected',
+}
