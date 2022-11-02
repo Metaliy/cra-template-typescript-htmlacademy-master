@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function HeaderNavigationComponent () {
   return (
-    <nav className="main-nav header__main-nav">
+    <nav className="main-nav header__main-nav" data-testid="main-nav">
       <ul className="main-nav__list">
         <li className="main-nav__item"><Link className="main-nav__link" to="/catalog/page_1">Каталог</Link>
         </li>

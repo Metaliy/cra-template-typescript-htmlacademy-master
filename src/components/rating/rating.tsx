@@ -29,14 +29,14 @@ function RatingComponent({ maxRating, rating, reviewCount, isReview}: RatingComp
 
   if (isReview) {
     return (
-      <div className="rate review-card__rate">
+      <div className="rate review-card__rate" data-testid="review-card-rating">
         {stars}
         <p className="visually-hidden">Оценка: {rating}</p>
       </div>
     );
   }
   return (
-    <div className="rate product-card__rate">
+    <div className="rate product-card__rate" data-testid="product-card-rating">
       {stars}
       <p className="visually-hidden">Рейтинг: {rating}</p>
       <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{reviewCount}</p>

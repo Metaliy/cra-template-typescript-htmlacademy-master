@@ -3,6 +3,7 @@ import { ReviewType } from '../../../types/server-data-types';
 import { RatingComponent } from '../../rating/rating';
 
 import 'dayjs/locale/ru';
+import { MAX_RATING } from '../../../consts/const';
 
 require('dayjs/locale/ru');
 dayjs().locale('ru').format();
@@ -12,14 +13,14 @@ type ReviewCardComponentProps = {
 }
 
 function ReviewCardComponent ({reviewItem}:ReviewCardComponentProps) {
-  const {advantage, disadvantage, review, rating, userName, createAt} = reviewItem;
+  const {advantage, disadvantage, review, rating, userName, createAt, id} = reviewItem;
   return (
-    <li className="review-card">
+    <li className="review-card" data-testid={`review-card-${id}`}>
       <div className="review-card__head">
         <p className="title title--h4">{userName}</p>
         <time className="review-card__data" dateTime={createAt}>{dayjs(createAt).locale('ru').format('D MMMM')}</time>
       </div>
-      <RatingComponent maxRating={5} rating={rating} isReview />
+      <RatingComponent maxRating={MAX_RATING} rating={rating} isReview />
       <ul className="review-card__list">
         <li className="item-list"><span className="item-list__title">Достоинства:</span>
           <p className="item-list__text">{advantage}</p>

@@ -7,7 +7,7 @@ const initialState: CatalogProcessType = {
 };
 
 export const catalogProcess = createSlice ({
-  name: NameSpace.Catalog,
+  name: NameSpace.CatalogProcess,
   initialState,
   reducers: {
     changePage: (state, action) => {

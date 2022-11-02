@@ -1,9 +1,10 @@
 
 
 export enum NameSpace {
-  Cameras = 'CAMERAS',
-  Catalog = 'CATALOG',
-  Review = 'REVIEW'
+  CatalogData = 'CatalogData',
+  CatalogProcess = 'CatalogProcess',
+  ProductData = 'ProductData',
+  ProductProcess = 'ProductProcess'
 }
 
 export const CAMERAS_COUNT = 40;

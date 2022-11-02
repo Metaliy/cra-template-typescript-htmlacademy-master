@@ -1,5 +1,5 @@
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { BannerComponent } from '../../components/banner/banner';
 import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs';
 import { CatalogFilterComponent } from '../../components/catalog-filter/catalog-filter';
@@ -13,35 +13,42 @@ import { PaginationComponent } from '../../components/pagination/pagination';
 import { ProductCardListComponent } from '../../components/product-card-list/product-card-list';
 import { AppPageNames, LoadingStatus } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchCamerasAction, fetchPromoCameraAction } from '../../store/api-actions';
-import { getCameras, getCamerasListLoadingStatus, getPromoCameraListLoadingStatus } from '../../store/camera-data/selectors';
+import { fetchCamerasAction, fetchPromoCameraAction } from '../../store/api-actions/catalog-api/catalog-api';
+import { getCameras, getCamerasListLoadingStatus, getPromoCameraListLoadingStatus } from '../../store/catalog-data/selectors';
 import { getCurrentPage } from '../../store/catalog-process/selectors';
 
 function CatalogPage():JSX.Element {
 
   const camerasList = useAppSelector(getCameras);
-
   const currentPage = useAppSelector(getCurrentPage);
+  const isRendered = useRef(false);
 
   const dispatch = useAppDispatch();
-  const isCamerasLoading = useAppSelector(getCamerasListLoadingStatus);
-  const isPromoCameraLoading = useAppSelector(getPromoCameraListLoadingStatus);
 
   useEffect(() => {
     dispatch(fetchCamerasAction(currentPage));
-    dispatch(fetchPromoCameraAction());
 
   }, [dispatch, currentPage]);
 
+  useEffect(() => {
+    dispatch(fetchPromoCameraAction());
+  }, [dispatch]);
 
-  if(isPromoCameraLoading === LoadingStatus.Initial ||
+  const isCamerasLoading = useAppSelector(getCamerasListLoadingStatus);
+  const isPromoCameraLoading = useAppSelector(getPromoCameraListLoadingStatus);
+
+
+  if((isPromoCameraLoading === LoadingStatus.Initial ||
     isCamerasLoading === LoadingStatus.Initial ||
-     isPromoCameraLoading === LoadingStatus.Pending ||
-     isCamerasLoading === LoadingStatus.Pending) {
+    isPromoCameraLoading === LoadingStatus.Pending ||
+    isCamerasLoading === LoadingStatus.Pending) &&
+    !isRendered.current) {
     return (
       <LoaderComponent />
     );
   }
+
+  isRendered.current = true;
 
   return (
     <>

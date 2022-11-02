@@ -1,24 +1,23 @@
 import { useState } from 'react';
 import { TabName } from '../../consts/const';
+import { CameraType } from '../../types/server-data-types';
 
 type ProductTabsComponentProps = {
-  vendorCode: string,
-  category: string,
-  type: string,
-  level: string,
-  description: string
+  selectedCamera: CameraType
 }
 
-function ProductTabsComponent ({vendorCode, category, type, level, description}:ProductTabsComponentProps) {
+function ProductTabsComponent ({selectedCamera}:ProductTabsComponentProps) {
+
+  const {vendorCode, category, type, level, description} = selectedCamera;
 
   const [activeTab, setActiveTab] = useState<string>(TabName.Description);
 
 
   return (
-    <div className="tabs product__tabs">
+    <div className="tabs product__tabs" data-testid="product-tabs">
       <div className="tabs__controls product__tabs-controls">
-        <button className={activeTab === TabName.Features ? 'tabs__control is-active' : 'tabs__control '} onClick={() => setActiveTab(TabName.Features)} type="button">Характеристики</button>
-        <button className={activeTab === TabName.Description ? 'tabs__control is-active' : 'tabs__control '} onClick={() => setActiveTab(TabName.Description)} type="button">Описание</button>
+        <button className={activeTab === TabName.Features ? 'tabs__control is-active' : 'tabs__control '} data-testid={activeTab === TabName.Features ? 'features-tub-button-active' : 'features-tub-button'} onClick={() => setActiveTab(TabName.Features)} type="button">Характеристики</button>
+        <button className={activeTab === TabName.Description ? 'tabs__control is-active' : 'tabs__control '} data-testid={activeTab === TabName.Description ? 'description-tub-button-active' : 'description-tub-button'} onClick={() => setActiveTab(TabName.Description)} type="button">Описание</button>
       </div>
       <div className="tabs__content">
         <div className={activeTab === TabName.Features ? 'tabs__element is-active' : 'tabs__element'}>

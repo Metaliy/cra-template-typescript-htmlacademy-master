@@ -6,17 +6,17 @@ import { FooterComponent } from '../../components/footer/footer';
 import { HeaderComponent } from '../../components/header/header';
 import { IconContainerComponent } from '../../components/icon-container/icon-container';
 import { LoaderComponent } from '../../components/loading-screen/loading-screen';
-import { ProductSimilarSlider } from '../../components/product-similar-slider/product-similar-slider';
+import { ProductSimilarSliderComponent } from '../../components/product-similar-slider/product-similar-slider';
 import { ProductTabsComponent } from '../../components/product-tabs/product-tabs';
 import { RatingComponent } from '../../components/rating/rating';
 import { ReviewBlockComponent } from '../../components/review-block/review-block';
 import { ReviewModalComponent } from '../../components/review-block/review-modal/review-modal';
 import { AppPageNames, LoadingStatus, MAX_RATING } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchSelectedCameraAction } from '../../store/api-actions';
-import { getSelectedCamera, getSelectedCameraLoadingStatus } from '../../store/camera-data/selectors';
 import { getPriceWitchSpaces } from '../../utils/utils';
 import { RemoveScroll } from 'react-remove-scroll';
+import { getReviewsListLoadingStatus, getSelectedCamera, getSelectedCameraLoadingStatus, getSimilarCamerasListLoadingStatus } from '../../store/product-data/selectors';
+import { fetchSelectedCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../../store/api-actions/product-api/product-api';
 
 export function ProductPage():JSX.Element {
 
@@ -27,6 +27,8 @@ export function ProductPage():JSX.Element {
 
   useEffect(() => {
     dispatch(fetchSelectedCameraAction(productId));
+    dispatch(fetchSimilarCamerasAction(productId));
+    dispatch(fetchCamerasReviewsAction(productId));
   }, [dispatch, productId]);
 
   const selectedCamera = useAppSelector(getSelectedCamera);
@@ -35,9 +37,12 @@ export function ProductPage():JSX.Element {
   const [isReviewModalOpenStatus, setIsReviewModalOpen] = useState(false);
 
   const isSelectedCameraLoading = useAppSelector(getSelectedCameraLoadingStatus);
+  const isSimilarCamerasListLoading = useAppSelector(getSimilarCamerasListLoadingStatus);
+  const isReviewsListLoading = useAppSelector(getReviewsListLoadingStatus);
 
-
-  if(isSelectedCameraLoading === LoadingStatus.Initial || isSelectedCameraLoading === LoadingStatus.Pending) {
+  if(isSelectedCameraLoading === LoadingStatus.Initial || isSelectedCameraLoading === LoadingStatus.Pending ||
+    isSimilarCamerasListLoading === LoadingStatus.Pending || isSimilarCamerasListLoading === LoadingStatus.Initial ||
+    isReviewsListLoading === LoadingStatus.Initial || isReviewsListLoading === LoadingStatus.Pending) {
     return (
       <LoaderComponent />
     );
@@ -70,7 +75,7 @@ export function ProductPage():JSX.Element {
                         <use xlinkHref="#icon-add-basket"></use>
                       </svg>Добавить в корзину
                     </button>
-                    <ProductTabsComponent vendorCode={selectedCamera.vendorCode} category={selectedCamera.category} type={selectedCamera.type} level={selectedCamera.level} description={selectedCamera.description} />
+                    <ProductTabsComponent selectedCamera={selectedCamera} />
                   </div>
                 </div>
               </section>
@@ -78,12 +83,12 @@ export function ProductPage():JSX.Element {
             <div className="page-content__section">
               <section className="product-similar">
                 <div className="container">
-                  <ProductSimilarSlider cameraId={productId} />
+                  <ProductSimilarSliderComponent />
                 </div>
               </section>
             </div>
             <div className="page-content__section">
-              <ReviewBlockComponent cameraId={id} modalStatusHandler={setIsReviewModalOpen} isReviewModalOpenStatus={isReviewModalOpenStatus}/>
+              <ReviewBlockComponent modalStatusHandler={setIsReviewModalOpen} isReviewModalOpenStatus={isReviewModalOpenStatus}/>
             </div>
           </div>
         </main>

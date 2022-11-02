@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { AppPageNames } from '../../consts/const';
-import { LoaderComponent } from '../loading-screen/loading-screen';
 
 type BreadcrumbsComponentProps = {
   pageName: {name: string; path: string;},
@@ -18,18 +17,12 @@ function BreadcrumbsComponent({pageName, productName}:BreadcrumbsComponentProps)
     if(pageName.name === AppPageNames.Product.name && productName) {
       pathNames.push(AppPageNames.Catalog, AppPageNames.Product);
     }
-
     return pathNames;
   };
 
-  if(!pageName) {
-    return (
-      <LoaderComponent />
-    );
-  }
 
   return (
-    <div className="breadcrumbs">
+    <div className="breadcrumbs" data-testid="breadcrumbs">
       <div className="container">
         <ul className="breadcrumbs__list">
           {generatePath().map((product, i, array) => (
@@ -43,7 +36,7 @@ function BreadcrumbsComponent({pageName, productName}:BreadcrumbsComponentProps)
               </li>
               :
               <li className="breadcrumbs__item" key={productName ? productName : product.name}>
-                <span className="breadcrumbs__link breadcrumbs__link--active">{product.name}</span>
+                <span className="breadcrumbs__link breadcrumbs__link--active">{productName ? productName : product.name}</span>
               </li>))}
         </ul>
       </div>

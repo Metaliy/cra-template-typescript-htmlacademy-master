@@ -1,7 +1,9 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../consts/const';
 
 function FooterComponent ():JSX.Element {
   return (
-    <footer className="footer">
+    <footer className="footer" data-testid="footer">
       <div className="container">
         <div className="footer__info">
           <a className="footer__logo" href="index.html" aria-label="Переход на главную">
@@ -39,8 +41,8 @@ function FooterComponent ():JSX.Element {
             <p className="footer__title">Навигация</p>
             <ul className="footer__list">
               <li className="footer__item">
-                <a className="link" href="#">Каталог
-                </a>
+                <Link className="link" to={AppRoute.Catalog}>Каталог
+                </Link>
               </li>
               <li className="footer__item">
                 <a className="link" href="#">Гарантии

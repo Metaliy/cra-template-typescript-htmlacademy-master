@@ -1,15 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../consts/const';
-import { PromoCameraType, CameraType } from '../../types/server-data-types';
-import { CameraDataType } from '../../types/state-types';
-import { fetchSelectedCameraAction, fetchCamerasAction, fetchPromoCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../api-actions';
+import { CameraType } from '../../types/server-data-types';
+import { ProductDataType } from '../../types/state-types';
+import { fetchSelectedCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../api-actions/product-api/product-api';
 
 
-export const initialState: CameraDataType = {
-  cameras: [],
-  isCamerasListLoading: LoadingStatus.Initial,
-  promoCamera: {} as PromoCameraType,
-  isPromoCameraLoading: LoadingStatus.Initial,
+export const initialState: ProductDataType = {
   selectedCamera: {} as CameraType,
   isSelectedCameraLoading: LoadingStatus.Initial,
   similarCameras: [],
@@ -18,32 +14,12 @@ export const initialState: CameraDataType = {
   isReviewsListLoading: LoadingStatus.Initial
 };
 
-export const camerasData = createSlice({
-  name: NameSpace.Cameras,
+export const productData = createSlice({
+  name: NameSpace.ProductData,
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchCamerasAction.pending, (state) => {
-        state.isCamerasListLoading = LoadingStatus.Pending;
-      })
-      .addCase(fetchCamerasAction.fulfilled, (state, action) => {
-        state.isCamerasListLoading = LoadingStatus.Fulfilled;
-        state.cameras = action.payload;
-      })
-      .addCase(fetchCamerasAction.rejected, (state) => {
-        state.isCamerasListLoading = LoadingStatus.Rejected;
-      })
-      .addCase(fetchPromoCameraAction.pending, (state) => {
-        state.isPromoCameraLoading = LoadingStatus.Pending;
-      })
-      .addCase(fetchPromoCameraAction.fulfilled, (state, action) => {
-        state.isPromoCameraLoading = LoadingStatus.Fulfilled;
-        state.promoCamera = action.payload;
-      })
-      .addCase(fetchPromoCameraAction.rejected, (state) => {
-        state.isPromoCameraLoading = LoadingStatus.Rejected;
-      })
       .addCase(fetchSelectedCameraAction.pending, (state) => {
         state.isSelectedCameraLoading = LoadingStatus.Pending;
       })
@@ -68,8 +44,8 @@ export const camerasData = createSlice({
         state.isReviewsListLoading = LoadingStatus.Pending;
       })
       .addCase(fetchCamerasReviewsAction.fulfilled, (state, action) => {
-        state.isReviewsListLoading = LoadingStatus.Fulfilled;
         state.reviewsList = action.payload;
+        state.isReviewsListLoading = LoadingStatus.Fulfilled;
       })
       .addCase(fetchCamerasReviewsAction.rejected, (state) => {
         state.isReviewsListLoading = LoadingStatus.Rejected;

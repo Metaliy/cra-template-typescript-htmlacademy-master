@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
-import { AppRoute, LoadingStatus } from '../../consts/const';
-import { fakeCamerasList, fakePromoCamera, fakeReviewList, getFakeCamera, getFakeCamerasReview } from '../../mock/mock';
+import { AppRoute, LoadingStatus, NameSpace } from '../../consts/const';
+import { fakeReviewList, getFakeCamera, getFakeCamerasReview, getFakePromoCamera } from '../../mock/mock';
 import App from './app';
 import { generatePath } from 'react-router-dom';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
@@ -10,28 +10,31 @@ import { createAPI } from '../../services/api';
 import 'react-intersection-observer/test-utils';
 
 const fakeCamera = getFakeCamera();
+const fakeCameraList = [getFakeCamera(), getFakeCamera()];
+const fakesimilarCameras = [getFakeCamera(), getFakeCamera()];
+const fakePromoCamera = getFakePromoCamera();
 
 
 const mockState = {
-  CAMERAS: {
-    cameras: [getFakeCamera(), getFakeCamera()],
+  [NameSpace.CatalogData]: {
+    cameras: fakeCameraList,
     isCamerasListLoading: LoadingStatus.Fulfilled,
     promoCamera: fakePromoCamera,
-    isPromoCameraLoading: LoadingStatus.Fulfilled,
-    selectedcamera: fakeCamera,
-    isSelectedCameraLoading: LoadingStatus.Fulfilled,
-    similarCameras: fakeCamerasList,
-    isSimilarCamerasLoading: LoadingStatus.Fulfilled,
-    reviewsList: fakeReviewList,
-    isReviewsListLoading: LoadingStatus.Fulfilled
-
+    isPromoCameraLoading: LoadingStatus.Fulfilled
   },
-  CATALOG: {
+  [NameSpace.CatalogProcess]: {
     currentPage: 1
   },
-  REVIEW: {
+  [NameSpace.ProductData]: {
+    selectedCamera: fakeCamera,
+    isSelectedCameraLoading: LoadingStatus.Fulfilled,
+    similarCameras: fakesimilarCameras,
+    isSimilarCamerasLoading: LoadingStatus.Fulfilled,
+    reviewsList: fakeReviewList,
+    isReviewsListLoading: LoadingStatus.Fulfilled,
+  },
+  [NameSpace.ProductProcess]: {
     reviewSentStatus: false,
-    reviewSentErrorStatus: false,
   }
 };
 
@@ -40,12 +43,12 @@ const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
 
 const store = mockStore({
-  CAMERAS: {
-    selectedcamera: getFakeCamera(),
-    similarCameras: [getFakeCamera(), getFakeCamera()],
-    reviewsList: [getFakeCamerasReview(), getFakeCamerasReview()]
+  [NameSpace.ProductData]: {
+    selectedCamera: getFakeCamera(),
+    similarCameras: [getFakeCamera()],
+    reviewsList: [getFakeCamerasReview()]
   },
-  CATALOG: {
+  [NameSpace.CatalogProcess]: {
     currentPage: 1
   }
 });
@@ -61,7 +64,7 @@ describe('Application Routing', () => {
     expect(screen.getByText(/УПС.../i)).toBeInTheDocument();
   });
 
-  it('should render "CatalogPage" when user navigate to "/catalog"', async () => {
+  it('should render "CatalogPage" when user navigate to "/catalog"', () => {
     renderFakeApp(<App />, {
       initialRoute: generatePath(AppRoute.Catalog, {id: 'page_1'}),
       initialState: mockState

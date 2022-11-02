@@ -1,7 +1,7 @@
 import faker from 'faker';
-import { CameraType, PromoCameraType, ReviewType } from '../types/server-data-types';
+import { MAX_RATING } from '../consts/const';
+import { CameraType, PostReviewType, PromoCameraType, ReviewType } from '../types/server-data-types';
 
-window.scrollTo = jest.fn();
 
 export const getFakeCamera = (): CameraType => ({
   id: faker.datatype.number({min: 1, max: 20}),
@@ -21,7 +21,7 @@ export const getFakeCamera = (): CameraType => ({
 });
 
 export const getFakePromoCamera = () : PromoCameraType => ({
-  id: faker.datatype.number(),
+  id: faker.datatype.number({min: 1, max: 20}),
   name: faker.datatype.string(),
   previewImg: faker.datatype.string(),
   previewImg2x: faker.datatype.string(),
@@ -30,22 +30,38 @@ export const getFakePromoCamera = () : PromoCameraType => ({
 });
 
 export const getFakeCamerasReview = (): ReviewType => ({
-  id: faker.datatype.string(),
+  id: faker.datatype.uuid(),
   userName: faker.datatype.string(),
   advantage: faker.datatype.string(),
   disadvantage: faker.datatype.string(),
   review: faker.datatype.string(),
-  rating: faker.datatype.number(),
-  createAt: faker.datatype.string(),
+  rating: faker.datatype.number({min: 0, max: 5}),
+  createAt: String(faker.date.past(5)),
   cameraId: faker.datatype.number(),
 });
 
-export const fakeCamera = getFakeCamera();
+export const getFakePostedReview = (): PostReviewType => ({
+  cameraId: faker.datatype.number(),
+  userName: faker.name.firstName(),
+  advantage: faker.datatype.string(),
+  disadvantage: faker.datatype.string(),
+  review: faker.datatype.string(),
+  rating: faker.datatype.number(MAX_RATING),
+});
 
 export const fakeCamerasList = [getFakeCamera(), getFakeCamera(), getFakeCamera(), getFakeCamera()];
 
 export const fakeReviewList = [getFakeCamerasReview(), getFakeCamerasReview(), getFakeCamerasReview(), getFakeCamerasReview()];
 
-export const fakePromoCamera = getFakePromoCamera();
-
-
+export const getUidCamerasList = (count:number) => {
+  const camerasList: CameraType[] = [];
+  for (let i = 0; camerasList.length < count; i++) {
+    const camera = getFakeCamera();
+    if (!camerasList.find((item) => item.id === camera.id)) {
+      camerasList.push(camera);
+    }
+  }
+  return(
+    camerasList
+  );
+};

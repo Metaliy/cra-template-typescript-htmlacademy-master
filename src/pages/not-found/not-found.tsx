@@ -5,7 +5,7 @@ import './not-found.css';
 function NotFoundPage () {
   return (
     <>
-      <header className="top-header">
+      <header className="top-header" data-testid="not-found">
       </header>
       <div>
         <div className="starsec"></div>

@@ -13,7 +13,7 @@ function ProductCardComponent ({camera, isActive}:ProductCardComponentPropsType)
   const {id, name, price, rating, reviewCount, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x} = camera;
 
   return (
-    <div className={isActive ? 'product-card is-active' : 'product-card'}>
+    <div className={isActive ? 'product-card is-active' : 'product-card'} data-testid={isActive ? `active-product-card-${id}` : 'product-card'}>
       <div className="product-card__img">
         <picture>
           <source type="image/webp" srcSet={`../${previewImgWebp}, ../${previewImgWebp2x} 2x`}></source>

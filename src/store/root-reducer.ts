@@ -1,12 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { NameSpace } from '../consts/const';
-import { camerasData } from './camera-data/camera-data';
+import { catalogData } from './catalog-data/catalog-data';
 import { catalogProcess } from './catalog-process/catalog-process';
-import { reviewProcess } from './review-process/review-process';
+import { productData } from './product-data/product-data';
+import { productProcess } from './product-process/product-process';
 
 export const rootReducer = combineReducers({
-  [NameSpace.Cameras]: camerasData.reducer,
-  [NameSpace.Catalog]: catalogProcess.reducer,
-  [NameSpace.Review]: reviewProcess.reducer
+  [NameSpace.CatalogData]: catalogData.reducer,
+  [NameSpace.CatalogProcess]: catalogProcess.reducer,
+  [NameSpace.ProductData]: productData.reducer,
+  [NameSpace.ProductProcess]: productProcess.reducer
 });
 

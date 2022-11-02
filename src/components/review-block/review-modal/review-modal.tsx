@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { fetchCamerasReviewsAction, postCameraReview } from '../../../store/api-actions';
+import { postCameraReview, fetchCamerasReviewsAction } from '../../../store/api-actions/product-api/product-api';
 
 import { PostReviewType } from '../../../types/server-data-types';
+import { ReviewModalSuccessComponent } from './review-modal-success/review-modal-success';
 
 
 type ReviewModalComponentProps = {
@@ -15,16 +16,17 @@ type ReviewModalComponentProps = {
 
 function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewModalComponentProps) {
 
+
   const dispatch = useAppDispatch();
 
   const [isReviewSended, setIsReviewSended] = useState(false);
 
   const { register, watch, handleSubmit, reset, formState: { errors } } = useForm<PostReviewType>({defaultValues: {rating: 0}});
   const onSubmit: SubmitHandler<PostReviewType> = (data) => {
+    setIsReviewSended(true);
     data.cameraId = cameraId;
     data.rating = Number(data.rating);
     dispatch(postCameraReview(data));
-    setIsReviewSended(true);
     reset();
   };
 
@@ -64,9 +66,9 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
   }, [isReviewSended]);
 
   return (
-    <div className={generateModalClass()}>
+    <div className={generateModalClass()} data-testid="review-modal">
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={() => (isReviewSended ? closeAfterSuccessfulRevievSend() : modalStatusHandler(false))}></div>
+        <div className="modal__overlay" onClick={() => (isReviewSended ? closeAfterSuccessfulRevievSend() : modalStatusHandler(false))} data-testid='modal-overlay'></div>
         {!isReviewSended &&
           <div className="modal__content">
             <p className="title title--h4">Оставить отзыв</p>
@@ -85,7 +87,7 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
                         <label className="rate__label" htmlFor="star-5" title="Отлично"></label>
                         <input className="visually-hidden" id="star-4" type="radio" value={4} {...register('rating', { required: true })}></input>
                         <label className="rate__label" htmlFor="star-4" title="Хорошо"></label>
-                        <input className="visually-hidden" id="star-3" type="radio" value={3} {...register('rating', { required: true })}></input>
+                        <input className="visually-hidden" id="star-3" type="radio" value={3} {...register('rating', { required: true })} data-testid='rate-bar-input-3'></input>
                         <label className="rate__label" htmlFor="star-3" title="Нормально"></label>
                         <input className="visually-hidden" id="star-2" type="radio" value={2} {...register('rating', { required: true })}></input>
                         <label className="rate__label" htmlFor="star-2" title="Плохо"></label>
@@ -97,7 +99,7 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
                     </div>
                     <p className="rate__message">Нужно оценить товар</p>
                   </fieldset>
-                  <div className={errors.userName ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'}>
+                  <div className={errors.userName ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'} data-testid={errors.userName ? 'input-invalid' : 'initial-input'}>
                     <label>
                       <span className="custom-input__label">Ваше имя
                         <svg width="9" height="9" aria-hidden="true">
@@ -112,7 +114,7 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
                     </label>
                   </div>
 
-                  <div className={errors.advantage ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'}>
+                  <div className={errors.advantage ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'} data-testid={errors.userName ? 'input-invalid' : 'initial-input'}>
                     <label>
                       <span className="custom-input__label">Достоинства
                         <svg width="9" height="9" aria-hidden="true">
@@ -127,9 +129,9 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
                     </label>
                   </div>
 
-                  <div className={errors.disadvantage ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'}>
+                  <div className={errors.disadvantage ? 'custom-input form-review__item is-invalid' : 'custom-input form-review__item'} data-testid={errors.userName ? 'input-invalid' : 'initial-input'}>
                     <label>
-                      <span className="custom-input__label">Недостатки
+                      <span className="custom-input__label">недостатки
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
@@ -142,14 +144,14 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
                     </label>
                   </div>
 
-                  <div className={errors.review ? 'custom-textarea form-review__item is-invalid' : 'custom-textarea form-review__item'}>
+                  <div className={errors.review ? 'custom-textarea form-review__item is-invalid' : 'custom-textarea form-review__item'} data-testid={errors.userName ? 'input-invalid' : 'initial-input'}>
                     <label>
-                      <span className="custom-textarea__label">Недостатки
+                      <span className="custom-textarea__label">Комментарий
                         <svg width="9" height="9" aria-hidden="true">
                           <use xlinkHref="#icon-snowflake"></use>
                         </svg>
                       </span>
-                      <p className="custom-input__error">Нужно указать недостатки</p>
+                      <p className="custom-input__error">Нужно добавить комментарий</p>
                       <textarea placeholder="Поделитесь своим опытом покупки" {...register('review', {
                         required: true
                       })}
@@ -158,31 +160,17 @@ function ReviewModalComponent ({cameraId, isOpen, modalStatusHandler }: ReviewMo
                   </div>
 
                 </div>
-                <button className="btn btn--purple form-review__btn" type="submit">Отправить отзыв</button>
+                <button className="btn btn--purple form-review__btn" type="submit" data-testid="submit">Отправить отзыв</button>
               </form>
             </div>
-            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => modalStatusHandler(!isOpen)}>
+            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => modalStatusHandler(!isOpen)} data-testid='cross-btn'>
               <svg width="10" height="10" aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg>
             </button>
           </div>}
         {isReviewSended &&
-          <div className="modal__content">
-            <p className="title title--h4">Спасибо за отзыв</p>
-            <svg className="modal__icon" width="80" height="78" aria-hidden="true">
-              <use xlinkHref="#icon-review-success"></use>
-            </svg>
-            <div className="modal__buttons">
-              <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={() => closeAfterSuccessfulRevievSend()}>Вернуться к покупкам
-              </button>
-            </div>
-            <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => closeAfterSuccessfulRevievSend()}>
-              <svg width="10" height="10" aria-hidden="true">
-                <use xlinkHref="#icon-close"></use>
-              </svg>
-            </button>
-          </div>}
+          <ReviewModalSuccessComponent onCloseAfterSuccessfulRevievSend={closeAfterSuccessfulRevievSend} />}
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { SearchFormComponent } from './search-form/search-form';
 
 function HeaderComponent () {
   return (
-    <header className="header" id="header">
+    <header className="header" id="header" data-testid="header">
       <div className="container">
         <Link className="header__logo" to="/catalog/page_1" aria-label="Переход на главную">
           <svg width="100" height="36" aria-hidden="true">

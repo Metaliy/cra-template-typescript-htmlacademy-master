@@ -13,7 +13,7 @@ const getPages = (pagesCount:number, checkedPage: number): JSX.Element[] =>{
   for (let i = 1; i <= pagesCount; i++) {
     paginationItems.push(
       <li className="pagination__item" key={i}>
-        <Link className={i !== checkedPage ? 'pagination__link' : 'pagination__link pagination__link--active'} to={`/catalog/page_${i}`} onClick={() => (store.dispatch(changePage(i)))}>{i}</Link>
+        <Link className={i !== checkedPage ? 'pagination__link' : 'pagination__link pagination__link--active'} data-testid="page-buttons" to={`/catalog/page_${i}`} onClick={() => (store.dispatch(changePage(i)))}>{i}</Link>
       </li>
     );
   }
@@ -30,21 +30,21 @@ function PaginationComponent () {
 
 
   useEffect(() => {
-    dispatch(changePage(id));
-  }, [id]);
+    dispatch(changePage(currentPage));
+  }, [id, currentPage]);
 
 
   return (
-    <div className="pagination">
+    <div className="pagination" data-testid="pagination-component">
       <ul className="pagination__list">
         {currentPage !== 1 ?
           <li className="pagination__item">
-            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage - 1}`} onClick={() => (store.dispatch(changePage(currentPage - 1)))}>Назад</Link>
+            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage - 1}`} data-testid="back-button" onClick={() => (store.dispatch(changePage(currentPage - 1)))}>Назад</Link>
           </li> : ''}
         {getPages(pageCount, currentPage)}
         {currentPage !== pageCount ?
           <li className="pagination__item">
-            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage + 1}`} onClick={() => (store.dispatch(changePage(currentPage + 1)))}>Далее</Link>
+            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage + 1}`} data-testid="next-button" onClick={() => (store.dispatch(changePage(currentPage + 1)))}>Далее</Link>
           </li> : ''}
       </ul>
     </div>

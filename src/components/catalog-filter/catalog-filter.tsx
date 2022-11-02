@@ -1,6 +1,6 @@
 function CatalogFilterComponent () {
   return (
-    <div className="catalog__aside">
+    <div className="catalog__aside" data-testid="catalog-filter">
       <div className="catalog-filter">
         <form action="#">
           <h2 className="visually-hidden">Фильтр</h2>

@@ -9,7 +9,7 @@ function ProductCardListComponent ({camerasList}:ProductCardListComponentProps) 
 
 
   return (
-    <div className="cards catalog__cards">
+    <div className="cards catalog__cards" data-testid="product-card-list">
       {camerasList.map((camera) => (
         <ProductCardComponent camera={camera} key={camera.id} />
       ))}
