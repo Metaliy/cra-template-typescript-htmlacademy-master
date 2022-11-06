@@ -18,21 +18,21 @@ const fakePromoCamera = getFakePromoCamera();
 const mockState = {
   [NameSpace.Cameras]: {
     cameras: fakeCameraList,
-    isCamerasListLoading: LoadingStatus.Fulfilled,
+    camerasListLoadingStatus: LoadingStatus.Fulfilled,
     selectedCamera: fakeCamera,
-    isSelectedCameraLoading: LoadingStatus.Fulfilled,
+    selectedCameraLoadingStatus: LoadingStatus.Fulfilled,
     similarCameras: fakesimilarCameras,
-    isSimilarCamerasLoading: LoadingStatus.Fulfilled,
+    similarCamerasLoadingStatus: LoadingStatus.Fulfilled,
     camerasCount: 15
   },
   [NameSpace.Reviews]: {
     reviewsList: fakeReviewList,
-    isReviewsListLoading: LoadingStatus.Fulfilled,
+    reviewsListLoadingStatus: LoadingStatus.Fulfilled,
     reviewSentStatus: LoadingStatus.Initial,
   },
   [NameSpace.Promo]: {
     promoCamera: fakePromoCamera,
-    isPromoCameraLoading: LoadingStatus.Fulfilled
+    promoCameraLoadingStatus: LoadingStatus.Fulfilled
   },
   [NameSpace.Catalog]: {
     currentPage: 1

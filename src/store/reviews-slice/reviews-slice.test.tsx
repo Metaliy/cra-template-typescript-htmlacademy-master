@@ -14,7 +14,7 @@ describe('Reducer test: productReviewsData', () => {
   beforeEach(() => {
     mockState = {
       reviewsList: [],
-      isReviewsListLoading: LoadingStatus.Initial,
+      reviewsListLoadingStatus: LoadingStatus.Initial,
       reviewSentStatus: LoadingStatus.Initial
     };
   });
@@ -25,7 +25,7 @@ describe('Reducer test: productReviewsData', () => {
   });
 
   describe('fetchCamerasReviewsAction test', () => {
-    it('should update cameras with given mock data, update isReviewsListLoading to fulfilled if fetchCamerasAction is fulfilled',
+    it('should update cameras with given mock data, update reviewsListLoadingStatus to fulfilled if fetchCamerasAction is fulfilled',
       () => {
         expect(reviewsSlice.reducer(mockState, {
           payload: fakeReviews,
@@ -34,36 +34,36 @@ describe('Reducer test: productReviewsData', () => {
           .toEqual({
             ...mockState,
             reviewsList: fakeReviews,
-            isReviewsListLoading: LoadingStatus.Fulfilled,
+            reviewsListLoadingStatus: LoadingStatus.Fulfilled,
           });
       });
 
-    it('Update isReviewsListLoading to pending if fetchCamerasAction is pending',
+    it('Update reviewsListLoadingStatus to pending if fetchCamerasAction is pending',
       () => {
         expect(reviewsSlice.reducer(mockState, {
           type: fetchCamerasReviewsAction.pending.type
         }))
           .toEqual({
             ...mockState,
-            isReviewsListLoading: LoadingStatus.Pending
+            reviewsListLoadingStatus: LoadingStatus.Pending
           });
       });
 
-    it('Update isReviewsListLoading to rejected if fetchCamerasAction is rejected',
+    it('Update reviewsListLoadingStatus to rejected if fetchCamerasAction is rejected',
       () => {
         expect(reviewsSlice.reducer(mockState, {
           type: fetchCamerasReviewsAction.rejected.type
         }))
           .toEqual({
             ...mockState,
-            isReviewsListLoading: LoadingStatus.Rejected
+            reviewsListLoadingStatus: LoadingStatus.Rejected
           });
       });
 
   });
 
   describe('postCameraReviewAction test', () => {
-    it('should update cameras with given mock data, update isCamerasListLoading to fulfilled if postCameraReviewAction is fulfilled',
+    it('should update cameras with given mock data, update camerasListLoadingStatus to fulfilled if postCameraReviewAction is fulfilled',
       () => {
         expect(reviewsSlice.reducer(mockState, {
           type: postCameraReviewAction.fulfilled.type
@@ -74,7 +74,7 @@ describe('Reducer test: productReviewsData', () => {
           });
       });
 
-    it('Update isCamerasListLoading to pending if postCameraReviewAction is pending',
+    it('Update camerasListLoadingStatus to pending if postCameraReviewAction is pending',
       () => {
         expect(reviewsSlice.reducer(mockState, {
           type: postCameraReviewAction.pending.type
@@ -85,7 +85,7 @@ describe('Reducer test: productReviewsData', () => {
           });
       });
 
-    it('Update isCamerasListLoading to rejected if postCameraReviewAction is rejected',
+    it('Update camerasListLoadingStatus to rejected if postCameraReviewAction is rejected',
       () => {
         expect(reviewsSlice.reducer(mockState, {
           type: postCameraReviewAction.rejected.type

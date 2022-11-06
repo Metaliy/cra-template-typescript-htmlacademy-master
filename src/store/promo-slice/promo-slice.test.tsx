@@ -15,7 +15,7 @@ describe('Reducer test: catalogData', () => {
   beforeEach(() => {
     mockState = {
       promoCamera: {} as PromoCameraType,
-      isPromoCameraLoading: LoadingStatus.Initial
+      promoCameraLoadingStatus: LoadingStatus.Initial
     };
   });
 
@@ -25,7 +25,7 @@ describe('Reducer test: catalogData', () => {
   });
 
   describe('fetchPromoCameraAction test', () => {
-    it('should update cameras with given mock data, update isPromoCameraLoading to fulfilled if fetchPromoCameraAction is fulfilled',
+    it('should update cameras with given mock data, update promoCameraLoadingStatus to fulfilled if fetchPromoCameraAction is fulfilled',
       () => {
         expect(promoSlice.reducer(mockState, {
           payload: fakePromoCamera,
@@ -34,29 +34,29 @@ describe('Reducer test: catalogData', () => {
           .toEqual({
             ...mockState,
             promoCamera: fakePromoCamera,
-            isPromoCameraLoading: LoadingStatus.Fulfilled,
+            promoCameraLoadingStatus: LoadingStatus.Fulfilled,
           });
       });
 
-    it('Update isCamerasListLoading to pending if fetchCamerasAction is pending',
+    it('Update camerasListLoadingStatus to pending if fetchCamerasAction is pending',
       () => {
         expect(promoSlice.reducer(mockState, {
           type: fetchPromoCameraAction.pending.type
         }))
           .toEqual({
             ...mockState,
-            isPromoCameraLoading: LoadingStatus.Pending
+            promoCameraLoadingStatus: LoadingStatus.Pending
           });
       });
 
-    it('Update isCamerasListLoading to rejected if fetchCamerasAction is rejected',
+    it('Update camerasListLoadingStatus to rejected if fetchCamerasAction is rejected',
       () => {
         expect(promoSlice.reducer(mockState, {
           type: fetchPromoCameraAction.rejected.type
         }))
           .toEqual({
             ...mockState,
-            isPromoCameraLoading: LoadingStatus.Rejected
+            promoCameraLoadingStatus: LoadingStatus.Rejected
           });
       });
 

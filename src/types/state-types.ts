@@ -8,22 +8,22 @@ export type AppDispatch = typeof store.dispatch;
 
 export type CamerasSliceType = {
   cameras: CameraType[],
-  isCamerasListLoading: LoadingStatus,
+  camerasListLoadingStatus: LoadingStatus,
   selectedCamera: CameraType,
-  isSelectedCameraLoading: LoadingStatus,
+  selectedCameraLoadingStatus: LoadingStatus,
   similarCameras: CameraType[],
-  isSimilarCamerasLoading: LoadingStatus,
+  similarCamerasLoadingStatus: LoadingStatus,
   camerasCount: number
 }
 
 export type PromoSliceType = {
   promoCamera: PromoCameraType,
-  isPromoCameraLoading: LoadingStatus
+  promoCameraLoadingStatus: LoadingStatus
 }
 
 export type ReviewsSliceType = {
   reviewsList: ReviewType[],
-  isReviewsListLoading: LoadingStatus,
+  reviewsListLoadingStatus: LoadingStatus,
   reviewSentStatus: LoadingStatus,
 }
 

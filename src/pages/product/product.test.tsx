@@ -6,7 +6,7 @@ import { ProductPage } from './product';
 
 const mockState = {
   [NameSpace.Cameras]: {
-    isSelectedCameraLoading: LoadingStatus.Pending,
+    selectedCameraLoadingStatus: LoadingStatus.Pending,
   }
 
 };

@@ -8,11 +8,11 @@ import { fetchSelectedCameraAction, fetchSimilarCamerasAction } from '../api-act
 
 export const initialState: CamerasSliceType = {
   cameras: [],
-  isCamerasListLoading: LoadingStatus.Initial,
+  camerasListLoadingStatus: LoadingStatus.Initial,
   selectedCamera: {} as CameraType,
-  isSelectedCameraLoading: LoadingStatus.Initial,
+  selectedCameraLoadingStatus: LoadingStatus.Initial,
   similarCameras: [],
-  isSimilarCamerasLoading: LoadingStatus.Initial,
+  similarCamerasLoadingStatus: LoadingStatus.Initial,
   camerasCount: 0
 };
 
@@ -23,35 +23,35 @@ export const camerasSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchCamerasAction.pending, (state) => {
-        state.isCamerasListLoading = LoadingStatus.Pending;
+        state.camerasListLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(fetchCamerasAction.fulfilled, (state, action) => {
         state.cameras = action.payload.responsedData;
         state.camerasCount = Number(action.payload.responsedDataCount);
-        state.isCamerasListLoading = LoadingStatus.Fulfilled;
+        state.camerasListLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchCamerasAction.rejected, (state) => {
-        state.isCamerasListLoading = LoadingStatus.Rejected;
+        state.camerasListLoadingStatus = LoadingStatus.Rejected;
       })
       .addCase(fetchSelectedCameraAction.pending, (state) => {
-        state.isSelectedCameraLoading = LoadingStatus.Pending;
+        state.selectedCameraLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(fetchSelectedCameraAction.fulfilled, (state, action) => {
         state.selectedCamera = action.payload;
-        state.isSelectedCameraLoading = LoadingStatus.Fulfilled;
+        state.selectedCameraLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchSelectedCameraAction.rejected, (state) => {
-        state.isSelectedCameraLoading = LoadingStatus.Rejected;
+        state.selectedCameraLoadingStatus = LoadingStatus.Rejected;
       })
       .addCase(fetchSimilarCamerasAction.pending, (state) => {
-        state.isSimilarCamerasLoading = LoadingStatus.Pending;
+        state.similarCamerasLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(fetchSimilarCamerasAction.fulfilled, (state, action) => {
         state.similarCameras = action.payload;
-        state.isSimilarCamerasLoading = LoadingStatus.Fulfilled;
+        state.similarCamerasLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchSimilarCamerasAction.rejected, (state) => {
-        state.isSimilarCamerasLoading = LoadingStatus.Rejected;
+        state.similarCamerasLoadingStatus = LoadingStatus.Rejected;
       });
   }
 });

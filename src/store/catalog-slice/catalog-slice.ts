@@ -10,10 +10,10 @@ export const catalogSlice = createSlice ({
   name: NameSpace.Catalog,
   initialState,
   reducers: {
-    changePage: (state, action) => {
+    CurrenCatalogPage: (state, action) => {
       state.currentPage = action.payload;
     }
   }
 });
 
-export const {changePage} = catalogSlice.actions;
+export const {CurrenCatalogPage} = catalogSlice.actions;

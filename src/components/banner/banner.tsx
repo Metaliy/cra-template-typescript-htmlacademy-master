@@ -6,14 +6,14 @@ import { getPromoCamera } from '../../store/promo-slice/selectors';
 
 function Banner () {
 
-  const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, id} = useAppSelector(getPromoCamera);
+  const {name, id} = useAppSelector(getPromoCamera);
 
 
   return (
     <div className="banner" data-testid="banner">
       <picture>
-        <source type="image/webp" srcSet={`../${previewImgWebp}, ../${previewImgWebp2x} 2x`}></source>
-        <img src={`../${previewImg}`} srcSet={`../${previewImg2x}`} width="1280" height="280" alt="баннер"></img>
+        <source type="image/webp" srcSet='/img/content/banner-bg.webp, /img/content/banner-bg@2x.webp 2x'></source>
+        <img src="img/content/banner-bg.jpg" srcSet="img/content/banner-bg@2x.jpg 2x" width="1280" height="280" alt="баннер"></img>
       </picture>
       <p className="banner__info">
         <span className="banner__message">Новинка!</span>

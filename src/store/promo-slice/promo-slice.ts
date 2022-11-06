@@ -7,7 +7,7 @@ import { fetchPromoCameraAction } from '../api-actions/catalog-api/catalog-api';
 
 export const initialState: PromoSliceType = {
   promoCamera: {} as PromoCameraType,
-  isPromoCameraLoading: LoadingStatus.Initial
+  promoCameraLoadingStatus: LoadingStatus.Initial
 };
 
 export const promoSlice = createSlice({
@@ -17,14 +17,14 @@ export const promoSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchPromoCameraAction.pending, (state) => {
-        state.isPromoCameraLoading = LoadingStatus.Pending;
+        state.promoCameraLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(fetchPromoCameraAction.fulfilled, (state, action) => {
         state.promoCamera = action.payload;
-        state.isPromoCameraLoading = LoadingStatus.Fulfilled;
+        state.promoCameraLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchPromoCameraAction.rejected, (state) => {
-        state.isPromoCameraLoading = LoadingStatus.Rejected;
+        state.promoCameraLoadingStatus = LoadingStatus.Rejected;
       });
   }
 });

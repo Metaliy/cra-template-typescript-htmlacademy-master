@@ -7,7 +7,7 @@ import { fetchCamerasReviewsAction, postCameraReviewAction } from '../api-action
 
 export const initialState: ReviewsSliceType = {
   reviewsList: [],
-  isReviewsListLoading: LoadingStatus.Initial,
+  reviewsListLoadingStatus: LoadingStatus.Initial,
   reviewSentStatus: LoadingStatus.Initial,
 };
 
@@ -22,14 +22,14 @@ export const reviewsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchCamerasReviewsAction.pending, (state) => {
-        state.isReviewsListLoading = LoadingStatus.Pending;
+        state.reviewsListLoadingStatus = LoadingStatus.Pending;
       })
       .addCase(fetchCamerasReviewsAction.fulfilled, (state, action) => {
         state.reviewsList = action.payload;
-        state.isReviewsListLoading = LoadingStatus.Fulfilled;
+        state.reviewsListLoadingStatus = LoadingStatus.Fulfilled;
       })
       .addCase(fetchCamerasReviewsAction.rejected, (state) => {
-        state.isReviewsListLoading = LoadingStatus.Rejected;
+        state.reviewsListLoadingStatus = LoadingStatus.Rejected;
       })
       .addCase(postCameraReviewAction.pending, (state) => {
         state.reviewSentStatus = LoadingStatus.Pending;

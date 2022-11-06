@@ -5,7 +5,7 @@ import { CatalogPage } from './catalog';
 
 const mockState = {
   [NameSpace.Catalog]: {
-    isCamerasListLoading: LoadingStatus.Pending,
+    camerasListLoadingStatus: LoadingStatus.Pending,
   }
 
 };

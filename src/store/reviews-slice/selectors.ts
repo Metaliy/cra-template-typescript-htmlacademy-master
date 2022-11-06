@@ -4,6 +4,6 @@ import { State } from '../../types/state-types';
 
 export const getReviewsList = (state: State): ReviewType[] => state[NameSpace.Reviews].reviewsList;
 
-export const getReviewsListLoadingStatus = (state: State): LoadingStatus => state[NameSpace.Reviews].isReviewsListLoading;
+export const getReviewsListLoadingStatus = (state: State): LoadingStatus => state[NameSpace.Reviews].reviewsListLoadingStatus;
 
 export const getReviewSentStatus = (state: State): LoadingStatus => state[NameSpace.Reviews].reviewSentStatus;

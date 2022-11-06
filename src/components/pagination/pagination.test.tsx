@@ -17,12 +17,12 @@ const fakePromoCamera = getFakePromoCamera();
 const firstPagemockState = {
   [NameSpace.Cameras]: {
     cameras: fakeCameraList,
-    isCamerasListLoading: LoadingStatus.Fulfilled,
+    camerasListLoadingStatus: LoadingStatus.Fulfilled,
     camerasCount: 20
   },
   [NameSpace.Promo]: {
     promoCamera: fakePromoCamera,
-    isPromoCameraLoading: LoadingStatus.Fulfilled
+    promoCameraLoadingStatus: LoadingStatus.Fulfilled
   },
   [NameSpace.Catalog]: {
     currentPage: 1,
@@ -33,11 +33,11 @@ const firstPagemockState = {
 const lastPagemockState = {
   [NameSpace.Cameras]: {
     cameras: fakeCameraList,
-    isCamerasListLoading: LoadingStatus.Fulfilled,
+    camerasListLoadingStatus: LoadingStatus.Fulfilled,
   },
   [NameSpace.Promo]: {
     promoCamera: fakePromoCamera,
-    isPromoCameraLoading: LoadingStatus.Fulfilled
+    promoCameraLoadingStatus: LoadingStatus.Fulfilled
   },
   [NameSpace.Catalog]: {
     currentPage: 5,
@@ -129,6 +129,6 @@ describe('Pagination component', () => {
 
     await userEvent.click(screen.getByText(2));
     const [action] = store.getActions();
-    expect(action.type).toBe('Catalog/changePage');
+    expect(action.type).toBe('Catalog/CurrenCatalogPage');
   });
 });
