@@ -1,9 +1,10 @@
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/const';
 import { useAppSelector } from '../../hooks/hooks';
-import { getPromoCamera } from '../../store/catalog-data/selectors';
+import { getPromoCamera } from '../../store/promo-slice/selectors';
 
-function BannerComponent () {
+
+function Banner () {
 
   const {name, previewImg, previewImg2x, previewImgWebp, previewImgWebp2x, id} = useAppSelector(getPromoCamera);
 
@@ -24,4 +25,4 @@ function BannerComponent () {
   );
 }
 
-export {BannerComponent};
+export {Banner};

@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
-import { HeaderComponent } from './header';
+import { Header } from './header';
 
 
-describe('Header Component', () => {
+describe('Header ', () => {
   it('should render "Header component"', () => {
-    renderFakeApp(<HeaderComponent />, {});
+    renderFakeApp(<Header />, {});
 
     expect(screen.getByTestId('header')).toBeInTheDocument();
   });

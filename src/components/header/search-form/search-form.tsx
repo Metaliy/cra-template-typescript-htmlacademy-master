@@ -1,5 +1,5 @@
 
-function SearchFormComponent () {
+function SearchForm () {
   return (
     <form data-testid="search-form">
       <label>
@@ -19,4 +19,4 @@ function SearchFormComponent () {
   );
 }
 
-export {SearchFormComponent};
+export {SearchForm};

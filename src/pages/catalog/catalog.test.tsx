@@ -4,7 +4,7 @@ import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { CatalogPage } from './catalog';
 
 const mockState = {
-  [NameSpace.CatalogData]: {
+  [NameSpace.Catalog]: {
     isCamerasListLoading: LoadingStatus.Pending,
   }
 

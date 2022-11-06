@@ -1,22 +1,25 @@
 import FocusLock from 'react-focus-lock';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs';
-import { FooterComponent } from '../../components/footer/footer';
-import { HeaderComponent } from '../../components/header/header';
-import { IconContainerComponent } from '../../components/icon-container/icon-container';
-import { LoaderComponent } from '../../components/loading-screen/loading-screen';
-import { ProductSimilarSliderComponent } from '../../components/product-similar-slider/product-similar-slider';
-import { ProductTabsComponent } from '../../components/product-tabs/product-tabs';
-import { RatingComponent } from '../../components/rating/rating';
-import { ReviewBlockComponent } from '../../components/review-block/review-block';
-import { ReviewModalComponent } from '../../components/review-block/review-modal/review-modal';
+import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
+import { Footer } from '../../components/footer/footer';
+import { Header } from '../../components/header/header';
+import { IconContainer } from '../../components/icon-container/icon-container';
+import { Loader } from '../../components/loading-screen/loading-screen';
+import { ProductSimilarSlider } from '../../components/product-similar-slider/product-similar-slider';
+import { ProductTabs } from '../../components/product-tabs/product-tabs';
+import { Rating } from '../../components/rating/rating';
+import { ReviewBlock } from '../../components/review-block/review-block';
+import { ReviewModal } from '../../components/review-block/review-modal/review-modal';
 import { AppPageNames, LoadingStatus, MAX_RATING } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getPriceWitchSpaces } from '../../utils/utils';
 import { RemoveScroll } from 'react-remove-scroll';
-import { getReviewsListLoadingStatus, getSelectedCamera, getSelectedCameraLoadingStatus, getSimilarCamerasListLoadingStatus } from '../../store/product-data/selectors';
+
 import { fetchSelectedCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../../store/api-actions/product-api/product-api';
+import { getSelectedCamera, getSelectedCameraLoadingStatus, getSimilarCamerasListLoadingStatus } from '../../store/cameras-slice/selectors';
+import { getReviewsListLoadingStatus } from '../../store/reviews-slice/selectors';
+import { getReviewModalOpenedStatus } from '../../store/product-slice/selectors';
 
 export function ProductPage():JSX.Element {
 
@@ -33,30 +36,29 @@ export function ProductPage():JSX.Element {
 
   const selectedCamera = useAppSelector(getSelectedCamera);
 
+  const reviewModalOpenedStatus = useAppSelector(getReviewModalOpenedStatus);
 
-  const [isReviewModalOpenStatus, setIsReviewModalOpen] = useState(false);
+  const selectedCameraLoadingStatus = useAppSelector(getSelectedCameraLoadingStatus);
+  const similarCamerasListLoadingStatus = useAppSelector(getSimilarCamerasListLoadingStatus);
+  const reviewsListLoadingStatus = useAppSelector(getReviewsListLoadingStatus);
 
-  const isSelectedCameraLoading = useAppSelector(getSelectedCameraLoadingStatus);
-  const isSimilarCamerasListLoading = useAppSelector(getSimilarCamerasListLoadingStatus);
-  const isReviewsListLoading = useAppSelector(getReviewsListLoadingStatus);
-
-  if(isSelectedCameraLoading === LoadingStatus.Initial || isSelectedCameraLoading === LoadingStatus.Pending ||
-    isSimilarCamerasListLoading === LoadingStatus.Pending || isSimilarCamerasListLoading === LoadingStatus.Initial ||
-    isReviewsListLoading === LoadingStatus.Initial || isReviewsListLoading === LoadingStatus.Pending) {
+  if(selectedCameraLoadingStatus === LoadingStatus.Initial || selectedCameraLoadingStatus === LoadingStatus.Pending ||
+    similarCamerasListLoadingStatus === LoadingStatus.Pending || similarCamerasListLoadingStatus === LoadingStatus.Initial ||
+    reviewsListLoadingStatus === LoadingStatus.Initial || reviewsListLoadingStatus === LoadingStatus.Pending) {
     return (
-      <LoaderComponent />
+      <Loader />
     );
   }
 
 
   return (
     <>
-      <IconContainerComponent />
+      <IconContainer />
       <div className="wrapper">
-        <HeaderComponent/>
+        <Header/>
         <main>
           <div className="page-content">
-            <BreadcrumbsComponent pageName={AppPageNames.Product} productName={selectedCamera.name} />
+            <Breadcrumbs pageName={AppPageNames.Product} productName={selectedCamera.name} />
             <div className="page-content__section">
               <section className="product">
                 <div className="container">
@@ -68,14 +70,14 @@ export function ProductPage():JSX.Element {
                   </div>
                   <div className="product__content">
                     <h1 className="title title--h3">{selectedCamera.name}</h1>
-                    <RatingComponent maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
+                    <Rating maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
                     <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(selectedCamera.price)} ₽</p>
                     <button className="btn btn--purple" type="button">
                       <svg width="24" height="16" aria-hidden="true">
                         <use xlinkHref="#icon-add-basket"></use>
                       </svg>Добавить в корзину
                     </button>
-                    <ProductTabsComponent selectedCamera={selectedCamera} />
+                    <ProductTabs selectedCamera={selectedCamera} />
                   </div>
                 </div>
               </section>
@@ -83,12 +85,12 @@ export function ProductPage():JSX.Element {
             <div className="page-content__section">
               <section className="product-similar">
                 <div className="container">
-                  <ProductSimilarSliderComponent />
+                  <ProductSimilarSlider />
                 </div>
               </section>
             </div>
             <div className="page-content__section">
-              <ReviewBlockComponent modalStatusHandler={setIsReviewModalOpen} isReviewModalOpenStatus={isReviewModalOpenStatus}/>
+              <ReviewBlock/>
             </div>
           </div>
         </main>
@@ -98,15 +100,15 @@ export function ProductPage():JSX.Element {
           </svg>
         </a>
         <FocusLock returnFocus={{ preventScroll: false }}>
-          {isReviewModalOpenStatus ?
+          {reviewModalOpenedStatus ?
             <RemoveScroll>
-              <ReviewModalComponent cameraId={productId} isOpen={isReviewModalOpenStatus} modalStatusHandler={setIsReviewModalOpen}/>
+              <ReviewModal />
             </RemoveScroll>
             :
-            <ReviewModalComponent cameraId={productId} isOpen={isReviewModalOpenStatus} modalStatusHandler={setIsReviewModalOpen}/>}
+            <ReviewModal/>}
 
         </FocusLock>
-        <FooterComponent />
+        <Footer />
       </div>
     </>
   );

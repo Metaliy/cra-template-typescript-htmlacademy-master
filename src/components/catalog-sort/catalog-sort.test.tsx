@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
-import { CatalogSortComponent } from './catalog-sort';
+import { CatalogSort } from './catalog-sort';
 
-describe('Catalog sort Component', () => {
+describe('Catalog sort ', () => {
   it('should render "Catalog sort component"', () => {
-    renderFakeApp(<CatalogSortComponent />, {});
+    renderFakeApp(<CatalogSort />, {});
 
     expect(screen.getByTestId('catalog-sort')).toBeInTheDocument();
   });

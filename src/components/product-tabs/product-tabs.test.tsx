@@ -2,21 +2,21 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { getFakeCamera } from '../../mock/mock';
-import { ProductTabsComponent } from './product-tabs';
+import { ProductTabs } from './product-tabs';
 
 const fakeCamera = getFakeCamera();
 
 
 describe('Product tabs component', () => {
   it('should render "Product tabs component"', () => {
-    renderFakeApp(<ProductTabsComponent selectedCamera={fakeCamera} />, {});
+    renderFakeApp(<ProductTabs selectedCamera={fakeCamera} />, {});
 
     expect(screen.getByTestId('product-tabs')).toBeInTheDocument();
     expect(screen.getByText(fakeCamera.vendorCode)).toBeInTheDocument();
   });
 
   it('should click features-tub-button"', async () => {
-    renderFakeApp(<ProductTabsComponent selectedCamera={fakeCamera} />, {});
+    renderFakeApp(<ProductTabs selectedCamera={fakeCamera} />, {});
 
 
     expect(screen.getByTestId('features-tub-button')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('Product tabs component', () => {
   });
 
   it('should click description-tub-button after click features-tub-button"', async () => {
-    renderFakeApp(<ProductTabsComponent selectedCamera={fakeCamera} />, {});
+    renderFakeApp(<ProductTabs selectedCamera={fakeCamera} />, {});
 
     expect(screen.getByTestId('description-tub-button-active')).toBeInTheDocument();
     await userEvent.click(screen.getByTestId('features-tub-button'));

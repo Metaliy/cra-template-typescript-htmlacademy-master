@@ -1,4 +1,4 @@
-function IconContainerComponent () {
+function IconContainer () {
   return (
     <div className="visually-hidden" data-testid="icon-container">
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
@@ -80,5 +80,5 @@ function IconContainerComponent () {
   );
 }
 
-export {IconContainerComponent};
+export {IconContainer};
 

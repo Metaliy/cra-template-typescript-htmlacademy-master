@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { TabName } from '../../consts/const';
 import { CameraType } from '../../types/server-data-types';
 
-type ProductTabsComponentProps = {
+type ProductTabsProps = {
   selectedCamera: CameraType
 }
 
-function ProductTabsComponent ({selectedCamera}:ProductTabsComponentProps) {
+function ProductTabs ({selectedCamera}:ProductTabsProps) {
 
   const {vendorCode, category, type, level, description} = selectedCamera;
 
@@ -46,4 +46,4 @@ function ProductTabsComponent ({selectedCamera}:ProductTabsComponentProps) {
   );
 }
 
-export {ProductTabsComponent};
+export {ProductTabs};

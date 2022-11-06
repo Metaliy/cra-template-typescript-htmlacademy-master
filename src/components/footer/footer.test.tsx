@@ -1,10 +1,10 @@
-import { FooterComponent } from './footer';
+import { Footer } from './footer';
 import { screen } from '@testing-library/react';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 
-describe('Footer Component', () => {
+describe('Footer ', () => {
   it('should render "Footer component"', () => {
-    renderFakeApp(<FooterComponent />, {});
+    renderFakeApp(<Footer />, {});
 
     expect(screen.getByTestId('footer')).toBeInTheDocument();
   });

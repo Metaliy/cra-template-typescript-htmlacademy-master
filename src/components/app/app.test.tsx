@@ -16,25 +16,29 @@ const fakePromoCamera = getFakePromoCamera();
 
 
 const mockState = {
-  [NameSpace.CatalogData]: {
+  [NameSpace.Cameras]: {
     cameras: fakeCameraList,
     isCamerasListLoading: LoadingStatus.Fulfilled,
-    promoCamera: fakePromoCamera,
-    isPromoCameraLoading: LoadingStatus.Fulfilled
-  },
-  [NameSpace.CatalogProcess]: {
-    currentPage: 1
-  },
-  [NameSpace.ProductData]: {
     selectedCamera: fakeCamera,
     isSelectedCameraLoading: LoadingStatus.Fulfilled,
     similarCameras: fakesimilarCameras,
     isSimilarCamerasLoading: LoadingStatus.Fulfilled,
+    camerasCount: 15
+  },
+  [NameSpace.Reviews]: {
     reviewsList: fakeReviewList,
     isReviewsListLoading: LoadingStatus.Fulfilled,
+    reviewSentStatus: LoadingStatus.Initial,
   },
-  [NameSpace.ProductProcess]: {
-    reviewSentStatus: false,
+  [NameSpace.Promo]: {
+    promoCamera: fakePromoCamera,
+    isPromoCameraLoading: LoadingStatus.Fulfilled
+  },
+  [NameSpace.Catalog]: {
+    currentPage: 1
+  },
+  [NameSpace.Product]: {
+    reviewModalOpenedStatus: false
   }
 };
 
@@ -43,13 +47,19 @@ const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
 
 const store = mockStore({
-  [NameSpace.ProductData]: {
+  [NameSpace.Cameras]: {
     selectedCamera: getFakeCamera(),
     similarCameras: [getFakeCamera()],
+    camerasCount: 15
+  },
+  [NameSpace.Reviews]: {
     reviewsList: [getFakeCamerasReview()]
   },
-  [NameSpace.CatalogProcess]: {
+  [NameSpace.Catalog]: {
     currentPage: 1
+  },
+  [NameSpace.Product]: {
+    reviewModalOpenedStatus: false
   }
 });
 

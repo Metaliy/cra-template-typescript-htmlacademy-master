@@ -1,4 +1,4 @@
-function CatalogFilterComponent () {
+function CatalogFilter () {
   return (
     <div className="catalog__aside" data-testid="catalog-filter">
       <div className="catalog-filter">
@@ -99,4 +99,4 @@ function CatalogFilterComponent () {
   );
 }
 
-export {CatalogFilterComponent};
+export {CatalogFilter};

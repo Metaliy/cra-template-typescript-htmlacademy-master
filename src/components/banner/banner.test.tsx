@@ -1,22 +1,22 @@
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { getFakePromoCamera } from '../../mock/mock';
-import { BannerComponent } from './banner';
+import { Banner } from './banner';
 import { screen } from '@testing-library/react';
 import { NameSpace } from '../../consts/const';
 
 export const fakePromoCamera = getFakePromoCamera();
 
 const mockState = {
-  [NameSpace.CatalogData]: {
+  [NameSpace.Promo]: {
     promoCamera: fakePromoCamera
   }
 
 };
 
 
-describe('Banner Component', () => {
+describe('Banner ', () => {
   it('should render correctly', () => {
-    renderFakeApp(<BannerComponent />, {
+    renderFakeApp(<Banner />, {
       initialState: mockState
     });
 

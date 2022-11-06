@@ -1,12 +1,12 @@
 
-type RatingComponentProps ={
+type RatingProps ={
   maxRating: number,
   rating: number,
   reviewCount?: number,
   isReview?: boolean
 }
 
-function RatingComponent({ maxRating, rating, reviewCount, isReview}: RatingComponentProps):JSX.Element {
+function Rating({ maxRating, rating, reviewCount, isReview}: RatingProps):JSX.Element {
   const stars = [];
   let starId = 1;
   for (let i = 0; i < rating; i++) {
@@ -44,4 +44,4 @@ function RatingComponent({ maxRating, rating, reviewCount, isReview}: RatingComp
   );
 }
 
-export {RatingComponent};
+export {Rating};

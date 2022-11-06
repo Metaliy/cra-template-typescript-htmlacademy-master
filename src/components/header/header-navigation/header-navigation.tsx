@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 
-function HeaderNavigationComponent () {
+function HeaderNavigation () {
   return (
     <nav className="main-nav header__main-nav" data-testid="main-nav">
       <ul className="main-nav__list">
@@ -18,4 +18,4 @@ function HeaderNavigationComponent () {
   );
 }
 
-export {HeaderNavigationComponent};
+export {HeaderNavigation};

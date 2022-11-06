@@ -1,21 +1,23 @@
 
 import { useEffect, useRef } from 'react';
-import { BannerComponent } from '../../components/banner/banner';
-import { BreadcrumbsComponent } from '../../components/breadcrumbs/breadcrumbs';
-import { CatalogFilterComponent } from '../../components/catalog-filter/catalog-filter';
-import { CatalogSortComponent } from '../../components/catalog-sort/catalog-sort';
-import { FooterComponent } from '../../components/footer/footer';
-import { HeaderComponent } from '../../components/header/header';
-import { IconContainerComponent } from '../../components/icon-container/icon-container';
-import { LoaderComponent } from '../../components/loading-screen/loading-screen';
+import { Banner } from '../../components/banner/banner';
+import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
+import { CatalogFilter } from '../../components/catalog-filter/catalog-filter';
+import { CatalogSort } from '../../components/catalog-sort/catalog-sort';
+import { Footer } from '../../components/footer/footer';
+import { Header } from '../../components/header/header';
+import { IconContainer } from '../../components/icon-container/icon-container';
+import { Loader } from '../../components/loading-screen/loading-screen';
 
-import { PaginationComponent } from '../../components/pagination/pagination';
-import { ProductCardListComponent } from '../../components/product-card-list/product-card-list';
+import { Pagination } from '../../components/pagination/pagination';
+import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { AppPageNames, LoadingStatus } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { fetchCamerasAction, fetchPromoCameraAction } from '../../store/api-actions/catalog-api/catalog-api';
-import { getCameras, getCamerasListLoadingStatus, getPromoCameraListLoadingStatus } from '../../store/catalog-data/selectors';
-import { getCurrentPage } from '../../store/catalog-process/selectors';
+import { getCameras, getCamerasListLoadingStatus } from '../../store/cameras-slice/selectors';
+import { getCurrentPage } from '../../store/catalog-slice/selectors';
+import { getPromoCameraListLoadingStatus } from '../../store/promo-slice/selectors';
+
 
 function CatalogPage():JSX.Element {
 
@@ -27,24 +29,23 @@ function CatalogPage():JSX.Element {
 
   useEffect(() => {
     dispatch(fetchCamerasAction(currentPage));
-
   }, [dispatch, currentPage]);
 
   useEffect(() => {
     dispatch(fetchPromoCameraAction());
   }, [dispatch]);
 
-  const isCamerasLoading = useAppSelector(getCamerasListLoadingStatus);
-  const isPromoCameraLoading = useAppSelector(getPromoCameraListLoadingStatus);
+  const camerasLoadingStatus = useAppSelector(getCamerasListLoadingStatus);
+  const promoCameraLoadingStatus = useAppSelector(getPromoCameraListLoadingStatus);
 
 
-  if((isPromoCameraLoading === LoadingStatus.Initial ||
-    isCamerasLoading === LoadingStatus.Initial ||
-    isPromoCameraLoading === LoadingStatus.Pending ||
-    isCamerasLoading === LoadingStatus.Pending) &&
+  if((promoCameraLoadingStatus === LoadingStatus.Initial ||
+    camerasLoadingStatus === LoadingStatus.Initial ||
+    promoCameraLoadingStatus === LoadingStatus.Pending ||
+    camerasLoadingStatus === LoadingStatus.Pending) &&
     !isRendered.current) {
     return (
-      <LoaderComponent />
+      <Loader />
     );
   }
 
@@ -52,31 +53,31 @@ function CatalogPage():JSX.Element {
 
   return (
     <>
-      <IconContainerComponent />
+      <IconContainer />
       <div className="wrapper">
 
-        <HeaderComponent />
+        <Header />
 
         <main>
 
-          <BannerComponent />
+          <Banner />
 
           <div className="page-content">
-            <BreadcrumbsComponent pageName={AppPageNames.Catalog} />
+            <Breadcrumbs pageName={AppPageNames.Catalog} />
             <section className="catalog">
               <div className="container">
                 <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
                 <div className="page-content__columns">
 
-                  <CatalogFilterComponent />
+                  <CatalogFilter />
 
                   <div className="catalog__content">
 
-                    <CatalogSortComponent />
+                    <CatalogSort />
 
-                    <ProductCardListComponent camerasList={camerasList}/>
+                    <ProductCardList camerasList={camerasList}/>
 
-                    <PaginationComponent />
+                    <Pagination />
 
                   </div>
                 </div>
@@ -84,7 +85,7 @@ function CatalogPage():JSX.Element {
             </section>
           </div>
         </main>
-        <FooterComponent />
+        <Footer />
       </div>
     </>
   );

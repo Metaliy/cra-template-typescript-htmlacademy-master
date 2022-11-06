@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { HeaderNavigationComponent } from './header-navigation/header-navigation';
-import { SearchFormComponent } from './search-form/search-form';
+import { HeaderNavigation } from './header-navigation/header-navigation';
+import { SearchForm } from './search-form/search-form';
 
-function HeaderComponent () {
+function Header () {
   return (
     <header className="header" id="header" data-testid="header">
       <div className="container">
@@ -11,9 +11,9 @@ function HeaderComponent () {
             <use xlinkHref="#icon-logo"></use>
           </svg>
         </Link>
-        <HeaderNavigationComponent />
+        <HeaderNavigation />
         <div className="form-search">
-          <SearchFormComponent />
+          <SearchForm />
         </div>
         <a className="header__basket-link" href="#">
           <svg width="16" height="16" aria-hidden="true">
@@ -25,4 +25,4 @@ function HeaderComponent () {
   );
 }
 
-export {HeaderComponent};
+export {Header};

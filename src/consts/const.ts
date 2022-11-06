@@ -1,13 +1,14 @@
 
 
 export enum NameSpace {
-  CatalogData = 'CatalogData',
-  CatalogProcess = 'CatalogProcess',
-  ProductData = 'ProductData',
-  ProductProcess = 'ProductProcess'
+  Cameras = 'Cameras',
+  Promo = 'Promo',
+  Reviews = 'Reviews',
+  Catalog = 'Catalog',
+  Product = 'Product'
 }
 
-export const CAMERAS_COUNT = 40;
+export const CAMERAS_ON_PAGE = '9';
 
 export const MAX_RATING = 5;
 

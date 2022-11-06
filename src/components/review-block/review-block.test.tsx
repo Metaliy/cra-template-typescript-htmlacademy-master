@@ -1,26 +1,47 @@
+import { configureMockStore } from '@jedmao/redux-mock-store';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { NameSpace } from '../../consts/const';
+import thunk from 'redux-thunk';
+import { LoadingStatus, NameSpace } from '../../consts/const';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { getFakeCamerasReview } from '../../mock/mock';
-import { ReviewBlockComponent } from './review-block';
+import { createAPI } from '../../services/api';
+import { ReviewBlock } from './review-block';
 
-
-const modalStatusHandler = jest.fn();
 
 const fakeReviewList = [getFakeCamerasReview(), getFakeCamerasReview(), getFakeCamerasReview(), getFakeCamerasReview()];
 
 const mockState = {
-  [NameSpace.ProductData]: {
+  [NameSpace.Reviews]: {
     reviewsList: fakeReviewList,
-  }
+    reviewSentStatus: LoadingStatus.Initial,
+  },
+  [NameSpace.Product]: {
+    reviewModalOpenedStatus: false,
+  },
 
 };
+
+const api = createAPI();
+const middlewares = [thunk.withExtraArgument(api)];
+const mockStore = configureMockStore(middlewares);
+const store = mockStore({
+  [NameSpace.Reviews]: {
+    reviewSentStatus: LoadingStatus.Initial,
+    reviewsList: fakeReviewList,
+  },
+  [NameSpace.Cameras]: {
+    selectedCamera: getFakeCamerasReview().id
+  },
+  [NameSpace.Product]: {
+    reviewModalOpenedStatus: false
+  },
+});
 
 
 describe('Review block component', () => {
   it('should render "Review block component"', () => {
-    renderFakeApp(<ReviewBlockComponent modalStatusHandler={modalStatusHandler} isReviewModalOpenStatus={false}/>, {
+    renderFakeApp(<ReviewBlock/>, {
       initialState:mockState
     });
 
@@ -28,16 +49,17 @@ describe('Review block component', () => {
   });
 
   it('should click on modalStatusHandler', async () => {
-    renderFakeApp(<ReviewBlockComponent modalStatusHandler={modalStatusHandler} isReviewModalOpenStatus={false}/>, {
-      initialState:mockState
+    renderFakeApp(<ReviewBlock/>, {
+      mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('modal-open-button'));
-    expect(modalStatusHandler).toBeCalledTimes(1);
+    const [action] = store.getActions();
+    expect(action.type).toBe('Product/setReviewModalOpenedStatus');
   });
 
   it('should click on show-more-reviews-button', async () => {
-    renderFakeApp(<ReviewBlockComponent modalStatusHandler={modalStatusHandler} isReviewModalOpenStatus={false}/>, {
+    renderFakeApp(<ReviewBlock/>, {
       initialState:mockState
     });
 

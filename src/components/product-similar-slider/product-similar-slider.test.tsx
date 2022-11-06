@@ -3,13 +3,13 @@ import userEvent from '@testing-library/user-event';
 import { LoadingStatus, NameSpace } from '../../consts/const';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { getUidCamerasList } from '../../mock/mock';
-import { ProductSimilarSliderComponent } from './product-similar-slider';
+import { ProductSimilarSlider } from './product-similar-slider';
 
 const similarCameras = getUidCamerasList(4);
 
 
 const mockState = {
-  [NameSpace.ProductData]: {
+  [NameSpace.Cameras]: {
     similarCameras: similarCameras,
     isSimilarCamerasListLoading: LoadingStatus.Fulfilled
   }
@@ -19,7 +19,7 @@ const mockState = {
 
 describe('Product similar slider component', () => {
   it('should render "Product similar slider component"', () => {
-    renderFakeApp(<ProductSimilarSliderComponent />, {
+    renderFakeApp(<ProductSimilarSlider />, {
       initialState: mockState
     });
 
@@ -28,7 +28,7 @@ describe('Product similar slider component', () => {
   });
 
   it('should click on next-button', async () => {
-    renderFakeApp(<ProductSimilarSliderComponent />, {
+    renderFakeApp(<ProductSimilarSlider />, {
       initialState: mockState
     });
 
@@ -40,7 +40,7 @@ describe('Product similar slider component', () => {
   });
 
   it('should click on prev-button after click on next-button', async () => {
-    renderFakeApp(<ProductSimilarSliderComponent />, {
+    renderFakeApp(<ProductSimilarSlider />, {
       initialState: mockState
     });
 

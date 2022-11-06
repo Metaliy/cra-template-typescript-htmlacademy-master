@@ -1,25 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../consts/const';
 import { CameraType } from '../../types/server-data-types';
-import { ProductDataType } from '../../types/state-types';
-import { fetchSelectedCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../api-actions/product-api/product-api';
+import { CamerasSliceType, } from '../../types/state-types';
+import { fetchCamerasAction } from '../api-actions/catalog-api/catalog-api';
+import { fetchSelectedCameraAction, fetchSimilarCamerasAction } from '../api-actions/product-api/product-api';
 
 
-export const initialState: ProductDataType = {
+export const initialState: CamerasSliceType = {
+  cameras: [],
+  isCamerasListLoading: LoadingStatus.Initial,
   selectedCamera: {} as CameraType,
   isSelectedCameraLoading: LoadingStatus.Initial,
   similarCameras: [],
   isSimilarCamerasLoading: LoadingStatus.Initial,
-  reviewsList: [],
-  isReviewsListLoading: LoadingStatus.Initial
+  camerasCount: 0
 };
 
-export const productData = createSlice({
-  name: NameSpace.ProductData,
+export const camerasSlice = createSlice({
+  name: NameSpace.Cameras,
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(fetchCamerasAction.pending, (state) => {
+        state.isCamerasListLoading = LoadingStatus.Pending;
+      })
+      .addCase(fetchCamerasAction.fulfilled, (state, action) => {
+        state.cameras = action.payload.responsedData;
+        state.camerasCount = Number(action.payload.responsedDataCount);
+        state.isCamerasListLoading = LoadingStatus.Fulfilled;
+      })
+      .addCase(fetchCamerasAction.rejected, (state) => {
+        state.isCamerasListLoading = LoadingStatus.Rejected;
+      })
       .addCase(fetchSelectedCameraAction.pending, (state) => {
         state.isSelectedCameraLoading = LoadingStatus.Pending;
       })
@@ -39,16 +52,6 @@ export const productData = createSlice({
       })
       .addCase(fetchSimilarCamerasAction.rejected, (state) => {
         state.isSimilarCamerasLoading = LoadingStatus.Rejected;
-      })
-      .addCase(fetchCamerasReviewsAction.pending, (state) => {
-        state.isReviewsListLoading = LoadingStatus.Pending;
-      })
-      .addCase(fetchCamerasReviewsAction.fulfilled, (state, action) => {
-        state.reviewsList = action.payload;
-        state.isReviewsListLoading = LoadingStatus.Fulfilled;
-      })
-      .addCase(fetchCamerasReviewsAction.rejected, (state) => {
-        state.isReviewsListLoading = LoadingStatus.Rejected;
       });
   }
 });

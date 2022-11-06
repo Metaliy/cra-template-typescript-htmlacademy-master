@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../consts/const';
-import { CatalogProcessType } from '../../types/state-types';
+import { CatalogSliceType } from '../../types/state-types';
 
-const initialState: CatalogProcessType = {
+const initialState: CatalogSliceType = {
   currentPage: 1
 };
 
-export const catalogProcess = createSlice ({
-  name: NameSpace.CatalogProcess,
+export const catalogSlice = createSlice ({
+  name: NameSpace.Catalog,
   initialState,
   reducers: {
     changePage: (state, action) => {
@@ -16,4 +16,4 @@ export const catalogProcess = createSlice ({
   }
 });
 
-export const {changePage} = catalogProcess.actions;
+export const {changePage} = catalogSlice.actions;

@@ -8,7 +8,7 @@ import { createAPI } from '../../../services/api';
 import { getUidCamerasList } from '../../../mock/mock';
 import { State } from '../../../types/state-types';
 import { fetchCamerasAction, fetchPromoCameraAction } from './catalog-api';
-import { ITEMS_PER_PAGE } from '../../../consts/const';
+import { CAMERAS_ON_PAGE } from '../../../consts/const';
 
 const mockCameras = getUidCamerasList(14);
 const currentPage = 1;
@@ -26,18 +26,17 @@ describe('Catalog api', () => {
 
   it('should dispatch fetchCamerasAction when GET /cameras', async () => {
     mockAPI
-      .onGet(`/cameras?_start=${(currentPage * ITEMS_PER_PAGE) - ITEMS_PER_PAGE}&_end=${currentPage * ITEMS_PER_PAGE}`, {
+      .onGet(`/cameras?_page=${currentPage}&_limit=${CAMERAS_ON_PAGE}`, {
       })
-      .reply(200, mockCameras);
+      .reply(200, mockCameras, {
+        'x-total-count': 14
+      });
 
     const store = mockStore();
 
     await store.dispatch(fetchCamerasAction(1));
 
     const actions = store.getActions().map(({type}) => type);
-
-    // eslint-disable-next-line no-console
-    console.log(store.getState());
 
     expect(actions).toEqual([
       fetchCamerasAction.pending.type,
@@ -47,7 +46,7 @@ describe('Catalog api', () => {
 
   it('should dispatch fetchCamerasAction when GET /cameras error', async () => {
     mockAPI
-      .onGet(`/cameras?_start=${(currentPage * ITEMS_PER_PAGE) - ITEMS_PER_PAGE}&_end=${currentPage * ITEMS_PER_PAGE}`, {
+      .onGet(`/cameras?_page=${currentPage}&_limit=${CAMERAS_ON_PAGE}`, {
       })
       .reply(300, mockCameras);
 
@@ -57,8 +56,6 @@ describe('Catalog api', () => {
 
     const actions = store.getActions().map(({type}) => type);
 
-    // eslint-disable-next-line no-console
-    console.log(store.getState());
 
     expect(actions).toEqual([
       fetchCamerasAction.pending.type,
@@ -95,9 +92,6 @@ describe('Catalog api', () => {
     await store.dispatch(fetchPromoCameraAction());
 
     const actions = store.getActions().map(({type}) => type);
-
-    // eslint-disable-next-line no-console
-    console.log(store.getState());
 
     expect(actions).toEqual([
       fetchPromoCameraAction.pending.type,

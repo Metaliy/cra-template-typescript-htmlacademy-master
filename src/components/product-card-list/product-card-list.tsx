@@ -1,20 +1,20 @@
 import { CameraType } from '../../types/server-data-types';
-import { ProductCardComponent } from '../product-card/product-card';
+import { ProductCard } from '../product-card/product-card';
 
-type ProductCardListComponentProps = {
+type ProductCardListProps = {
   camerasList: CameraType[]
 }
 
-function ProductCardListComponent ({camerasList}:ProductCardListComponentProps) {
+function ProductCardList ({camerasList}:ProductCardListProps) {
 
 
   return (
     <div className="cards catalog__cards" data-testid="product-card-list">
       {camerasList.map((camera) => (
-        <ProductCardComponent camera={camera} key={camera.id} />
+        <ProductCard camera={camera} key={camera.id} />
       ))}
     </div>
   );
 }
 
-export {ProductCardListComponent};
+export {ProductCardList};

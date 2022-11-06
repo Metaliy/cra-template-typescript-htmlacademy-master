@@ -1,4 +1,4 @@
-function CatalogSortComponent () {
+function CatalogSort () {
   return (
     <div className="catalog-sort" data-testid="catalog-sort">
       <form action="#">
@@ -39,4 +39,4 @@ function CatalogSortComponent () {
 
 }
 
-export {CatalogSortComponent};
+export {CatalogSort};

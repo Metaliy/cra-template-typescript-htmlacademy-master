@@ -57,12 +57,12 @@ export const fetchCamerasReviewsAction = createAsyncThunk<ReviewType[], number, 
   },
 );
 
-export const postCameraReview = createAsyncThunk<void, PostReviewType, {
+export const postCameraReviewAction = createAsyncThunk<void, PostReviewType, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
-  'data/postCameraReview',
+  'data/postCameraReviewAction',
   async (review, {extra: api}) => {
     try {
       await api.post('/reviews', review);

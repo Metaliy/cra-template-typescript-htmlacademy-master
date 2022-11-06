@@ -1,10 +1,10 @@
 import './loading-screen.css';
 
-function LoaderComponent ():JSX.Element {
+function Loader ():JSX.Element {
   return (
     <div className="spinner" data-testid="loader-component"></div>
   );
 }
 
-export {LoaderComponent};
+export {Loader};
 

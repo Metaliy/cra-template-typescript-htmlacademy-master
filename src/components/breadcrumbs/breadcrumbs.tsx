@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import { AppPageNames } from '../../consts/const';
 
-type BreadcrumbsComponentProps = {
+type BreadcrumbsProps = {
   pageName: {name: string; path: string;},
   productName?: string
 }
 
 
-function BreadcrumbsComponent({pageName, productName}:BreadcrumbsComponentProps):JSX.Element {
+function Breadcrumbs({pageName, productName}:BreadcrumbsProps):JSX.Element {
 
   const generatePath = () => {
     const pathNames = [AppPageNames.Main];
@@ -44,4 +44,4 @@ function BreadcrumbsComponent({pageName, productName}:BreadcrumbsComponentProps)
   );
 }
 
-export {BreadcrumbsComponent};
+export {Breadcrumbs};

@@ -5,7 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import App from './components/app/app';
 import { store } from './store';
 import 'react-toastify/dist/ReactToastify.css';
-import browserHistory from './components/app/browser-history';
+import browserHistory from './browser-history';
 import HistoryRouter from './components/history-router/history-router';
 
 const root = ReactDOM.createRoot(

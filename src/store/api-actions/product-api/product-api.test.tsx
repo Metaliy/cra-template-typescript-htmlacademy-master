@@ -7,7 +7,7 @@ import {configureMockStore} from '@jedmao/redux-mock-store';
 import { createAPI } from '../../../services/api';
 import { getFakeCamera, getFakeCamerasReview, getFakePostedReview, getUidCamerasList } from '../../../mock/mock';
 import { State } from '../../../types/state-types';
-import { fetchCamerasReviewsAction, fetchSelectedCameraAction, fetchSimilarCamerasAction, postCameraReview } from './product-api';
+import { fetchCamerasReviewsAction, fetchSelectedCameraAction, fetchSimilarCamerasAction, postCameraReviewAction } from './product-api';
 
 const fakeCamera = getFakeCamera();
 const fakeSimilarCamerasList = getUidCamerasList(3);
@@ -140,38 +140,38 @@ describe('Product api', () => {
     ]);
   });
 
-  it('should dispatch postCameraReview when POST /reviews', async () => {
+  it('should dispatch postCameraReviewAction when POST /reviews', async () => {
     mockAPI
       .onPost('/reviews', fakePostedReview)
       .reply(200);
 
     const store = mockStore();
 
-    await store.dispatch(postCameraReview(fakePostedReview));
+    await store.dispatch(postCameraReviewAction(fakePostedReview));
 
     const actions = store.getActions().map(({type}) => type);
 
 
     expect(actions).toEqual([
-      postCameraReview.pending.type,
-      postCameraReview.fulfilled.type
+      postCameraReviewAction.pending.type,
+      postCameraReviewAction.fulfilled.type
     ]);
   });
 
-  it('should dispatch postCameraReview when POST /reviews error', async () => {
+  it('should dispatch postCameraReviewAction when POST /reviews error', async () => {
     mockAPI
       .onPost('/reviews', fakePostedReview);
 
     const store = mockStore();
 
-    await store.dispatch(postCameraReview(fakeReview));
+    await store.dispatch(postCameraReviewAction(fakeReview));
 
     const actions = store.getActions().map(({type}) => type);
 
 
     expect(actions).toEqual([
-      postCameraReview.pending.type,
-      postCameraReview.rejected.type
+      postCameraReviewAction.pending.type,
+      postCameraReviewAction.rejected.type
     ]);
   });
 });

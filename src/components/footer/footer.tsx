@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/const';
 
-function FooterComponent ():JSX.Element {
+function Footer ():JSX.Element {
   return (
     <footer className="footer" data-testid="footer">
       <div className="container">
@@ -94,4 +94,4 @@ function FooterComponent ():JSX.Element {
   );
 }
 
-export {FooterComponent};
+export {Footer};

@@ -1,14 +1,16 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { NameSpace } from '../consts/const';
-import { catalogData } from './catalog-data/catalog-data';
-import { catalogProcess } from './catalog-process/catalog-process';
-import { productData } from './product-data/product-data';
-import { productProcess } from './product-process/product-process';
+import { camerasSlice } from './cameras-slice/cameras-slice';
+import { catalogSlice } from './catalog-slice/catalog-slice';
+import { productSlice } from './product-slice/product-slice';
+import { promoSlice } from './promo-slice/promo-slice';
+import { reviewsSlice } from './reviews-slice/reviews-slice';
 
 export const rootReducer = combineReducers({
-  [NameSpace.CatalogData]: catalogData.reducer,
-  [NameSpace.CatalogProcess]: catalogProcess.reducer,
-  [NameSpace.ProductData]: productData.reducer,
-  [NameSpace.ProductProcess]: productProcess.reducer
+  [NameSpace.Cameras]: camerasSlice.reducer,
+  [NameSpace.Promo]: promoSlice.reducer,
+  [NameSpace.Reviews]: reviewsSlice.reducer,
+  [NameSpace.Catalog]: catalogSlice.reducer,
+  [NameSpace.Product]: productSlice.reducer,
 });
 

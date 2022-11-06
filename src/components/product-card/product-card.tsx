@@ -2,14 +2,15 @@ import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, MAX_RATING } from '../../consts/const';
 import { CameraType } from '../../types/server-data-types';
 import { getPriceWitchSpaces } from '../../utils/utils';
-import { RatingComponent } from '../rating/rating';
+import { ProductRating } from '../rating/product-rating/product-rating';
 
-type ProductCardComponentPropsType = {
+
+type ProductCardPropsType = {
   camera: CameraType,
   isActive?: boolean
 }
 
-function ProductCardComponent ({camera, isActive}:ProductCardComponentPropsType):JSX.Element {
+function ProductCard ({camera, isActive}:ProductCardPropsType):JSX.Element {
   const {id, name, price, rating, reviewCount, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x} = camera;
 
   return (
@@ -21,7 +22,7 @@ function ProductCardComponent ({camera, isActive}:ProductCardComponentPropsType)
         </picture>
       </div>
       <div className="product-card__info">
-        <RatingComponent maxRating={MAX_RATING} rating={rating} reviewCount={reviewCount} />
+        <ProductRating maxRating={MAX_RATING} rating={rating} reviewCount={reviewCount} />
 
         <p className="product-card__title">
           {name}
@@ -40,4 +41,4 @@ function ProductCardComponent ({camera, isActive}:ProductCardComponentPropsType)
   );
 }
 
-export {ProductCardComponent};
+export {ProductCard};

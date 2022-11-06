@@ -1,21 +1,21 @@
 import { AppPageNames, AppRoute, NameSpace } from '../../consts/const';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { getFakeCamera } from '../../mock/mock';
-import { BreadcrumbsComponent } from './breadcrumbs';
+import { Breadcrumbs } from './breadcrumbs';
 import { screen } from '@testing-library/react';
 
 const fakeCamera = getFakeCamera();
 
 const mockState = {
-  [NameSpace.ProductData]: {
+  [NameSpace.Cameras]: {
     selectedCamera: fakeCamera,
   }
 
 };
 
-describe('Breadcrumbs Component', () => {
+describe('Breadcrumbs ', () => {
   it('should render correctly when user navigate to "Catalog page"', () => {
-    renderFakeApp(<BreadcrumbsComponent pageName={AppPageNames.Catalog} />, {
+    renderFakeApp(<Breadcrumbs pageName={AppPageNames.Catalog} />, {
       initialRoute: AppRoute.Catalog,
       initialState: mockState
     });
@@ -25,7 +25,7 @@ describe('Breadcrumbs Component', () => {
   });
 
   it('should render correctly when user navigate to "Product page"', () => {
-    renderFakeApp(<BreadcrumbsComponent pageName={AppPageNames.Product} productName={fakeCamera.name} />, {
+    renderFakeApp(<Breadcrumbs pageName={AppPageNames.Product} productName={fakeCamera.name} />, {
       initialRoute: AppRoute.Product,
       initialState: mockState
     });

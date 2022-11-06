@@ -6,26 +6,36 @@ export type State = ReturnType<typeof store.getState>;
 
 export type AppDispatch = typeof store.dispatch;
 
-export type CatalogDataType = {
+export type CamerasSliceType = {
   cameras: CameraType[],
   isCamerasListLoading: LoadingStatus,
-  promoCamera: PromoCameraType,
-  isPromoCameraLoading: LoadingStatus
-}
-
-export type CatalogProcessType = {
-  currentPage: number
-}
-
-export type ProductProcessType = {
-  reviewSentStatus: LoadingStatus,
-}
-
-export type ProductDataType = {
   selectedCamera: CameraType,
   isSelectedCameraLoading: LoadingStatus,
   similarCameras: CameraType[],
   isSimilarCamerasLoading: LoadingStatus,
+  camerasCount: number
+}
+
+export type PromoSliceType = {
+  promoCamera: PromoCameraType,
+  isPromoCameraLoading: LoadingStatus
+}
+
+export type ReviewsSliceType = {
   reviewsList: ReviewType[],
-  isReviewsListLoading: LoadingStatus
+  isReviewsListLoading: LoadingStatus,
+  reviewSentStatus: LoadingStatus,
+}
+
+export type CatalogSliceType = {
+  currentPage: number
+}
+
+export type FetchCamerasActionResponsedType = {
+  responsedDataCount: number;
+  responsedData: CameraType[];
+}
+
+export type ProductSliceType = {
+  reviewModalOpenedStatus: boolean
 }

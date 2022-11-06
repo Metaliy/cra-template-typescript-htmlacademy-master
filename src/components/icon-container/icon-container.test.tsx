@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
-import { IconContainerComponent } from './icon-container';
+import { IconContainer } from './icon-container';
 
 
 describe('Icon container component', () => {
   it('should render "Icon container component"', () => {
-    renderFakeApp(<IconContainerComponent />, {});
+    renderFakeApp(<IconContainer />, {});
 
     expect(screen.getByTestId('icon-container')).toBeInTheDocument();
   });

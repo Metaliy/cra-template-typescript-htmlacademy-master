@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { VISIBLE_CARD_COUNT } from '../../consts/const';
 import { useAppSelector } from '../../hooks/hooks';
-import { getSimilarCameras } from '../../store/product-data/selectors';
-import { ProductCardComponent } from '../product-card/product-card';
+import { getSimilarCameras } from '../../store/cameras-slice/selectors';
+import { ProductCard } from '../product-card/product-card';
 
-function ProductSimilarSliderComponent () {
+function ProductSimilarSlider () {
 
   const [visibleCardStartIndex, setVisibleCardIndex] = useState(0);
 
@@ -21,7 +21,7 @@ function ProductSimilarSliderComponent () {
         <div className="product-similar__slider">
           <div className="product-similar__slider-list">
             {similarCamerasList.slice(visibleCardStartIndex, visibleCardEndIndex).map((camera) => (
-              <ProductCardComponent camera={camera} key={camera.id} isActive />
+              <ProductCard camera={camera} key={camera.id} isActive />
             ))}
           </div>
           <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" data-testid="prev-button" onClick={() => setVisibleCardIndex(visibleCardStartIndex - VISIBLE_CARD_COUNT)} disabled={visibleCardStartIndex === 0}>
@@ -40,4 +40,4 @@ function ProductSimilarSliderComponent () {
   );
 }
 
-export {ProductSimilarSliderComponent};
+export {ProductSimilarSlider};
