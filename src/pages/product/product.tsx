@@ -17,8 +17,8 @@ import { getPriceWitchSpaces } from '../../utils/utils';
 import { RemoveScroll } from 'react-remove-scroll';
 
 import { fetchSelectedCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../../store/api-actions/product-api/product-api';
-import { getSelectedCamera, getSelectedCameraLoadingStatus, getSimilarCamerasListLoadingStatus } from '../../store/cameras-slice/selectors';
-import { getReviewsListLoadingStatus } from '../../store/reviews-slice/selectors';
+import { getSelectedCamera, getSelectedCameraLoadingStatus, getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../store/cameras-slice/selectors';
+import { getReviewSentStatus, getReviewsList, getReviewsListLoadingStatus } from '../../store/reviews-slice/selectors';
 import { getReviewModalOpenedStatus } from '../../store/product-slice/selectors';
 
 export function ProductPage():JSX.Element {
@@ -35,12 +35,16 @@ export function ProductPage():JSX.Element {
   }, [dispatch, productId]);
 
   const selectedCamera = useAppSelector(getSelectedCamera);
+  const similarCamerasList = useAppSelector(getSimilarCameras);
+  const reviewsList = useAppSelector(getReviewsList);
+  const reviewSentStatus = useAppSelector(getReviewSentStatus);
 
   const reviewModalOpenedStatus = useAppSelector(getReviewModalOpenedStatus);
 
   const selectedCameraLoadingStatus = useAppSelector(getSelectedCameraLoadingStatus);
   const similarCamerasListLoadingStatus = useAppSelector(getSimilarCamerasListLoadingStatus);
   const reviewsListLoadingStatus = useAppSelector(getReviewsListLoadingStatus);
+
 
   if(selectedCameraLoadingStatus === LoadingStatus.Initial || selectedCameraLoadingStatus === LoadingStatus.Pending ||
     similarCamerasListLoadingStatus === LoadingStatus.Pending || similarCamerasListLoadingStatus === LoadingStatus.Initial ||
@@ -85,12 +89,12 @@ export function ProductPage():JSX.Element {
             <div className="page-content__section">
               <section className="product-similar">
                 <div className="container">
-                  <ProductSimilarSlider />
+                  <ProductSimilarSlider similarCamerasList={similarCamerasList} />
                 </div>
               </section>
             </div>
             <div className="page-content__section">
-              <ReviewBlock/>
+              <ReviewBlock reviewsList={reviewsList}/>
             </div>
           </div>
         </main>
@@ -102,10 +106,10 @@ export function ProductPage():JSX.Element {
         <FocusLock returnFocus={{ preventScroll: false }}>
           {reviewModalOpenedStatus ?
             <RemoveScroll>
-              <ReviewModal />
+              <ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={selectedCamera.id} />
             </RemoveScroll>
             :
-            <ReviewModal/>}
+            <ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={selectedCamera.id}/>}
 
         </FocusLock>
         <Footer />

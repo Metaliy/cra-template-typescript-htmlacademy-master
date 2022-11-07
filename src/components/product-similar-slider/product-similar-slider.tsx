@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import { VISIBLE_CARD_COUNT } from '../../consts/const';
-import { useAppSelector } from '../../hooks/hooks';
-import { getSimilarCameras } from '../../store/cameras-slice/selectors';
+import { CameraType } from '../../types/server-data-types';
 import { ProductCard } from '../product-card/product-card';
 
-function ProductSimilarSlider () {
+type ProductSimilarSliderProps = {
+  similarCamerasList: CameraType[]
+}
+
+function ProductSimilarSlider ({similarCamerasList}: ProductSimilarSliderProps) {
 
   const [visibleCardStartIndex, setVisibleCardIndex] = useState(0);
 
-  const similarCamerasList = useAppSelector(getSimilarCameras);
 
   const visibleCardEndIndex = visibleCardStartIndex + VISIBLE_CARD_COUNT;
 

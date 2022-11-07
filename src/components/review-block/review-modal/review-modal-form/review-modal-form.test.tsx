@@ -6,9 +6,12 @@ import thunk from 'redux-thunk';
 import { LoadingStatus, NameSpace } from '../../../../consts/const';
 import { createAPI } from '../../../../services/api';
 import { ReviewModalForm } from './review-modal-form';
-import { getFakeCamerasReview } from '../../../../mock/mock';
+import { getFakeCamera, getFakeCamerasReview } from '../../../../mock/mock';
 
 const fakeReviewList = [getFakeCamerasReview(), getFakeCamerasReview(), getFakeCamerasReview(), getFakeCamerasReview()];
+
+const reviewModalOpenedStatus = true;
+const cameraId = getFakeCamera().id;
 
 
 const api = createAPI();
@@ -20,7 +23,7 @@ const store = mockStore({
     reviewsList: fakeReviewList,
   },
   [NameSpace.Cameras]: {
-    selectedCamera: getFakeCamerasReview().id
+    selectedCamera: getFakeCamera().id
   },
   [NameSpace.Product]: {
     reviewModalOpenedStatus: true
@@ -29,20 +32,20 @@ const store = mockStore({
 
 describe('Review modal form component', () => {
   it('should render "Review modal form component"', () => {
-    renderFakeApp(<ReviewModalForm/>, {});
+    renderFakeApp(<ReviewModalForm reviewModalOpenedStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
     expect(screen.getByTestId('review-modal')).toBeInTheDocument();
   });
 
   it('should close review modal if user clicks on cross-btn', async () => {
-    renderFakeApp(<ReviewModalForm />, {});
+    renderFakeApp(<ReviewModalForm reviewModalOpenedStatus={reviewModalOpenedStatus} cameraId={cameraId} />, {});
 
     await userEvent.click(screen.getByTestId('cross-btn'));
 
   });
 
   it('should close review modal if user clicks on modal-overlay not sended', async () => {
-    renderFakeApp(<ReviewModalForm />, {});
+    renderFakeApp(<ReviewModalForm reviewModalOpenedStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
 
     await userEvent.click(screen.getByTestId('modal-overlay'));
@@ -50,7 +53,7 @@ describe('Review modal form component', () => {
   });
 
   it('should send empty review', async () => {
-    renderFakeApp(<ReviewModalForm/>, {
+    renderFakeApp(<ReviewModalForm reviewModalOpenedStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {
       mockStore: store
     });
 
@@ -62,7 +65,7 @@ describe('Review modal form component', () => {
 
 
   it('should close review modal if user press on esc button and rerivew sended', async () => {
-    renderFakeApp(<ReviewModalForm />, {});
+    renderFakeApp(<ReviewModalForm reviewModalOpenedStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
     await userEvent.type(screen.getByPlaceholderText(/Введите ваше имя/i), 'testtesttest');
     await userEvent.type(screen.getByPlaceholderText(/Главные недостатки товара/i), 'testtesttest');
@@ -75,7 +78,7 @@ describe('Review modal form component', () => {
   });
 
   it('should review correctly sended', async () => {
-    renderFakeApp(<ReviewModalForm />, {
+    renderFakeApp(<ReviewModalForm reviewModalOpenedStatus={reviewModalOpenedStatus} cameraId={cameraId} />, {
       mockStore:store
     });
 

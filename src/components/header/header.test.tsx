@@ -3,7 +3,7 @@ import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { Header } from './header';
 
 
-describe('Header ', () => {
+describe('Header component', () => {
   it('should render "Header component"', () => {
     renderFakeApp(<Header />, {});
 

@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { CatalogFilter } from './catalog-filter';
 
-describe('Catalog filter ', () => {
+describe('Catalog filter component', () => {
   it('should render "Catalog filter component"', () => {
     renderFakeApp(<CatalogFilter />, {});
 

@@ -1,11 +1,11 @@
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { ProductCardList } from './product-card-list';
 import { screen } from '@testing-library/react';
-import { getFakeCamera } from '../../mock/mock';
+import { getUidCamerasList } from '../../mock/mock';
 
-const fakeCamerasList = [getFakeCamera()];
+const fakeCamerasList = getUidCamerasList(4);
 
-describe('product card list ', () => {
+describe('product card list component', () => {
   it('should render correctly', () => {
     renderFakeApp(<ProductCardList camerasList={fakeCamerasList} />, {});
 

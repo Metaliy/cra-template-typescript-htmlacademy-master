@@ -3,11 +3,9 @@ import { renderFakeApp } from '../../mock/fake-app/fake-app';
 import { NotFoundPage } from './not-found';
 
 
-describe('Review card component', () => {
-  it('should render "Review card component"', () => {
-    renderFakeApp(<NotFoundPage/>, {
-      initialRoute: 'invalid-route'
-    });
+describe('Not found page', () => {
+  it('should render "Review card component', () => {
+    renderFakeApp(<NotFoundPage/>, {});
 
     expect(screen.getByTestId('not-found')).toBeInTheDocument();
   });

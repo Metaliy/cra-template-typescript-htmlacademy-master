@@ -13,6 +13,10 @@ import 'react-intersection-observer/test-utils';
 const fakeCameraList = [getFakeCamera(), getFakeCamera()];
 const fakePromoCamera = getFakePromoCamera();
 
+const currentPage = 1;
+const camerasCount = 20;
+const currentLastPage = 5;
+
 
 const firstPagemockState = {
   [NameSpace.Cameras]: {
@@ -40,7 +44,7 @@ const lastPagemockState = {
     promoCameraLoadingStatus: LoadingStatus.Fulfilled
   },
   [NameSpace.Catalog]: {
-    currentPage: 5,
+    currentPage: 3,
   }
 
 };
@@ -62,29 +66,16 @@ const store = mockStore({
   }
 });
 
-const storeLastPage = mockStore({
-  [NameSpace.Cameras]: {
-    cameras: [getFakeCamera()],
-    camerasCount: 20
-  },
-  [NameSpace.Promo]: {
-    promoCamera: getFakePromoCamera(),
-  },
-  [NameSpace.Catalog]: {
-    currentPage: 3
-  }
-});
-
 describe('Pagination component', () => {
   it('should render "Pagination component"', () => {
-    renderFakeApp(<Pagination />, {
+    renderFakeApp(<Pagination currentPage={currentPage} camerasCount={camerasCount} />, {
       initialState: firstPagemockState
     });
 
     expect(screen.getByTestId('pagination-component')).toBeInTheDocument();
   });
   it('should not render "back button" if user on first page', () => {
-    renderFakeApp(<Pagination />, {
+    renderFakeApp(<Pagination currentPage={currentPage} camerasCount={camerasCount} />, {
       initialRoute: generatePath(AppRoute.Catalog, {id: 'page_1'}),
       mockStore: store
     });
@@ -93,7 +84,7 @@ describe('Pagination component', () => {
   });
 
   it('should click next button', async () => {
-    renderFakeApp(<Pagination />, {
+    renderFakeApp(<Pagination currentPage={currentPage} camerasCount={camerasCount} />, {
       initialRoute: generatePath(AppRoute.Catalog, {id: 'page_1'}),
       mockStore: store
     });
@@ -102,27 +93,16 @@ describe('Pagination component', () => {
   });
 
   it('should click back button', async () => {
-    renderFakeApp(<Pagination />, {
-      initialRoute: generatePath(AppRoute.Catalog, {id: 'page_1'}),
+    renderFakeApp(<Pagination currentPage={currentLastPage} camerasCount={camerasCount}/>, {
+      initialRoute: generatePath(AppRoute.Catalog, {id: 'page_3'}),
       initialState: lastPagemockState
     });
     await userEvent.click(screen.getByText('Назад'));
 
   });
 
-  it('should not render "next button" if user on last page', async () => {
-    renderFakeApp(<Pagination />, {
-      initialRoute: generatePath(AppRoute.Catalog, {id: 'page_3'}),
-      mockStore: storeLastPage
-    });
-
-    await userEvent.click(screen.getByText(3));
-
-    expect(screen.queryByTestId('next-button')).not.toBeInTheDocument();
-  });
-
   it('should user click on link', async () => {
-    renderFakeApp(<Pagination />, {
+    renderFakeApp(<Pagination currentPage={currentPage} camerasCount={camerasCount}/>, {
       initialRoute: generatePath(AppRoute.Catalog, {id: 'page_1'}),
       mockStore: store
     });

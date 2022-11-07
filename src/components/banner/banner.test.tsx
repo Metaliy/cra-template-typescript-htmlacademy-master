@@ -14,9 +14,9 @@ const mockState = {
 };
 
 
-describe('Banner ', () => {
+describe('Banner', () => {
   it('should render correctly', () => {
-    renderFakeApp(<Banner />, {
+    renderFakeApp(<Banner promoCamera={fakePromoCamera} />, {
       initialState: mockState
     });
 

@@ -1,21 +1,19 @@
 import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks';
+import { useAppDispatch } from '../../../../hooks/hooks';
 import { fetchCamerasReviewsAction, postCameraReviewAction } from '../../../../store/api-actions/product-api/product-api';
-import { getSelectedCamera } from '../../../../store/cameras-slice/selectors';
 import { setReviewModalOpenedStatus } from '../../../../store/product-slice/product-slice';
-import { getReviewModalOpenedStatus } from '../../../../store/product-slice/selectors';
 
 import { PostReviewType } from '../../../../types/server-data-types';
 
+type ReviewModalFormProps = {
+  cameraId: number,
+  reviewModalOpenedStatus: boolean
+}
 
-function ReviewModalForm () {
+function ReviewModalForm ({cameraId, reviewModalOpenedStatus}: ReviewModalFormProps) {
 
   const dispatch = useAppDispatch();
-
-  const cameraId = useAppSelector(getSelectedCamera).id;
-  const reviewModalOpenedStatus = useAppSelector(getReviewModalOpenedStatus);
-
 
   const { register, watch, handleSubmit, reset, formState: { errors } } = useForm<PostReviewType>({defaultValues: {rating: 0}});
   const onSubmit: SubmitHandler<PostReviewType> = async (data) => {

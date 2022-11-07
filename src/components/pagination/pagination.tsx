@@ -1,13 +1,16 @@
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { ITEMS_PER_PAGE } from '../../consts/const';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { CurrenCatalogPage } from '../../store/catalog-slice/catalog-slice';
-import { getCurrentPage } from '../../store/catalog-slice/selectors';
-import { getTotalCamerasCount } from '../../store/cameras-slice/selectors';
 
 
-function Pagination () {
+type PaginationProps = {
+  currentPage: number,
+  camerasCount: number
+}
+
+function Pagination ({currentPage, camerasCount}: PaginationProps) {
 
   const getPages = (pagesCount:number, checkedPage: number): JSX.Element[] =>{
     const paginationItems = [];
@@ -23,9 +26,6 @@ function Pagination () {
 
 
   const dispatch = useAppDispatch();
-
-  const currentPage = useAppSelector(getCurrentPage);
-  const camerasCount = useAppSelector(getTotalCamerasCount);
 
   const id = Number(useParams().id?.replace(/.*page_/, ''));
   const pageCount = Math.ceil(camerasCount / ITEMS_PER_PAGE);

@@ -13,7 +13,7 @@ const mockState = {
 
 };
 
-describe('Breadcrumbs ', () => {
+describe('Breadcrumbs component', () => {
   it('should render correctly when user navigate to "Catalog page"', () => {
     renderFakeApp(<Breadcrumbs pageName={AppPageNames.Catalog} />, {
       initialRoute: AppRoute.Catalog,

@@ -15,6 +15,7 @@ const mockState = {
   [NameSpace.Reviews]: {
     reviewsList: fakeReviewList,
     reviewSentStatus: LoadingStatus.Initial,
+    reviewsListLoadingStatus: LoadingStatus.Initial,
   },
   [NameSpace.Product]: {
     reviewModalOpenedStatus: false,
@@ -29,6 +30,7 @@ const store = mockStore({
   [NameSpace.Reviews]: {
     reviewSentStatus: LoadingStatus.Initial,
     reviewsList: fakeReviewList,
+    reviewsListLoadingStatus: LoadingStatus.Initial,
   },
   [NameSpace.Cameras]: {
     selectedCamera: getFakeCamerasReview().id
@@ -41,7 +43,7 @@ const store = mockStore({
 
 describe('Review block component', () => {
   it('should render "Review block component"', () => {
-    renderFakeApp(<ReviewBlock/>, {
+    renderFakeApp(<ReviewBlock reviewsList={fakeReviewList}/>, {
       initialState:mockState
     });
 
@@ -49,7 +51,7 @@ describe('Review block component', () => {
   });
 
   it('should click on modalStatusHandler', async () => {
-    renderFakeApp(<ReviewBlock/>, {
+    renderFakeApp(<ReviewBlock reviewsList={fakeReviewList}/>, {
       mockStore: store
     });
 
@@ -59,7 +61,7 @@ describe('Review block component', () => {
   });
 
   it('should click on show-more-reviews-button', async () => {
-    renderFakeApp(<ReviewBlock/>, {
+    renderFakeApp(<ReviewBlock reviewsList={fakeReviewList}/>, {
       initialState:mockState
     });
 

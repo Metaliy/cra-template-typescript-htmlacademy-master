@@ -5,4 +5,4 @@ import { State } from '../../types/state-types';
 
 export const getPromoCamera = (state: State): PromoCameraType => state[NameSpace.Promo].promoCamera;
 
-export const getPromoCameraListLoadingStatus = (state: State): LoadingStatus => state[NameSpace.Promo].promoCameraLoadingStatus;
+export const getPromoCameraLoadingStatus = (state: State): LoadingStatus => state[NameSpace.Promo].promoCameraLoadingStatus;

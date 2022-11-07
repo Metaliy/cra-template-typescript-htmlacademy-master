@@ -14,15 +14,17 @@ import { ProductCardList } from '../../components/product-card-list/product-card
 import { AppPageNames, LoadingStatus } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { fetchCamerasAction, fetchPromoCameraAction } from '../../store/api-actions/catalog-api/catalog-api';
-import { getCameras, getCamerasListLoadingStatus } from '../../store/cameras-slice/selectors';
+import { getCameras, getCamerasListLoadingStatus, getTotalCamerasCount } from '../../store/cameras-slice/selectors';
 import { getCurrentPage } from '../../store/catalog-slice/selectors';
-import { getPromoCameraListLoadingStatus } from '../../store/promo-slice/selectors';
+import { getPromoCamera, getPromoCameraLoadingStatus } from '../../store/promo-slice/selectors';
 
 
 function CatalogPage():JSX.Element {
 
   const camerasList = useAppSelector(getCameras);
   const currentPage = useAppSelector(getCurrentPage);
+  const promoCamera = useAppSelector(getPromoCamera);
+  const camerasCount = useAppSelector(getTotalCamerasCount);
   const isRendered = useRef(false);
 
   const dispatch = useAppDispatch();
@@ -36,7 +38,7 @@ function CatalogPage():JSX.Element {
   }, [dispatch]);
 
   const camerasLoadingStatus = useAppSelector(getCamerasListLoadingStatus);
-  const promoCameraLoadingStatus = useAppSelector(getPromoCameraListLoadingStatus);
+  const promoCameraLoadingStatus = useAppSelector(getPromoCameraLoadingStatus);
 
 
   if((promoCameraLoadingStatus === LoadingStatus.Initial ||
@@ -60,11 +62,11 @@ function CatalogPage():JSX.Element {
 
         <main>
 
-          <Banner />
+          <Banner promoCamera={promoCamera} />
 
           <div className="page-content">
             <Breadcrumbs pageName={AppPageNames.Catalog} />
-            <section className="catalog">
+            <section className="catalog" data-testid="catalog">
               <div className="container">
                 <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
                 <div className="page-content__columns">
@@ -77,7 +79,7 @@ function CatalogPage():JSX.Element {
 
                     <ProductCardList camerasList={camerasList}/>
 
-                    <Pagination />
+                    <Pagination camerasCount={camerasCount} currentPage={currentPage} />
 
                   </div>
                 </div>

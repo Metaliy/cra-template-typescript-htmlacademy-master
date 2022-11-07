@@ -3,6 +3,11 @@ import { renderFakeApp } from '../../../mock/fake-app/fake-app';
 import { ReviewModal } from './review-modal';
 import userEvent from '@testing-library/user-event';
 import { LoadingStatus, NameSpace } from '../../../consts/const';
+import { getFakeCamera } from '../../../mock/mock';
+
+const reviewSentStatus = LoadingStatus.Initial;
+const reviewModalOpenedStatus = true;
+const cameraId = getFakeCamera().id;
 
 const mockState = {
   [NameSpace.Product]: {
@@ -17,7 +22,7 @@ const mockState = {
 
 describe('Review modal component', () => {
   it('should render "Review modal component"', () => {
-    renderFakeApp(<ReviewModal/>, {
+    renderFakeApp(<ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={cameraId}/>, {
       initialState: mockState
     });
 
@@ -25,7 +30,7 @@ describe('Review modal component', () => {
   });
 
   it('should close review modal if user clicks on cross-btn', async () => {
-    renderFakeApp(<ReviewModal />, {
+    renderFakeApp(<ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={cameraId}/>, {
       initialState: mockState
     });
 
@@ -34,7 +39,7 @@ describe('Review modal component', () => {
   });
 
   it('should close review modal if user clicks on modal-overlay not sended', async () => {
-    renderFakeApp(<ReviewModal />, {
+    renderFakeApp(<ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={cameraId}/>, {
       initialState: mockState
     });
 

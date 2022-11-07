@@ -1,12 +1,14 @@
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../consts/const';
-import { useAppSelector } from '../../hooks/hooks';
-import { getPromoCamera } from '../../store/promo-slice/selectors';
+import { PromoCameraType } from '../../types/server-data-types';
 
+type BannerProps = {
+  promoCamera: PromoCameraType
+}
 
-function Banner () {
+function Banner ({promoCamera}: BannerProps) {
 
-  const {name, id} = useAppSelector(getPromoCamera);
+  const {name, id} = promoCamera;
 
 
   return (

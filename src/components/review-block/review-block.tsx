@@ -1,19 +1,18 @@
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { VISIBLE_REVIEWS_COUNT } from '../../consts/const';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { useAppDispatch } from '../../hooks/hooks';
 import { setReviewModalOpenedStatus } from '../../store/product-slice/product-slice';
-import { getReviewsList } from '../../store/reviews-slice/selectors';
-
-
+import { ReviewType } from '../../types/server-data-types';
 import { ReviewCard } from './review-card/review-card';
 
-function ReviewBlock():JSX.Element {
+type ReviewBlockProps = {
+  reviewsList: ReviewType[]
+}
+
+function ReviewBlock({reviewsList}: ReviewBlockProps):JSX.Element {
 
   const [visibleReviewCount, onSetVisibleReviewCount] = useState(VISIBLE_REVIEWS_COUNT);
-
-
-  const reviewsList = useAppSelector(getReviewsList);
 
   const sortedByDateReviewsList = reviewsList.slice().sort((a, b) => (dayjs(a.createAt).isAfter(dayjs(b.createAt)) ? -1 : 1));
 
