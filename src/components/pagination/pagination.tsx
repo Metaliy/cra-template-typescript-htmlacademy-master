@@ -2,7 +2,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { ITEMS_PER_PAGE } from '../../consts/const';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { CurrenCatalogPage } from '../../store/catalog-slice/catalog-slice';
+import { currenCatalogPage } from '../../store/catalog-slice/catalog-slice';
 
 
 type PaginationProps = {
@@ -17,7 +17,7 @@ function Pagination ({currentPage, camerasCount}: PaginationProps) {
     for (let i = 1; i <= pagesCount; i++) {
       paginationItems.push(
         <li className="pagination__item" key={i}>
-          <Link className={i !== checkedPage ? 'pagination__link' : 'pagination__link pagination__link--active'} data-testid="page-buttons" to={`/catalog/page_${i}`} onClick={() => (dispatch(CurrenCatalogPage(i)))}>{i}</Link>
+          <Link className={i !== checkedPage ? 'pagination__link' : 'pagination__link pagination__link--active'} data-testid="page-buttons" to={`/catalog/page_${i}`} onClick={() => (dispatch(currenCatalogPage(i)))}>{i}</Link>
         </li>
       );
     }
@@ -31,7 +31,7 @@ function Pagination ({currentPage, camerasCount}: PaginationProps) {
   const pageCount = Math.ceil(camerasCount / ITEMS_PER_PAGE);
 
   useEffect(() => {
-    dispatch(CurrenCatalogPage(id));
+    dispatch(currenCatalogPage(id));
   }, [id, currentPage, dispatch]);
 
 
@@ -40,12 +40,12 @@ function Pagination ({currentPage, camerasCount}: PaginationProps) {
       <ul className="pagination__list">
         {currentPage !== 1 ?
           <li className="pagination__item">
-            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage - 1}`} data-testid="back-button" onClick={() => (dispatch(CurrenCatalogPage(currentPage - 1)))}>Назад</Link>
+            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage - 1}`} data-testid="back-button" onClick={() => (dispatch(currenCatalogPage(currentPage - 1)))}>Назад</Link>
           </li> : ''}
         {getPages(pageCount, currentPage)}
         {currentPage !== pageCount ?
           <li className="pagination__item">
-            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage + 1}`} data-testid="next-button" onClick={() => (dispatch(CurrenCatalogPage(currentPage + 1)))}>Далее</Link>
+            <Link className="pagination__link pagination__link--text" to={`/catalog/page_${currentPage + 1}`} data-testid="next-button" onClick={() => (dispatch(currenCatalogPage(currentPage + 1)))}>Далее</Link>
           </li> : ''}
       </ul>
     </div>

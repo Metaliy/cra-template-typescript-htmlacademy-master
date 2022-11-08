@@ -1,7 +1,7 @@
 import { LoadingStatus } from '../../consts/const';
 import { getFakeCamerasReview } from '../../mock/mock';
 import { ReviewsSliceType } from '../../types/state-types';
-import { fetchCamerasReviewsAction, postCameraReviewAction } from '../api-actions/product-api/product-api';
+import { fetchCamerasReviewsAction } from '../api-actions/product-api/product-api';
 import { reviewsSlice } from './reviews-slice';
 
 
@@ -15,7 +15,6 @@ describe('Reducer test: productReviewsData', () => {
     mockState = {
       reviewsList: [],
       reviewsListLoadingStatus: LoadingStatus.Initial,
-      reviewSentStatus: LoadingStatus.Initial
     };
   });
 
@@ -62,40 +61,5 @@ describe('Reducer test: productReviewsData', () => {
 
   });
 
-  describe('postCameraReviewAction test', () => {
-    it('should update cameras with given mock data, update camerasListLoadingStatus to fulfilled if postCameraReviewAction is fulfilled',
-      () => {
-        expect(reviewsSlice.reducer(mockState, {
-          type: postCameraReviewAction.fulfilled.type
-        }))
-          .toEqual({
-            ...mockState,
-            reviewSentStatus: LoadingStatus.Fulfilled,
-          });
-      });
-
-    it('Update camerasListLoadingStatus to pending if postCameraReviewAction is pending',
-      () => {
-        expect(reviewsSlice.reducer(mockState, {
-          type: postCameraReviewAction.pending.type
-        }))
-          .toEqual({
-            ...mockState,
-            reviewSentStatus: LoadingStatus.Pending
-          });
-      });
-
-    it('Update camerasListLoadingStatus to rejected if postCameraReviewAction is rejected',
-      () => {
-        expect(reviewsSlice.reducer(mockState, {
-          type: postCameraReviewAction.rejected.type
-        }))
-          .toEqual({
-            ...mockState,
-            reviewSentStatus: LoadingStatus.Rejected
-          });
-      });
-
-  });
 
 });

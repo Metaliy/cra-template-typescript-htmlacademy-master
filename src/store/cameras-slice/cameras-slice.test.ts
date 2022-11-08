@@ -1,15 +1,13 @@
 import { LoadingStatus } from '../../consts/const';
-import { getFakeCamera, getUidCamerasList } from '../../mock/mock';
-import { CameraType} from '../../types/server-data-types';
+import { getUidCamerasList } from '../../mock/mock';
+
 import { CamerasSliceType } from '../../types/state-types';
 import { fetchCamerasAction } from '../api-actions/catalog-api/catalog-api';
-import { fetchSelectedCameraAction, fetchSimilarCamerasAction } from '../api-actions/product-api/product-api';
 import { camerasSlice } from './cameras-slice';
 
 
 const fakeCameras = getUidCamerasList(3);
-const fakeCamera = getFakeCamera();
-const fakeSimilarCameras = getUidCamerasList(3);
+
 
 const fakeCamerasCount = 15;
 
@@ -21,10 +19,6 @@ describe('Reducer test: cameras-slice', () => {
     mockState = {
       cameras: [],
       camerasListLoadingStatus: LoadingStatus.Initial,
-      selectedCamera: {} as CameraType,
-      selectedCameraLoadingStatus: LoadingStatus.Initial,
-      similarCameras: [],
-      similarCamerasLoadingStatus: LoadingStatus.Initial,
       camerasCount: 0
     };
   });
@@ -71,82 +65,6 @@ describe('Reducer test: cameras-slice', () => {
           .toEqual({
             ...mockState,
             camerasListLoadingStatus: LoadingStatus.Rejected
-          });
-      });
-
-  });
-
-  describe('fetchSelectedCameraAction test', () => {
-    it('should update cameras with given mock data, update selectedCameraLoadingStatus to fulfilled if fetchCamerasAction is fulfilled',
-      () => {
-        expect(camerasSlice.reducer(mockState, {
-          payload: fakeCamera,
-          type: fetchSelectedCameraAction.fulfilled.type
-        }))
-          .toEqual({
-            ...mockState,
-            selectedCamera: fakeCamera,
-            selectedCameraLoadingStatus: LoadingStatus.Fulfilled,
-          });
-      });
-
-    it('Update selectedCameraLoadingStatus to pending if fetchCamerasAction is pending',
-      () => {
-        expect(camerasSlice.reducer(mockState, {
-          type: fetchSelectedCameraAction.pending.type
-        }))
-          .toEqual({
-            ...mockState,
-            selectedCameraLoadingStatus: LoadingStatus.Pending
-          });
-      });
-
-    it('Update selectedCameraLoadingStatus to rejected if fetchCamerasAction is rejected',
-      () => {
-        expect(camerasSlice.reducer(mockState, {
-          type: fetchSelectedCameraAction.rejected.type
-        }))
-          .toEqual({
-            ...mockState,
-            selectedCameraLoadingStatus: LoadingStatus.Rejected
-          });
-      });
-
-  });
-
-  describe('fetchSimilarCamerasAction test', () => {
-    it('should update cameras with given mock data, update similarCamerasLoadingStatus to fulfilled if fetchCamerasAction is fulfilled',
-      () => {
-        expect(camerasSlice.reducer(mockState, {
-          payload: fakeSimilarCameras,
-          type: fetchSimilarCamerasAction.fulfilled.type
-        }))
-          .toEqual({
-            ...mockState,
-            similarCameras: fakeSimilarCameras,
-            similarCamerasLoadingStatus: LoadingStatus.Fulfilled,
-          });
-      });
-
-    it('Update similarCamerasLoadingStatus to pending if fetchCamerasAction is pending',
-      () => {
-        expect(camerasSlice.reducer(mockState, {
-          type: fetchSimilarCamerasAction.pending.type
-        }))
-          .toEqual({
-            ...mockState,
-            similarCamerasLoadingStatus: LoadingStatus.Pending
-          });
-      });
-
-    it('Update similarCamerasLoadingStatus to rejected if fetchCamerasAction is rejected',
-      () => {
-        expect(camerasSlice.reducer(mockState, {
-          type: fetchSimilarCamerasAction.rejected.type
-        }))
-          .toEqual({
-            ...mockState,
-            similarCamerasLoadingStatus: LoadingStatus.Rejected
           });
       });
 

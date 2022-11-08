@@ -109,6 +109,6 @@ describe('Pagination component', () => {
 
     await userEvent.click(screen.getByText(2));
     const [action] = store.getActions();
-    expect(action.type).toBe('Catalog/CurrenCatalogPage');
+    expect(action.type).toBe('Catalog/currenCatalogPage');
   });
 });

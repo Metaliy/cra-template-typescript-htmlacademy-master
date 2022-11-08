@@ -57,7 +57,7 @@ describe('Review block component', () => {
 
     await userEvent.click(screen.getByTestId('modal-open-button'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/setReviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModalOpenedStatus');
   });
 
   it('should click on show-more-reviews-button', async () => {

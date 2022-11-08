@@ -44,7 +44,7 @@ describe('Review modal success component', () => {
 
     await userEvent.click(screen.getByTestId('cross-btn'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/setReviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModalOpenedStatus');
   });
 
   it('should close review modal if user clicks on back-to-button', async () => {
@@ -54,7 +54,7 @@ describe('Review modal success component', () => {
 
     await userEvent.click(screen.getByTestId('back-to-button'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/setReviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModalOpenedStatus');
   });
 
   it('should close review modal if user clicks on modal-overlay', async () => {
@@ -64,6 +64,6 @@ describe('Review modal success component', () => {
 
     await userEvent.click(screen.getByTestId('modal-overlay'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/setReviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModalOpenedStatus');
   });
 });

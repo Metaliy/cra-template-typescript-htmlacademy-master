@@ -8,7 +8,6 @@ import { IconContainer } from '../../components/icon-container/icon-container';
 import { Loader } from '../../components/loading-screen/loading-screen';
 import { ProductSimilarSlider } from '../../components/product-similar-slider/product-similar-slider';
 import { ProductTabs } from '../../components/product-tabs/product-tabs';
-import { Rating } from '../../components/rating/rating';
 import { ReviewBlock } from '../../components/review-block/review-block';
 import { ReviewModal } from '../../components/review-block/review-modal/review-modal';
 import { AppPageNames, LoadingStatus, MAX_RATING } from '../../consts/const';
@@ -17,9 +16,12 @@ import { getPriceWitchSpaces } from '../../utils/utils';
 import { RemoveScroll } from 'react-remove-scroll';
 
 import { fetchSelectedCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../../store/api-actions/product-api/product-api';
-import { getSelectedCamera, getSelectedCameraLoadingStatus, getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../store/cameras-slice/selectors';
-import { getReviewSentStatus, getReviewsList, getReviewsListLoadingStatus } from '../../store/reviews-slice/selectors';
+import { getReviewsList, getReviewsListLoadingStatus } from '../../store/reviews-slice/selectors';
 import { getReviewModalOpenedStatus } from '../../store/product-slice/selectors';
+import { ProductRating } from '../../components/rating/product-rating/product-rating';
+import { getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../store/similar-cameras-slice/selectors';
+import { getSelectedCamera, getSelectedCameraLoadingStatus } from '../../store/selected-camera-slice/selectors';
+import { getReviewSentStatus } from '../../store/sended-review-slice/selectors';
 
 export function ProductPage():JSX.Element {
 
@@ -74,7 +76,7 @@ export function ProductPage():JSX.Element {
                   </div>
                   <div className="product__content">
                     <h1 className="title title--h3">{selectedCamera.name}</h1>
-                    <Rating maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
+                    <ProductRating maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
                     <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(selectedCamera.price)} ₽</p>
                     <button className="btn btn--purple" type="button">
                       <svg width="24" height="16" aria-hidden="true">

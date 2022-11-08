@@ -2,16 +2,16 @@ import { useEffect } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useAppDispatch } from '../../../../hooks/hooks';
 import { fetchCamerasReviewsAction, postCameraReviewAction } from '../../../../store/api-actions/product-api/product-api';
-import { setReviewModalOpenedStatus } from '../../../../store/product-slice/product-slice';
+import { reviewModalOpenedStatus } from '../../../../store/product-slice/product-slice';
 
 import { PostReviewType } from '../../../../types/server-data-types';
 
-type ReviewModalFormProps = {
+type ReviewModalWithFormProps = {
   cameraId: number,
-  reviewModalOpenedStatus: boolean
+  reviewModalStatus: boolean
 }
 
-function ReviewModalForm ({cameraId, reviewModalOpenedStatus}: ReviewModalFormProps) {
+function ReviewModalWithForm ({cameraId, reviewModalStatus}: ReviewModalWithFormProps) {
 
   const dispatch = useAppDispatch();
 
@@ -27,7 +27,7 @@ function ReviewModalForm ({cameraId, reviewModalOpenedStatus}: ReviewModalFormPr
   useEffect(() => {
     const onEscButtonClick = (evt: { key: string; }) => {
       if(evt.key === 'Escape') {
-        dispatch(setReviewModalOpenedStatus(false));
+        dispatch(reviewModalOpenedStatus(false));
       }
     };
     window.addEventListener('keydown', onEscButtonClick);
@@ -35,9 +35,9 @@ function ReviewModalForm ({cameraId, reviewModalOpenedStatus}: ReviewModalFormPr
   }, [dispatch]);
 
   return (
-    <div className={`modal ${reviewModalOpenedStatus ? 'is-active' : ''}`} data-testid="review-modal">
+    <div className={`modal ${reviewModalStatus ? 'is-active' : ''}`} data-testid="review-modal">
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={() => (dispatch(setReviewModalOpenedStatus(false)))} data-testid='modal-overlay'></div>
+        <div className="modal__overlay" onClick={() => (dispatch(reviewModalOpenedStatus(false)))} data-testid='modal-overlay'></div>
         <div className="modal__content">
           <p className="title title--h4">Оставить отзыв</p>
           <div className="form-review">
@@ -130,7 +130,7 @@ function ReviewModalForm ({cameraId, reviewModalOpenedStatus}: ReviewModalFormPr
               <button className="btn btn--purple form-review__btn" type="submit" data-testid="submit">Отправить отзыв</button>
             </form>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => dispatch(setReviewModalOpenedStatus(false))} data-testid='cross-btn'>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => dispatch(reviewModalOpenedStatus(false))} data-testid='cross-btn'>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>
@@ -141,4 +141,4 @@ function ReviewModalForm ({cameraId, reviewModalOpenedStatus}: ReviewModalFormPr
   );
 }
 
-export {ReviewModalForm};
+export {ReviewModalWithForm};

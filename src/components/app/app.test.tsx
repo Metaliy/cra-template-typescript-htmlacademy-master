@@ -19,15 +19,22 @@ const mockState = {
   [NameSpace.Cameras]: {
     cameras: fakeCameraList,
     camerasListLoadingStatus: LoadingStatus.Fulfilled,
+
+    camerasCount: 15
+  },
+  [NameSpace.SelectedCamera]: {
     selectedCamera: fakeCamera,
     selectedCameraLoadingStatus: LoadingStatus.Fulfilled,
+  },
+  [NameSpace.SimilarCameras]: {
     similarCameras: fakesimilarCameras,
     similarCamerasLoadingStatus: LoadingStatus.Fulfilled,
-    camerasCount: 15
   },
   [NameSpace.Reviews]: {
     reviewsList: fakeReviewList,
     reviewsListLoadingStatus: LoadingStatus.Fulfilled,
+  },
+  [NameSpace.SendedReview]: {
     reviewSentStatus: LoadingStatus.Initial,
   },
   [NameSpace.Promo]: {
@@ -47,13 +54,17 @@ const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
 
 const store = mockStore({
-  [NameSpace.Cameras]: {
-    selectedCamera: getFakeCamera(),
+  [NameSpace.SimilarCameras]: {
     similarCameras: [getFakeCamera()],
-    camerasCount: 15
+  },
+  [NameSpace.SelectedCamera]: {
+    selectedCamera: getFakeCamera(),
   },
   [NameSpace.Reviews]: {
-    reviewsList: [getFakeCamerasReview()]
+    reviewsList: [getFakeCamerasReview()],
+  },
+  [NameSpace.SendedReview]: {
+    reviewSentStatus: LoadingStatus.Initial,
   },
   [NameSpace.Catalog]: {
     currentPage: 1

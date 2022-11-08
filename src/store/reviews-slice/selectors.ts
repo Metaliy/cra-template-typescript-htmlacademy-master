@@ -6,4 +6,3 @@ export const getReviewsList = (state: State): ReviewType[] => state[NameSpace.Re
 
 export const getReviewsListLoadingStatus = (state: State): LoadingStatus => state[NameSpace.Reviews].reviewsListLoadingStatus;
 
-export const getReviewSentStatus = (state: State): LoadingStatus => state[NameSpace.Reviews].reviewSentStatus;

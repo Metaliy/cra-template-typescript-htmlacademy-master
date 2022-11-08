@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { LoadingStatus } from '../../../consts/const';
 import { useAppDispatch } from '../../../hooks/hooks';
+import { reviewsInitalState } from '../../../store/sended-review-slice/sended-review-slice';
 
-import { ReviewModalForm } from './review-modal-form/review-modal-form';
+import { ReviewModalWithForm } from './review-modal-with-form/review-modal-with-form';
 import { ReviewModalSuccess } from './review-modal-success/review-modal-success';
-import { setReviewsToInitalStateAfterSuccesSend } from '../../../store/reviews-slice/reviews-slice';
 
 type ReviewModalProps = {
   reviewSentStatus: LoadingStatus,
@@ -20,14 +20,14 @@ function ReviewModal ({reviewSentStatus, reviewModalOpenedStatus, cameraId}: Rev
 
   useEffect(() => {
     if (reviewSentStatus !== LoadingStatus.Initial) {
-      dispatch(setReviewsToInitalStateAfterSuccesSend());
+      dispatch(reviewsInitalState());
     }
   }, [dispatch, reviewModalOpenedStatus]);
 
 
   return (
     reviewSentStatusSuccess && reviewModalOpenedStatus ? <ReviewModalSuccess/> :
-      <ReviewModalForm cameraId={cameraId} reviewModalOpenedStatus={reviewModalOpenedStatus} />
+      <ReviewModalWithForm cameraId={cameraId} reviewModalStatus={reviewModalOpenedStatus} />
   );
 }
 

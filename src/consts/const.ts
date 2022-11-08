@@ -2,8 +2,11 @@
 
 export enum NameSpace {
   Cameras = 'Cameras',
+  SelectedCamera = 'SelectedCamera',
+  SimilarCameras = 'SimilarCameras',
   Promo = 'Promo',
   Reviews = 'Reviews',
+  SendedReview = 'SendedReview',
   Catalog = 'Catalog',
   Product = 'Product'
 }

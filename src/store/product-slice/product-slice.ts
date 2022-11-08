@@ -10,10 +10,10 @@ export const productSlice = createSlice ({
   name: NameSpace.Product,
   initialState,
   reducers: {
-    setReviewModalOpenedStatus: (state, action) => {
+    reviewModalOpenedStatus: (state, action) => {
       state.reviewModalOpenedStatus = action.payload;
     }
   }
 });
 
-export const {setReviewModalOpenedStatus} = productSlice.actions;
+export const {reviewModalOpenedStatus} = productSlice.actions;
