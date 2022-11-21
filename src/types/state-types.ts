@@ -17,12 +17,25 @@ export type ReviewsSliceType = {
 }
 
 export type CatalogSliceType = {
-  currentPage: number
+  currentPage: number,
+  sort: {
+    sortType: string,
+    order: string
+  }
+  filters: {
+    priceMin: string | string[],
+    priceMax: string |string[],
+    category: string[],
+    filterType: string[],
+    level: string[]
+  }
 }
 
 export type FetchCamerasActionResponsedType = {
-  responsedDataCount: number;
-  responsedData: CameraType[];
+  responsedDataCount: number,
+  responsedData: CameraType[],
+  responsedMinCamerasPrice: number,
+  responsedMaxCamerasPrice: number
 }
 
 export type ProductSliceType = {
@@ -32,7 +45,9 @@ export type ProductSliceType = {
 export type CamerasSliceType = {
   cameras: CameraType[],
   camerasListLoadingStatus: LoadingStatus,
-  camerasCount: number
+  camerasCount: number,
+  minCameraPrice: number,
+  maxCameraPrice: number
 }
 
 export type selectedCameraSliceType = {
@@ -47,4 +62,9 @@ export type similarCamerasSliceType = {
 
 export type SendedReviewSliceType = {
   reviewSentStatus: LoadingStatus,
+}
+
+export type SearchedCamerasSliceType = {
+  searchedCameras: CameraType[],
+  searchedCamerasListLoadingStatus: LoadingStatus,
 }

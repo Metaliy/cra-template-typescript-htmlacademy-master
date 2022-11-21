@@ -7,10 +7,10 @@ import { getFakeCamera, getFakePromoCamera } from '../../mock/mock';
 import { createAPI } from '../../services/api';
 import { CatalogPage } from './catalog';
 
-
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
+
 
 const store = mockStore({
   [NameSpace.Catalog]: {

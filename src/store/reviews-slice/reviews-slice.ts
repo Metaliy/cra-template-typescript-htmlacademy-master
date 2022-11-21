@@ -1,8 +1,7 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../consts/const';
 import { ReviewsSliceType } from '../../types/state-types';
-import { fetchCamerasReviewsAction } from '../api-actions/product-api/product-api';
+import { fetchCamerasReviewsAction } from '../api-actions/reviews-api/reviews-api';
 
 
 export const initialState: ReviewsSliceType = {

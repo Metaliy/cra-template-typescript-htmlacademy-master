@@ -8,7 +8,8 @@ export enum NameSpace {
   Reviews = 'Reviews',
   SendedReview = 'SendedReview',
   Catalog = 'Catalog',
-  Product = 'Product'
+  Product = 'Product',
+  SearchedCameras = 'SearchedCameras'
 }
 
 export const CAMERAS_ON_PAGE = '9';
@@ -70,4 +71,44 @@ export const enum LoadingStatus {
   Pending = 'Pending',
   Fulfilled = 'Fulfilled',
   Rejected = 'Rejected',
+}
+
+export enum QueryParameter {
+  SortType = '_sort',
+  Order = '_order',
+  Limit = '_limit',
+  Page = '_page',
+  Category = 'category',
+  Type = 'type',
+  Level = 'level',
+  PriceMin = 'price_gte',
+  PriceMax = 'price_lte'
+}
+
+export const enum SortOrderParameter {
+  LowToHigh = 'asc',
+  HighToLow = 'desc'
+}
+
+export const enum SortTypeParameter {
+  Price = 'price',
+  Rating = 'rating'
+}
+
+export const enum FilterCategoryParameter {
+  Photocamera = 'Фотоаппарат',
+  Videocamera = 'Видеокамера'
+}
+
+export const enum FilterTypeParameter {
+  Digital = 'Цифровая',
+  Film = 'Плёночная',
+  Snapshot = 'Моментальная',
+  Collection = 'Коллекционная'
+}
+
+export const enum FilterLevelParameter {
+  Zero = 'Нулевой',
+  NonProfessional = 'Любительский',
+  Professional = 'Профессиональный'
 }

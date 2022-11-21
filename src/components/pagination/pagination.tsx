@@ -30,9 +30,10 @@ function Pagination ({currentPage, camerasCount}: PaginationProps) {
   const id = Number(useParams().id?.replace(/.*page_/, ''));
   const pageCount = Math.ceil(camerasCount / ITEMS_PER_PAGE);
 
+
   useEffect(() => {
-    dispatch(currenCatalogPage(id));
-  }, [id, currentPage, dispatch]);
+    dispatch(currenCatalogPage(id <= pageCount ? id : pageCount));
+  }, [id, currentPage, dispatch, pageCount]);
 
 
   return (

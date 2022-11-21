@@ -2,7 +2,7 @@ import { LoadingStatus } from '../../consts/const';
 import { getFakeCamera } from '../../mock/mock';
 import { CameraType} from '../../types/server-data-types';
 import { selectedCameraSliceType } from '../../types/state-types';
-import { fetchSelectedCameraAction } from '../api-actions/product-api/product-api';
+import { fetchSelectedCameraAction } from '../api-actions/selected-camera-api/selected-camera-api';
 import { selectedCameraSlice } from './selected-camera-slice';
 
 

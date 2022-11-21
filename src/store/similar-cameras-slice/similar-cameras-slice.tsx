@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../consts/const';
 import { similarCamerasSliceType, } from '../../types/state-types';
-import { fetchSimilarCamerasAction } from '../api-actions/product-api/product-api';
+import { fetchSimilarCamerasAction } from '../api-actions/similar-cameras-api/similar-cameras-api';
 
 
 export const initialState: similarCamerasSliceType = {

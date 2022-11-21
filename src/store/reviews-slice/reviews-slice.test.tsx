@@ -1,7 +1,7 @@
 import { LoadingStatus } from '../../consts/const';
 import { getFakeCamerasReview } from '../../mock/mock';
 import { ReviewsSliceType } from '../../types/state-types';
-import { fetchCamerasReviewsAction } from '../api-actions/product-api/product-api';
+import { fetchCamerasReviewsAction } from '../api-actions/reviews-api/reviews-api';
 import { reviewsSlice } from './reviews-slice';
 
 

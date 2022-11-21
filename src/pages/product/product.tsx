@@ -14,14 +14,16 @@ import { AppPageNames, LoadingStatus, MAX_RATING } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getPriceWitchSpaces } from '../../utils/utils';
 import { RemoveScroll } from 'react-remove-scroll';
-
-import { fetchSelectedCameraAction, fetchSimilarCamerasAction, fetchCamerasReviewsAction } from '../../store/api-actions/product-api/product-api';
-import { getReviewsList, getReviewsListLoadingStatus } from '../../store/reviews-slice/selectors';
 import { getReviewModalOpenedStatus } from '../../store/product-slice/selectors';
 import { ProductRating } from '../../components/rating/product-rating/product-rating';
-import { getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../store/similar-cameras-slice/selectors';
+import { getReviewsList, getReviewsListLoadingStatus } from '../../store/reviews-slice/selectors';
 import { getSelectedCamera, getSelectedCameraLoadingStatus } from '../../store/selected-camera-slice/selectors';
 import { getReviewSentStatus } from '../../store/sended-review-slice/selectors';
+import { getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../store/similar-cameras-slice/selectors';
+import { fetchCamerasReviewsAction } from '../../store/api-actions/reviews-api/reviews-api';
+import { fetchSelectedCameraAction } from '../../store/api-actions/selected-camera-api/selected-camera-api';
+import { fetchSimilarCamerasAction } from '../../store/api-actions/similar-cameras-api/similar-cameras-api';
+
 
 export function ProductPage():JSX.Element {
 

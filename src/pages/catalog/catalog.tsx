@@ -1,5 +1,6 @@
 
 import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Banner } from '../../components/banner/banner';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { CatalogFilter } from '../../components/catalog-filter/catalog-filter';
@@ -8,14 +9,14 @@ import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
 import { IconContainer } from '../../components/icon-container/icon-container';
 import { Loader } from '../../components/loading-screen/loading-screen';
-
 import { Pagination } from '../../components/pagination/pagination';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { AppPageNames, LoadingStatus } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { fetchCamerasAction, fetchPromoCameraAction } from '../../store/api-actions/catalog-api/catalog-api';
-import { getCameras, getCamerasListLoadingStatus, getTotalCamerasCount } from '../../store/cameras-slice/selectors';
-import { getCurrentPage } from '../../store/catalog-slice/selectors';
+import { fetchCamerasAction } from '../../store/api-actions/cameras-api/cameras-api';
+import { fetchPromoCameraAction } from '../../store/api-actions/promo-api/promo-api';
+import { getCameras, getTotalCamerasCount, getCamerasListLoadingStatus, getMinCamerasPrice, getMaxCamerasPrice } from '../../store/cameras-slice/selectors';
+import { getCurrentPage, getFiltersParameters, getSortParameters } from '../../store/catalog-slice/selectors';
 import { getPromoCamera, getPromoCameraLoadingStatus } from '../../store/promo-slice/selectors';
 
 
@@ -25,13 +26,21 @@ function CatalogPage():JSX.Element {
   const currentPage = useAppSelector(getCurrentPage);
   const promoCamera = useAppSelector(getPromoCamera);
   const camerasCount = useAppSelector(getTotalCamerasCount);
+  const minCamerasPrice = useAppSelector(getMinCamerasPrice);
+  const maxCamerasPrice = useAppSelector(getMaxCamerasPrice);
   const isRendered = useRef(false);
 
   const dispatch = useAppDispatch();
 
+  const sortParameters = useAppSelector(getSortParameters);
+  const filterParameters = useAppSelector(getFiltersParameters);
+
+  const [, setSearchParams] = useSearchParams();
+
   useEffect(() => {
-    dispatch(fetchCamerasAction(currentPage));
-  }, [dispatch, currentPage]);
+    dispatch(fetchCamerasAction({currentPage, sort:{...sortParameters}, filters:{...filterParameters}}));
+    setSearchParams(({...sortParameters, ...filterParameters}));
+  }, [dispatch, currentPage, sortParameters, setSearchParams, filterParameters]);
 
   useEffect(() => {
     dispatch(fetchPromoCameraAction());
@@ -71,11 +80,11 @@ function CatalogPage():JSX.Element {
                 <h1 className="title title--h2">Каталог фото- и видеотехники</h1>
                 <div className="page-content__columns">
 
-                  <CatalogFilter />
+                  <CatalogFilter filters={filterParameters} minCamerasPrice={minCamerasPrice} maxCamerasPrice={maxCamerasPrice} />
 
                   <div className="catalog__content">
 
-                    <CatalogSort />
+                    <CatalogSort type={sortParameters.sortType} order={sortParameters.order}/>
 
                     <ProductCardList camerasList={camerasList}/>
 

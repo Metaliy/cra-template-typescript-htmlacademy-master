@@ -1,8 +1,7 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../consts/const';
 import { SendedReviewSliceType } from '../../types/state-types';
-import { postCameraReviewAction } from '../api-actions/product-api/product-api';
+import { postCameraReviewAction } from '../api-actions/sended-review-api/sended-review-api';
 
 
 export const initialState: SendedReviewSliceType = {

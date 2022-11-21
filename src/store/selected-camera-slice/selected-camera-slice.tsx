@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../consts/const';
 import { CameraType } from '../../types/server-data-types';
 import { selectedCameraSliceType, } from '../../types/state-types';
-import { fetchSelectedCameraAction } from '../api-actions/product-api/product-api';
+import { fetchSelectedCameraAction } from '../api-actions/selected-camera-api/selected-camera-api';
 
 
 export const initialState: selectedCameraSliceType = {

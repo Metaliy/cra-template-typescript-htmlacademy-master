@@ -12,14 +12,13 @@ const fakeReviewList = [getFakeCamerasReview(), getFakeCamerasReview(), getFakeC
 
 const reviewModalOpenedStatus = true;
 const cameraId = getFakeCamera().id;
-
+const reviewSentStatus = LoadingStatus.Initial;
 
 const api = createAPI();
 const middlewares = [thunk.withExtraArgument(api)];
 const mockStore = configureMockStore(middlewares);
 const store = mockStore({
   [NameSpace.Reviews]: {
-    reviewSentStatus: LoadingStatus.Initial,
     reviewsList: fakeReviewList,
   },
   [NameSpace.Cameras]: {
@@ -32,20 +31,20 @@ const store = mockStore({
 
 describe('Review modal form component', () => {
   it('should render "Review modal form component"', () => {
-    renderFakeApp(<ReviewModalWithForm reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
+    renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
     expect(screen.getByTestId('review-modal')).toBeInTheDocument();
   });
 
   it('should close review modal if user clicks on cross-btn', async () => {
-    renderFakeApp(<ReviewModalWithForm reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId} />, {});
+    renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId} />, {});
 
     await userEvent.click(screen.getByTestId('cross-btn'));
 
   });
 
   it('should close review modal if user clicks on modal-overlay not sended', async () => {
-    renderFakeApp(<ReviewModalWithForm reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
+    renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
 
     await userEvent.click(screen.getByTestId('modal-overlay'));
@@ -53,7 +52,7 @@ describe('Review modal form component', () => {
   });
 
   it('should send empty review', async () => {
-    renderFakeApp(<ReviewModalWithForm reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {
+    renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {
       mockStore: store
     });
 
@@ -65,7 +64,7 @@ describe('Review modal form component', () => {
 
 
   it('should close review modal if user press on esc button and rerivew sended', async () => {
-    renderFakeApp(<ReviewModalWithForm reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
+    renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
     await userEvent.type(screen.getByPlaceholderText(/Введите ваше имя/i), 'testtesttest');
     await userEvent.type(screen.getByPlaceholderText(/Главные недостатки товара/i), 'testtesttest');
@@ -78,7 +77,7 @@ describe('Review modal form component', () => {
   });
 
   it('should review correctly sended', async () => {
-    renderFakeApp(<ReviewModalWithForm reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId} />, {
+    renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId} />, {
       mockStore:store
     });
 

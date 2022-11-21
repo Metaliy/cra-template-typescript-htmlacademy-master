@@ -1,0 +1,66 @@
+//import {Action} from 'redux';
+//import thunk, {ThunkDispatch} from 'redux-thunk';
+//import MockAdapter from 'axios-mock-adapter';
+//import {configureMockStore} from '@jedmao/redux-mock-store';
+//import { createAPI } from '../../../services/api';
+//import { getUidCamerasList } from '../../../mock/mock';
+//import { State } from '../../../types/state-types';
+//import { fetchCamerasAction } from './cameras-api';
+//import { CAMERAS_ON_PAGE } from '../../../consts/const';
+//
+//const mockCameras = getUidCamerasList(14);
+//const currentPage = 1;
+//
+//describe('Catalog api', () => {
+//  const api = createAPI();
+//  const mockAPI = new MockAdapter(api);
+//  const middlewares = [thunk.withExtraArgument(api)];
+//
+//  const mockStore = configureMockStore<
+//      State,
+//      Action,
+//      ThunkDispatch<State, typeof api, Action>
+//    >(middlewares);
+//
+//  it('should dispatch fetchCamerasAction when GET /cameras', async () => {
+//    mockAPI
+//      .onGet(`/cameras?_page=${currentPage}&_limit=${CAMERAS_ON_PAGE}`, {
+//      })
+//      .reply(200, mockCameras, {
+//        'x-total-count': 14
+//      });
+//
+//    const store = mockStore();
+//
+//    await store.dispatch(fetchCamerasAction(1));
+//
+//    const actions = store.getActions().map(({type}) => type);
+//
+//    expect(actions).toEqual([
+//      fetchCamerasAction.pending.type,
+//      fetchCamerasAction.fulfilled.type
+//    ]);
+//  });
+//
+//  it('should dispatch fetchCamerasAction when GET /cameras error', async () => {
+//    mockAPI
+//      .onGet(`/cameras?_page=${currentPage}&_limit=${CAMERAS_ON_PAGE}`, {
+//      })
+//      .reply(300, mockCameras);
+//
+//    const store = mockStore();
+//
+//    await store.dispatch(fetchCamerasAction(1));
+//
+//    const actions = store.getActions().map(({type}) => type);
+//
+//
+//    expect(actions).toEqual([
+//      fetchCamerasAction.pending.type,
+//      fetchCamerasAction.rejected.type
+//    ]);
+//  });
+//
+//});
+
+export {};

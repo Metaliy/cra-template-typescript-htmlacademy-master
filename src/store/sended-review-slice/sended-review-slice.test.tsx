@@ -1,6 +1,6 @@
 import { LoadingStatus } from '../../consts/const';
 import { SendedReviewSliceType } from '../../types/state-types';
-import { postCameraReviewAction } from '../api-actions/product-api/product-api';
+import { postCameraReviewAction } from '../api-actions/sended-review-api/sended-review-api';
 import { sendedReviewSlice } from './sended-review-slice';
 
 

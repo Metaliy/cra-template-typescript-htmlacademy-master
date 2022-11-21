@@ -1650,7 +1650,6 @@ button,
   position: absolute;
   top: 0;
   right: 0;
-  display: none;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -1667,6 +1666,9 @@ button,
   -webkit-transition: color 0.3s ease;
   -o-transition: color 0.3s ease;
   transition: color 0.3s ease;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .form-search__reset svg {
@@ -1681,12 +1683,6 @@ button,
 .form-search.list-opened .form-search__select-list {
   visibility: visible;
   opacity: 1;
-}
-
-.form-search.list-opened .form-search__reset {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
 }
 
 .social {
@@ -2041,11 +2037,6 @@ button,
   background-color: #dddddd;
 }
 
-.catalog-sort__btn-text input[type="radio"]:focus + label {
-  color: #7575e2;
-  background-color: #e8e8fa;
-}
-
 .catalog-sort__btn {
   /* Checked */
   /* Disabled */
@@ -2118,10 +2109,6 @@ button,
   pointer-events: none;
 }
 
-.catalog-sort__btn input[type="radio"]:focus + label {
-  color: #7575e2;
-  background-color: #e8e8fa;
-}
 
 .form-checkbox {
   display: -webkit-box;

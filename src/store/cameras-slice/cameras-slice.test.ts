@@ -2,7 +2,7 @@ import { LoadingStatus } from '../../consts/const';
 import { getUidCamerasList } from '../../mock/mock';
 
 import { CamerasSliceType } from '../../types/state-types';
-import { fetchCamerasAction } from '../api-actions/catalog-api/catalog-api';
+import { fetchCamerasAction } from '../api-actions/cameras-api/cameras-api';
 import { camerasSlice } from './cameras-slice';
 
 
@@ -19,7 +19,9 @@ describe('Reducer test: cameras-slice', () => {
     mockState = {
       cameras: [],
       camerasListLoadingStatus: LoadingStatus.Initial,
-      camerasCount: 0
+      camerasCount: 0,
+      minCameraPrice: 0,
+      maxCameraPrice: 0
     };
   });
 

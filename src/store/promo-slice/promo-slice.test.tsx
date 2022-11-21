@@ -2,8 +2,7 @@ import { LoadingStatus } from '../../consts/const';
 import { getFakePromoCamera } from '../../mock/mock';
 import { PromoCameraType } from '../../types/server-data-types';
 import { PromoSliceType } from '../../types/state-types';
-
-import { fetchPromoCameraAction } from '../api-actions/catalog-api/catalog-api';
+import { fetchPromoCameraAction } from '../api-actions/promo-api/promo-api';
 import { promoSlice } from './promo-slice';
 
 const fakePromoCamera = getFakePromoCamera();

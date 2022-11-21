@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { LoadingStatus, NameSpace } from '../../consts/const';
 import { PromoCameraType } from '../../types/server-data-types';
 import { PromoSliceType } from '../../types/state-types';
-import { fetchPromoCameraAction } from '../api-actions/catalog-api/catalog-api';
+import { fetchPromoCameraAction } from '../api-actions/promo-api/promo-api';
 
 
 export const initialState: PromoSliceType = {

@@ -1,7 +1,7 @@
 import { LoadingStatus } from '../../consts/const';
 import { getUidCamerasList } from '../../mock/mock';
 import { similarCamerasSliceType } from '../../types/state-types';
-import { fetchSimilarCamerasAction } from '../api-actions/product-api/product-api';
+import { fetchSimilarCamerasAction } from '../api-actions/similar-cameras-api/similar-cameras-api';
 import { similarCamerasSlice } from './similar-cameras-slice';
 
 

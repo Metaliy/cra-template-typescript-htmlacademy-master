@@ -27,7 +27,7 @@ function ReviewModal ({reviewSentStatus, reviewModalOpenedStatus, cameraId}: Rev
 
   return (
     reviewSentStatusSuccess && reviewModalOpenedStatus ? <ReviewModalSuccess/> :
-      <ReviewModalWithForm cameraId={cameraId} reviewModalStatus={reviewModalOpenedStatus} />
+      <ReviewModalWithForm cameraId={cameraId} reviewModalStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} />
   );
 }
 
