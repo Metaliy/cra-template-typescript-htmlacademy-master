@@ -27,7 +27,7 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
     }
     const minPriceInputRefInput = Number(minPriceInputRef.current?.value);
 
-    if(minPriceInputRefInput < 0) {
+    if(minPriceInputRefInput < 0 || minPriceInputRefInput < minCamerasPrice) {
       minPriceInputRef.current.value = String(minCamerasPrice);
     }
 
@@ -39,10 +39,7 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
       minPriceInputRef.current.value = String(maxCamerasPrice);
     }
 
-    // eslint-disable-next-line no-console
-    console.log(minPriceInputRefInput);
-
-    dispatch((priceMinFilter(minPriceInputRef.current.value)));
+    dispatch((priceMinFilter(Number(minPriceInputRef.current.value) < minPriceInputRefInput ? minPriceInputRef.current.value : minPriceInputRefInput)));
   };
   useEffect(() => {
     if(minPriceInputRef.current?.value) {
@@ -59,13 +56,19 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
 
     if((maxPriceInputRefInput < Number(minPriceInputRef.current?.value)) && minPriceInputRef.current?.value) {
       maxPriceInputRef.current.value = minPriceInputRef.current.value;
+      // eslint-disable-next-line no-console
+      console.log(maxPriceInputRefInput);
     }
 
     if(maxPriceInputRefInput < minCamerasPrice) {
       maxPriceInputRef.current.value = String(minCamerasPrice);
     }
 
-    dispatch((priceMaxFilter(maxPriceInputRef.current.value)));
+    if(maxPriceInputRefInput > maxCamerasPrice) {
+      maxPriceInputRef.current.value = String(maxCamerasPrice);
+    }
+
+    dispatch((priceMaxFilter(Number(maxPriceInputRef.current.value) > maxPriceInputRefInput ? maxPriceInputRef.current.value : maxPriceInputRefInput)));
   };
   useEffect(() => {
     if(maxPriceInputRef.current?.value) {
