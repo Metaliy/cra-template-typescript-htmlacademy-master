@@ -1,9 +1,9 @@
 import { LoadingStatus } from '../../consts/const';
 import { getUidCamerasList } from '../../mock/mock';
-
-import { CamerasSliceType } from '../../types/state-types';
+import { SearchedCamerasSliceType } from '../../types/state-types';
 import { fetchCamerasAction } from '../api-actions/cameras-api/cameras-api';
-import { camerasSlice } from './cameras-slice';
+import { fetchSearchedCamerasAction } from '../api-actions/searched-cameras-api/searched-cameras-api';
+import { searchedCamerasSlice } from './searched-cameras-slice';
 
 
 const fakeCameras = getUidCamerasList(3);
@@ -11,50 +11,43 @@ const fakeCameras = getUidCamerasList(3);
 
 const fakeCamerasCount = 15;
 
-describe('Reducer test: cameras-slice', () => {
-  let mockState: CamerasSliceType;
+describe('Reducer test: searched-cameras-slice', () => {
+  let mockState: SearchedCamerasSliceType;
 
 
   beforeEach(() => {
     mockState = {
-      cameras: [],
-      camerasListLoadingStatus: LoadingStatus.Initial,
-      camerasCount: 0,
-      minCameraPrice: 0,
-      maxCameraPrice: 0
+      searchedCameras: [],
+      searchedCamerasListLoadingStatus: LoadingStatus.Initial,
     };
   });
 
   it('return initial state', () => {
-    expect(camerasSlice.reducer(undefined, {type: 'undefiend-action'}))
+    expect(searchedCamerasSlice.reducer(undefined, {type: 'undefiend-action'}))
       .toEqual(mockState);
   });
 
   describe('fetchCamerasAction test', () => {
-    it('should update cameras with given mock data, update camerasListLoadingStatus to fulfilled if fetchCamerasAction is fulfilled',
+    it('should update cameras with given mock data, update searchedCamerasListLoadingStatus to fulfilled if fetchSearchedCamerasAction is fulfilled',
       () => {
-        expect(camerasSlice.reducer(mockState, {
+        expect(searchedCamerasSlice.reducer(mockState, {
           payload: {
             responsedData: fakeCameras,
-            responsedDataCount: fakeCamerasCount,
-            responsedMinCamerasPrice: fakeCameras[0].price,
-            responsedMaxCamerasPrice: fakeCameras[0].price
+            responsedDataCount: fakeCamerasCount
           },
-          type: fetchCamerasAction.fulfilled.type
+          type: fetchSearchedCamerasAction.fulfilled.type
         }))
           .toEqual({
             ...mockState,
             cameras: fakeCameras,
             camerasCount : fakeCamerasCount,
             camerasListLoadingStatus: LoadingStatus.Fulfilled,
-            minCameraPrice: fakeCameras[0].price,
-            maxCameraPrice: fakeCameras[0].price
           });
       });
 
     it('Update camerasListLoadingStatus to pending if fetchCamerasAction is pending',
       () => {
-        expect(camerasSlice.reducer(mockState, {
+        expect(searchedCamerasSlice.reducer(mockState, {
           type: fetchCamerasAction.pending.type
         }))
           .toEqual({
@@ -65,7 +58,7 @@ describe('Reducer test: cameras-slice', () => {
 
     it('Update camerasListLoadingStatus to rejected if fetchCamerasAction is rejected',
       () => {
-        expect(camerasSlice.reducer(mockState, {
+        expect(searchedCamerasSlice.reducer(mockState, {
           type: fetchCamerasAction.rejected.type
         }))
           .toEqual({

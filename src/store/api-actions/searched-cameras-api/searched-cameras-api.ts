@@ -15,8 +15,6 @@ export const fetchSearchedCamerasAction = createAsyncThunk<CameraType[], string,
   async (userInputCamerasName, {extra: api}) => {
     try {
       const {data} = await api.get<CameraType[]>(`/cameras?name_like=${userInputCamerasName}`);
-      // eslint-disable-next-line no-console
-      console.log(data);
       return data;
     } catch (error) {
       toast.error(ToastMessages.PromoCameraLoadError);

@@ -10,6 +10,7 @@ import { Header } from '../../components/header/header';
 import { IconContainer } from '../../components/icon-container/icon-container';
 import { Loader } from '../../components/loading-screen/loading-screen';
 import { Pagination } from '../../components/pagination/pagination';
+import EmptyProductListMessage from '../../components/product-card-list/empty-product-list-message/empty-product-list-message';
 import { ProductCardList } from '../../components/product-card-list/product-card-list';
 import { AppPageNames, LoadingStatus } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
@@ -86,7 +87,8 @@ function CatalogPage():JSX.Element {
 
                     <CatalogSort type={sortParameters.sortType} order={sortParameters.order}/>
 
-                    <ProductCardList camerasList={camerasList}/>
+                    {camerasList.length !== 0 ? <ProductCardList camerasList={camerasList}/> : <EmptyProductListMessage />}
+
 
                     <Pagination camerasCount={camerasCount} currentPage={currentPage} />
 

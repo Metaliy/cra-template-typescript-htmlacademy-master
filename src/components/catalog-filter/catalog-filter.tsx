@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { FilterCategoryParameter, FilterLevelParameter, FilterTypeParameter } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
-import { categoryFilter, filterTypeFilter, levelFilter, priceMinFilter, priceMaxFilter } from '../../store/catalog-slice/catalog-slice';
+import { categoryFilter, filterTypeFilter, levelFilter, priceMinFilter, priceMaxFilter, filtersInitialState } from '../../store/catalog-slice/catalog-slice';
 
 type CatalogFilterProps = {
   filters: {
@@ -45,7 +45,12 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
     if(minPriceInputRef.current?.value) {
       minPriceInputRef.current.value = String(minCamerasPrice);
     }
-  }, [minCamerasPrice]);
+
+    if(minPriceInputRef.current?.value && minCamerasPrice === 0) {
+      minPriceInputRef.current.value = '';
+    }
+
+  }, [dispatch, minCamerasPrice]);
 
 
   const maxPriceValidation = () => {
@@ -56,8 +61,6 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
 
     if((maxPriceInputRefInput < Number(minPriceInputRef.current?.value)) && minPriceInputRef.current?.value) {
       maxPriceInputRef.current.value = minPriceInputRef.current.value;
-      // eslint-disable-next-line no-console
-      console.log(maxPriceInputRefInput);
     }
 
     if(maxPriceInputRefInput < minCamerasPrice) {
@@ -74,7 +77,12 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
     if(maxPriceInputRef.current?.value) {
       maxPriceInputRef.current.value = String(maxCamerasPrice);
     }
+
+    if(maxPriceInputRef.current?.value && maxCamerasPrice === 0) {
+      maxPriceInputRef.current.value = '';
+    }
   }, [maxCamerasPrice]);
+
 
   return (
     <div className="catalog__aside" data-testid="catalog-filter">
@@ -125,7 +133,7 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
             </div>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="videocamera" checked={category.includes(FilterCategoryParameter.Videocamera)} onChange={() => dispatch((categoryFilter(FilterCategoryParameter.Videocamera)))}></input>
+                <input type="checkbox" name="videocamera" checked={category.includes(FilterCategoryParameter.Videocamera)} onChange={() => dispatch((categoryFilter(FilterCategoryParameter.Videocamera)))} disabled={filterType.includes(FilterTypeParameter.Film) || filterType.includes(FilterTypeParameter.Snapshot)}></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Видеокамера</span>
               </label>
@@ -186,7 +194,7 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
               </label>
             </div>
           </fieldset>
-          <button className="btn catalog-filter__reset-btn" type="reset">Сбросить фильтры
+          <button className="btn catalog-filter__reset-btn" type="reset" onClick={() => dispatch(filtersInitialState())}>Сбросить фильтры
           </button>
         </form>
       </div>

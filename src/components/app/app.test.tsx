@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { AppRoute, LoadingStatus, NameSpace } from '../../consts/const';
+import { AppRoute, LoadingStatus, NameSpace, SortOrderParameter, SortTypeParameter } from '../../consts/const';
 import { fakeReviewList, getFakeCamera, getFakeCamerasReview, getFakePromoCamera } from '../../mock/mock';
 import App from './app';
 import { generatePath } from 'react-router-dom';
@@ -19,8 +19,9 @@ const mockState = {
   [NameSpace.Cameras]: {
     cameras: fakeCameraList,
     camerasListLoadingStatus: LoadingStatus.Fulfilled,
-
-    camerasCount: 15
+    camerasCount: 15,
+    minCameraPrice: 0,
+    maxCameraPrice: 10000
   },
   [NameSpace.SelectedCamera]: {
     selectedCamera: fakeCamera,
@@ -30,6 +31,10 @@ const mockState = {
     similarCameras: fakesimilarCameras,
     similarCamerasLoadingStatus: LoadingStatus.Fulfilled,
   },
+  [NameSpace.Promo]: {
+    promoCamera: fakePromoCamera,
+    promoCameraLoadingStatus: LoadingStatus.Fulfilled
+  },
   [NameSpace.Reviews]: {
     reviewsList: fakeReviewList,
     reviewsListLoadingStatus: LoadingStatus.Fulfilled,
@@ -37,15 +42,26 @@ const mockState = {
   [NameSpace.SendedReview]: {
     reviewSentStatus: LoadingStatus.Initial,
   },
-  [NameSpace.Promo]: {
-    promoCamera: fakePromoCamera,
-    promoCameraLoadingStatus: LoadingStatus.Fulfilled
-  },
   [NameSpace.Catalog]: {
-    currentPage: 1
+    currentPage: 1,
+    sort: {
+      sortType: SortTypeParameter.Price,
+      order:  SortOrderParameter.LowToHigh
+    },
+    filters: {
+      priceMin: [],
+      priceMax: [],
+      category: [],
+      filterType: [],
+      level: []
+    }
   },
   [NameSpace.Product]: {
     reviewModalOpenedStatus: false
+  },
+  [NameSpace.SearchedCameras]: {
+    searchedCameras: [],
+    searchedCamerasListLoadingStatus: LoadingStatus.Fulfilled
   }
 };
 
@@ -71,6 +87,9 @@ const store = mockStore({
   },
   [NameSpace.Product]: {
     reviewModalOpenedStatus: false
+  },
+  [NameSpace.SearchedCameras]: {
+    searchedCameras: [],
   }
 });
 

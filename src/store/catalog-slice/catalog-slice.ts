@@ -57,7 +57,11 @@ export const catalogSlice = createSlice ({
       }
       state.filters.level.push(action.payload);
     },
+    filtersInitialState: (state) => {
+      state.filters = initialState.filters;
+      state.sort = initialState.sort;
+    },
   }
 });
 
-export const {currenCatalogPage, sortType, sortOrder, priceMinFilter, priceMaxFilter, categoryFilter, filterTypeFilter, levelFilter} = catalogSlice.actions;
+export const {currenCatalogPage, sortType, sortOrder, priceMinFilter, priceMaxFilter, categoryFilter, filterTypeFilter, levelFilter, filtersInitialState} = catalogSlice.actions;
