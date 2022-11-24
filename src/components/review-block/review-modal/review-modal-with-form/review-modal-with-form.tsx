@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { LoadingStatus } from '../../../../consts/const';
 import { useAppDispatch } from '../../../../hooks/hooks';
-import { reviewModalOpenedStatus } from '../../../../store/product-slice/product-slice';
+import { reviewModalOpenedStatus } from '../../../../store/slices/product-slice/product-slice';
 import { ReviewModalForm } from '../review-modal-form/review-modal-form';
 
 type ReviewModalWithFormProps = {

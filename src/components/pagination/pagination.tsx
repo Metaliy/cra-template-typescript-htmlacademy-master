@@ -2,7 +2,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { ITEMS_PER_PAGE } from '../../consts/const';
 import { Link, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { currenCatalogPage } from '../../store/catalog-slice/catalog-slice';
+import { currenCatalogPage } from '../../store/slices/catalog-slice/catalog-slice';
 
 
 type PaginationProps = {

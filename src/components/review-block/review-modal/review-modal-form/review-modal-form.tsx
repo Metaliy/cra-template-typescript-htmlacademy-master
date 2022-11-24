@@ -31,7 +31,7 @@ function ReviewModalForm ({cameraId, reviewSentStatus}: ReviewModalWithFormProps
 
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} data-testid='review-modal-form'>
       <div className="form-review__rate">
         <fieldset className="rate form-review__item">
           <legend className="rate__caption">Рейтинг

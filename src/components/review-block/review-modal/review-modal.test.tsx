@@ -42,10 +42,15 @@ describe('Review modal component', () => {
     renderFakeApp(<ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={cameraId}/>, {
       initialState: mockState
     });
-
-
     await userEvent.click(screen.getByTestId('modal-overlay'));
+  });
 
+  it('should render "Review modal success component"', () => {
+    renderFakeApp(<ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={LoadingStatus.Fulfilled} cameraId={cameraId}/>, {
+      initialState: mockState
+    });
+
+    expect(screen.getByTestId('review-modal')).toBeInTheDocument();
   });
 
 });

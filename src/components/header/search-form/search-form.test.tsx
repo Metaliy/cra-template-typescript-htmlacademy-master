@@ -21,11 +21,23 @@ describe('Search form component', () => {
     expect(screen.getByText(fakeCamerasList[0].name)).toBeInTheDocument();
   });
 
-  it('should input empty camera name"', async () => {
+  it('should input and delete camera name', async () => {
     renderFakeApp(<SearchForm searchedCamerasList={fakeCamerasList} />, {});
 
-    await userEvent.type(screen.getByTestId('search-form-input'), '');
+    await userEvent.type(screen.getByTestId('search-form-input'), 'test');
 
-    expect(screen.getByText(fakeCamerasList[0].name)).toBeInTheDocument();
+    await userEvent.clear(screen.getByTestId('search-form-input'));
+
+    expect(screen.queryByText('test')).not.toBeInTheDocument();
+  });
+
+  it('should input camera name and push reset button', async () => {
+    renderFakeApp(<SearchForm searchedCamerasList={fakeCamerasList} />, {});
+
+    await userEvent.type(screen.getByTestId('search-form-input'), 'test');
+
+    await userEvent.click(screen.getByTestId('search-form-reset-button'));
+
+    expect(screen.queryByText('test')).not.toBeInTheDocument();
   });
 });

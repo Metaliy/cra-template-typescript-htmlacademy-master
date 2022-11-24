@@ -78,7 +78,7 @@ export function BasketPage():JSX.Element {
           </symbol>
         </svg>
       </div>
-      <div className="wrapper">
+      <div className="wrapper" data-testid="basket">
         <header className="header" id="header">
           <div className="container">
             <a className="header__logo" href="index.html" aria-label="Переход на главную">

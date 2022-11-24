@@ -44,3 +44,8 @@ export type PostReviewType = {
   review: string,
   rating: number,
 };
+
+export type CamerasPriceRangeType = {
+  maxPrice: number;
+  minPrice: number;
+};

@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { VISIBLE_REVIEWS_COUNT } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
-import { reviewModalOpenedStatus } from '../../store/product-slice/product-slice';
+import { reviewModalOpenedStatus } from '../../store/slices/product-slice/product-slice';
 import { ReviewType } from '../../types/server-data-types';
 import { ReviewCard } from './review-card/review-card';
 

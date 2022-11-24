@@ -43,15 +43,17 @@ const store = mockStore({
 
 const mockState = {
   [NameSpace.Cameras]: {
-    camerasListLoadingStatus: LoadingStatus.Pending,
+    camerasListLoadingStatus: LoadingStatus.Initial,
   },
+  [NameSpace.Promo]: {
+    promoCameraLoadingStatus: LoadingStatus.Initial,
+  }
 };
 describe('Catalog page', () => {
   it('should render "Catalog page"', async () => {
     renderFakeApp(<CatalogPage/>, {
       mockStore: store
     });
-
     expect(await screen.findByTestId('catalog')).toBeInTheDocument();
   });
   it('should render "Loader"', async () => {
@@ -59,6 +61,6 @@ describe('Catalog page', () => {
       initialState: mockState
     });
 
-    expect(await screen.findByTestId('catalog')).not.toBeInTheDocument();
+    expect(await screen.findByTestId('loader-component')).toBeInTheDocument();
   });
 });

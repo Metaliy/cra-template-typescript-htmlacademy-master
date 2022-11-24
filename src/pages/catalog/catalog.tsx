@@ -16,9 +16,11 @@ import { AppPageNames, LoadingStatus } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { fetchCamerasAction } from '../../store/api-actions/cameras-api/cameras-api';
 import { fetchPromoCameraAction } from '../../store/api-actions/promo-api/promo-api';
-import { getCameras, getTotalCamerasCount, getCamerasListLoadingStatus, getMinCamerasPrice, getMaxCamerasPrice } from '../../store/cameras-slice/selectors';
-import { getCurrentPage, getFiltersParameters, getSortParameters } from '../../store/catalog-slice/selectors';
-import { getPromoCamera, getPromoCameraLoadingStatus } from '../../store/promo-slice/selectors';
+import { fetchMinMaxPriceCamerasAction } from '../../store/api-actions/min-max-cameras-price-api/min-max-cameras-price-api';
+import { getCameras, getTotalCamerasCount, getCamerasListLoadingStatus, getMinCamerasPrice, getMaxCamerasPrice } from '../../store/slices/cameras-slice/selectors';
+import { getCurrentPage, getFiltersParameters, getSortParameters } from '../../store/slices/catalog-slice/selectors';
+import { getPromoCamera, getPromoCameraLoadingStatus } from '../../store/slices/promo-slice/selectors';
+import { filtersInitialState } from '../../store/slices/catalog-slice/catalog-slice';
 
 
 function CatalogPage():JSX.Element {
@@ -40,11 +42,13 @@ function CatalogPage():JSX.Element {
 
   useEffect(() => {
     dispatch(fetchCamerasAction({currentPage, sort:{...sortParameters}, filters:{...filterParameters}}));
+    dispatch(fetchMinMaxPriceCamerasAction(filterParameters));
     setSearchParams(({...sortParameters, ...filterParameters}));
   }, [dispatch, currentPage, sortParameters, setSearchParams, filterParameters]);
 
   useEffect(() => {
     dispatch(fetchPromoCameraAction());
+    dispatch(filtersInitialState());
   }, [dispatch]);
 
   const camerasLoadingStatus = useAppSelector(getCamerasListLoadingStatus);
@@ -90,7 +94,8 @@ function CatalogPage():JSX.Element {
                     {camerasList.length !== 0 ? <ProductCardList camerasList={camerasList}/> : <EmptyProductListMessage />}
 
 
-                    <Pagination camerasCount={camerasCount} currentPage={currentPage} />
+                    {camerasCount !== 0 ? <Pagination camerasCount={camerasCount} currentPage={currentPage} /> : ''}
+
 
                   </div>
                 </div>

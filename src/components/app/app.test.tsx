@@ -101,7 +101,7 @@ describe('Application Routing', () => {
       initialState: mockState
     });
 
-    expect(screen.getByText(/УПС.../i)).toBeInTheDocument();
+    expect(screen.getByText(/Каталог фото- и видеотехники/i)).toBeInTheDocument();
   });
 
   it('should render "CatalogPage" when user navigate to "/catalog"', () => {

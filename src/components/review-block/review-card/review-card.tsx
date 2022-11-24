@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import { ReviewType } from '../../../types/server-data-types';
-
 import 'dayjs/locale/ru';
 import { MAX_RATING } from '../../../consts/const';
 import { ReviewRating } from '../../rating/review-rating/review-rating';

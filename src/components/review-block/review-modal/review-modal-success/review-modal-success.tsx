@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../../../hooks/hooks';
-import { reviewModalOpenedStatus } from '../../../../store/product-slice/product-slice';
+import { reviewModalOpenedStatus } from '../../../../store/slices/product-slice/product-slice';
 
 
 function ReviewModalSuccess():JSX.Element {

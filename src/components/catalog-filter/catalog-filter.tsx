@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { FilterCategoryParameter, FilterLevelParameter, FilterTypeParameter } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
-import { categoryFilter, filterTypeFilter, levelFilter, priceMinFilter, priceMaxFilter, filtersInitialState } from '../../store/catalog-slice/catalog-slice';
+import { priceMinFilter, priceMaxFilter, categoryFilter, typeFilter, levelFilter, filtersInitialState } from '../../store/slices/catalog-slice/catalog-slice';
+
 
 type CatalogFilterProps = {
   filters: {
@@ -102,6 +103,7 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
                     placeholder={minCamerasPrice !== 0 ? String(minCamerasPrice) : 'от'}
                     onBlur={() => minPriceValidation()}
                     onKeyDown={(evt) => evt.key === 'Enter' ? minPriceValidation() : ''}
+                    data-testid="catalog-price-filter-min"
                   >
                   </input>
                 </label>
@@ -116,6 +118,7 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
                     placeholder={maxCamerasPrice !== 0 ? String(maxCamerasPrice) : 'до'}
                     onBlur={() => maxPriceValidation()}
                     onKeyDown={(evt) => evt.key === 'Enter' ? maxPriceValidation() : ''}
+                    data-testid="catalog-price-filter-max"
                   >
                   </input>
                 </label>
@@ -126,14 +129,14 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
             <legend className="title title--h5">Категория</legend>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="photocamera" checked={category.includes(FilterCategoryParameter.Photocamera)} onChange={() => dispatch((categoryFilter(FilterCategoryParameter.Photocamera)))}></input>
+                <input type="checkbox" name="photocamera" checked={category.includes(FilterCategoryParameter.Photocamera)} onChange={() => dispatch((categoryFilter(FilterCategoryParameter.Photocamera)))} data-testid="catalog-category-filter-photocamera"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Фотокамера</span>
               </label>
             </div>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="videocamera" checked={category.includes(FilterCategoryParameter.Videocamera)} onChange={() => dispatch((categoryFilter(FilterCategoryParameter.Videocamera)))} disabled={filterType.includes(FilterTypeParameter.Film) || filterType.includes(FilterTypeParameter.Snapshot)}></input>
+                <input type="checkbox" name="videocamera" checked={category.includes(FilterCategoryParameter.Videocamera)} onChange={() => dispatch((categoryFilter(FilterCategoryParameter.Videocamera)))} disabled={filterType.includes(FilterTypeParameter.Film) || filterType.includes(FilterTypeParameter.Snapshot)} data-testid="catalog-category-filter-videocamera"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Видеокамера</span>
               </label>
@@ -143,28 +146,28 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
             <legend className="title title--h5">Тип камеры</legend>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="digital" checked={filterType.includes(FilterTypeParameter.Digital)} onChange={() => dispatch((filterTypeFilter(FilterTypeParameter.Digital)))}></input>
+                <input type="checkbox" name="digital" checked={filterType.includes(FilterTypeParameter.Digital)} onChange={() => dispatch((typeFilter(FilterTypeParameter.Digital)))} data-testid="catalog-type-filter-digital"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Цифровая</span>
               </label>
             </div>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="film" checked={filterType.includes(FilterTypeParameter.Film)} onChange={() => dispatch((filterTypeFilter(FilterTypeParameter.Film)))} disabled={category.includes(FilterCategoryParameter.Videocamera) && !category.includes(FilterCategoryParameter.Photocamera)}></input>
+                <input type="checkbox" name="film" checked={filterType.includes(FilterTypeParameter.Film)} onChange={() => dispatch((typeFilter(FilterTypeParameter.Film)))} disabled={category.includes(FilterCategoryParameter.Videocamera) && !category.includes(FilterCategoryParameter.Photocamera)} data-testid="catalog-type-filter-film"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Плёночная</span>
               </label>
             </div>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="snapshot" checked={filterType.includes(FilterTypeParameter.Snapshot)} onChange={() => dispatch((filterTypeFilter(FilterTypeParameter.Snapshot)))} disabled={category.includes(FilterCategoryParameter.Videocamera) && !category.includes(FilterCategoryParameter.Photocamera)}></input>
+                <input type="checkbox" name="snapshot" checked={filterType.includes(FilterTypeParameter.Snapshot)} onChange={() => dispatch((typeFilter(FilterTypeParameter.Snapshot)))} disabled={category.includes(FilterCategoryParameter.Videocamera) && !category.includes(FilterCategoryParameter.Photocamera)} data-testid="catalog-type-filter-snapshot"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Моментальная</span>
               </label>
             </div>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="collection" checked={filterType.includes(FilterTypeParameter.Collection)} onChange={() => dispatch((filterTypeFilter(FilterTypeParameter.Collection)))}></input>
+                <input type="checkbox" name="collection" checked={filterType.includes(FilterTypeParameter.Collection)} onChange={() => dispatch((typeFilter(FilterTypeParameter.Collection)))} data-testid="catalog-type-filter-collection"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Коллекционная</span>
               </label>
@@ -174,27 +177,27 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
             <legend className="title title--h5">Уровень</legend>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="zero" checked={level.includes(FilterLevelParameter.Zero)} onChange={() => dispatch((levelFilter(FilterLevelParameter.Zero)))}></input>
+                <input type="checkbox" name="zero" checked={level.includes(FilterLevelParameter.Zero)} onChange={() => dispatch((levelFilter(FilterLevelParameter.Zero)))} data-testid="catalog-level-filter-zero"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Нулевой</span>
               </label>
             </div>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="non-professional" checked={level.includes(FilterLevelParameter.NonProfessional)} onChange={() => dispatch((levelFilter(FilterLevelParameter.NonProfessional)))}></input>
+                <input type="checkbox" name="non-professional" checked={level.includes(FilterLevelParameter.NonProfessional)} onChange={() => dispatch((levelFilter(FilterLevelParameter.NonProfessional)))} data-testid="catalog-level-filter-non-professional"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Любительский</span>
               </label>
             </div>
             <div className="custom-checkbox catalog-filter__item">
               <label>
-                <input type="checkbox" name="professional" checked={level.includes(FilterLevelParameter.Professional)} onChange={() => dispatch((levelFilter(FilterLevelParameter.Professional)))}></input>
+                <input type="checkbox" name="professional" checked={level.includes(FilterLevelParameter.Professional)} onChange={() => dispatch((levelFilter(FilterLevelParameter.Professional)))} data-testid="catalog-level-filter-professional"></input>
                 <span className="custom-checkbox__icon"></span>
                 <span className="custom-checkbox__label">Профессиональный</span>
               </label>
             </div>
           </fieldset>
-          <button className="btn catalog-filter__reset-btn" type="reset" onClick={() => dispatch(filtersInitialState())}>Сбросить фильтры
+          <button className="btn catalog-filter__reset-btn" type="reset" onClick={() => dispatch(filtersInitialState())} data-testid="catalog-filter-reset-button">Сбросить фильтры
           </button>
         </form>
       </div>

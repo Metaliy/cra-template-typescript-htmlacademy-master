@@ -31,11 +31,17 @@ export type CatalogSliceType = {
   }
 }
 
+export type FetchMinMaxCamerasResponsedType = {
+    priceMin: string | string[],
+    priceMax: string |string[],
+    category: string[],
+    filterType: string[],
+    level: string[]
+}
+
 export type FetchCamerasActionResponsedType = {
   responsedDataCount: number,
-  responsedData: CameraType[],
-  responsedMinCamerasPrice: number,
-  responsedMaxCamerasPrice: number
+  responsedData: CameraType[]
 }
 
 export type ProductSliceType = {

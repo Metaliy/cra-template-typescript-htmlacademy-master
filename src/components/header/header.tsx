@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/hooks';
-import { getSearchedCameras } from '../../store/searched-cameras-slice/selectors';
+import { getSearchedCameras } from '../../store/slices/searched-cameras-slice/selectors';
 import { HeaderNavigation } from './header-navigation/header-navigation';
 import { SearchForm } from './search-form/search-form';
 

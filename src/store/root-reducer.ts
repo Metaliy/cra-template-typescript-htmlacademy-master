@@ -1,14 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { NameSpace } from '../consts/const';
-import { camerasSlice } from './cameras-slice/cameras-slice';
-import { catalogSlice } from './catalog-slice/catalog-slice';
-import { productSlice } from './product-slice/product-slice';
-import { promoSlice } from './promo-slice/promo-slice';
-import { reviewsSlice } from './reviews-slice/reviews-slice';
-import { searchedCamerasSlice } from './searched-cameras-slice/searched-cameras-slice';
-import { selectedCameraSlice } from './selected-camera-slice/selected-camera-slice';
-import { sendedReviewSlice } from './sended-review-slice/sended-review-slice';
-import { similarCamerasSlice } from './similar-cameras-slice/similar-cameras-slice';
+import { camerasSlice } from './slices/cameras-slice/cameras-slice';
+import { catalogSlice } from './slices/catalog-slice/catalog-slice';
+import { productSlice } from './slices/product-slice/product-slice';
+import { promoSlice } from './slices/promo-slice/promo-slice';
+import { reviewsSlice } from './slices/reviews-slice/reviews-slice';
+import { searchedCamerasSlice } from './slices/searched-cameras-slice/searched-cameras-slice';
+import { selectedCameraSlice } from './slices/selected-camera-slice/selected-camera-slice';
+import { sendedReviewSlice } from './slices/sended-review-slice/sended-review-slice';
+import { similarCamerasSlice } from './slices/similar-cameras-slice/similar-cameras-slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.Cameras]: camerasSlice.reducer,

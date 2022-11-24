@@ -1,9 +1,9 @@
 import { Route } from 'react-router';
-import { Routes } from 'react-router-dom';
+import { generatePath, Navigate, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts/const';
 import { BasketPage } from '../../pages/basket/basker';
 import { CatalogPage } from '../../pages/catalog/catalog';
-import { MainPage } from '../../pages/main/main';
+
 import { NotFoundPage } from '../../pages/not-found/not-found';
 import { ProductPage } from '../../pages/product/product';
 
@@ -15,7 +15,13 @@ function App(): JSX.Element {
     <Routes>
       <Route
         path={AppRoute.Main}
-        element={<MainPage/>}
+        element={
+          <Navigate
+            to={{
+              pathname: generatePath(AppRoute.Catalog, {id: '1'})
+            }}
+          />
+        }
       />
       <Route
         path={AppRoute.Catalog}

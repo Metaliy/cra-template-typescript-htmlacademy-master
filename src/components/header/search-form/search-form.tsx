@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../../consts/const';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { fetchSearchedCamerasAction } from '../../../store/api-actions/searched-cameras-api/searched-cameras-api';
-import { emptySearchedCameraList } from '../../../store/searched-cameras-slice/searched-cameras-slice';
+import { emptySearchedCameraList } from '../../../store/slices/searched-cameras-slice/searched-cameras-slice';
 import { CameraType } from '../../../types/server-data-types';
 
 type SearchFormProps = {
@@ -36,6 +36,10 @@ function SearchForm ({searchedCamerasList}: SearchFormProps) {
     setIsResetButtonVisible(false);
   };
 
+  useEffect(() => {
+    dispatch(emptySearchedCameraList());
+  }, [dispatch]);
+
 
   return (
     <div className={searchedCamerasList.length ? 'form-search list-opened' : 'form-search'}>
@@ -51,7 +55,7 @@ function SearchForm ({searchedCamerasList}: SearchFormProps) {
             searchedCamerasList.map((camera) =>
               (
                 <li className="form-search__select-item" tabIndex={1} key={camera.id} data-testid="search-form-list-item">
-                  <Link to={generatePath(AppRoute.Product, {id: String(camera.id)})} onClick={() => dispatch(emptySearchedCameraList())}>
+                  <Link to={generatePath(AppRoute.Product, {id: String(camera.id)})}>
                     {camera.name}
                   </Link>
                 </li>
@@ -61,7 +65,7 @@ function SearchForm ({searchedCamerasList}: SearchFormProps) {
         </ul>
         {
           isResetButtonVisible ?
-            <button className="form-search__reset" type="reset">
+            <button className="form-search__reset" type="reset" data-testid="search-form-reset-button">
               <svg width="10" height="10" aria-hidden="true">
                 <use xlinkHref="#icon-close"></use>
               </svg><span className="visually-hidden">Сбросить поиск</span>
