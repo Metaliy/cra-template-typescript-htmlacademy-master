@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { FilterCategoryParameter, FilterLevelParameter, FilterTypeParameter } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
 import { priceMinFilter, priceMaxFilter, categoryFilter, typeFilter, levelFilter, filtersInitialState } from '../../store/slices/catalog-slice/catalog-slice';
@@ -17,72 +17,69 @@ type CatalogFilterProps = {
 function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilterProps) {
 
   const {category, filterType, level} = filters;
-  const minPriceInputRef = useRef<HTMLInputElement>(null);
-  const maxPriceInputRef = useRef<HTMLInputElement>(null);
+
+  const [minPriceInputValue, setMinPriceInputValue] = useState('');
+  const [maxPriceInputValue, setMaxPriceInputValue] = useState('');
+
 
   const dispatch = useAppDispatch();
 
   const minPriceValidation = () => {
-    if (!minPriceInputRef.current ) {
-      return;
-    }
-    const minPriceInputRefInput = Number(minPriceInputRef.current?.value);
+    const minPriceInputNumber = Number(minPriceInputValue);
 
-    if(minPriceInputRefInput < 0 || minPriceInputRefInput < minCamerasPrice) {
-      minPriceInputRef.current.value = String(minCamerasPrice);
+    if(minPriceInputNumber < 0 || minPriceInputNumber < minCamerasPrice) {
+      setMinPriceInputValue(String(minCamerasPrice));
     }
 
-    if((minPriceInputRefInput > Number(maxPriceInputRef.current?.value)) && maxPriceInputRef.current?.value) {
-      minPriceInputRef.current.value = maxPriceInputRef.current.value;
+    if((minPriceInputNumber > Number(maxPriceInputValue)) && maxPriceInputValue) {
+      setMinPriceInputValue(maxPriceInputValue);
     }
 
-    if(minPriceInputRefInput > maxCamerasPrice) {
-      minPriceInputRef.current.value = String(maxCamerasPrice);
+    if(minPriceInputNumber < minCamerasPrice || minPriceInputNumber > minCamerasPrice) {
+      setMinPriceInputValue(String(minCamerasPrice));
     }
 
-    dispatch((priceMinFilter(Number(minPriceInputRef.current.value) < minPriceInputRefInput ? minPriceInputRef.current.value : minPriceInputRefInput)));
+    dispatch((priceMinFilter(Number(minPriceInputValue) > maxCamerasPrice ? maxCamerasPrice : minPriceInputValue)));
   };
   useEffect(() => {
-    if(minPriceInputRef.current?.value) {
-      minPriceInputRef.current.value = String(minCamerasPrice);
+    if(minPriceInputValue) {
+      setMinPriceInputValue(String(minCamerasPrice));
     }
-
-    if(minPriceInputRef.current?.value && minCamerasPrice === 0) {
-      minPriceInputRef.current.value = '';
+    if(minCamerasPrice === 0) {
+      setMinPriceInputValue('');
     }
 
   }, [dispatch, minCamerasPrice]);
 
 
   const maxPriceValidation = () => {
-    if (!maxPriceInputRef.current) {
-      return;
-    }
-    const maxPriceInputRefInput = Number(maxPriceInputRef.current?.value);
+    const maxPriceInputNumber = Number(maxPriceInputValue);
 
-    if((maxPriceInputRefInput < Number(minPriceInputRef.current?.value)) && minPriceInputRef.current?.value) {
-      maxPriceInputRef.current.value = minPriceInputRef.current.value;
+    if((maxPriceInputNumber < Number(minPriceInputValue)) && minPriceInputValue) {
+      setMaxPriceInputValue(minPriceInputValue);
     }
 
-    if(maxPriceInputRefInput < minCamerasPrice) {
-      maxPriceInputRef.current.value = String(minCamerasPrice);
+    if(maxPriceInputNumber < minCamerasPrice) {
+      // eslint-disable-next-line no-console
+      console.log(minCamerasPrice);
+      setMaxPriceInputValue(String(minCamerasPrice));
     }
 
-    if(maxPriceInputRefInput > maxCamerasPrice) {
-      maxPriceInputRef.current.value = String(maxCamerasPrice);
+    if(maxPriceInputNumber > maxCamerasPrice) {
+      setMaxPriceInputValue(String(maxCamerasPrice));
     }
 
-    dispatch((priceMaxFilter(Number(maxPriceInputRef.current.value) > maxPriceInputRefInput ? maxPriceInputRef.current.value : maxPriceInputRefInput)));
+    dispatch((priceMaxFilter(Number(maxPriceInputValue) < minCamerasPrice ? minCamerasPrice : maxPriceInputValue)));
   };
   useEffect(() => {
-    if(maxPriceInputRef.current?.value) {
-      maxPriceInputRef.current.value = String(maxCamerasPrice);
+    if(maxPriceInputValue) {
+      setMaxPriceInputValue(String(maxCamerasPrice));
     }
 
-    if(maxPriceInputRef.current?.value && maxCamerasPrice === 0) {
-      maxPriceInputRef.current.value = '';
+    if(maxCamerasPrice === 0) {
+      setMaxPriceInputValue('');
     }
-  }, [maxCamerasPrice]);
+  }, [dispatch, maxCamerasPrice]);
 
 
   return (
@@ -99,11 +96,12 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
                     type="number"
                     name="price"
                     min={0}
-                    ref={minPriceInputRef}
                     placeholder={minCamerasPrice !== 0 ? String(minCamerasPrice) : 'от'}
                     onBlur={() => minPriceValidation()}
                     onKeyDown={(evt) => evt.key === 'Enter' ? minPriceValidation() : ''}
                     data-testid="catalog-price-filter-min"
+                    onChange={(evt) => setMinPriceInputValue(evt.target.value)}
+                    value={minPriceInputValue}
                   >
                   </input>
                 </label>
@@ -114,11 +112,12 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
                     type="number"
                     name="priceUp"
                     min={0}
-                    ref={maxPriceInputRef}
                     placeholder={maxCamerasPrice !== 0 ? String(maxCamerasPrice) : 'до'}
                     onBlur={() => maxPriceValidation()}
                     onKeyDown={(evt) => evt.key === 'Enter' ? maxPriceValidation() : ''}
                     data-testid="catalog-price-filter-max"
+                    onChange={(evt) => setMaxPriceInputValue(evt.target.value)}
+                    value={maxPriceInputValue}
                   >
                   </input>
                 </label>
