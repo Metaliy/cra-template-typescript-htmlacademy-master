@@ -60,8 +60,6 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
     }
 
     if(maxPriceInputNumber < minCamerasPrice) {
-      // eslint-disable-next-line no-console
-      console.log(minCamerasPrice);
       setMaxPriceInputValue(String(minCamerasPrice));
     }
 
