@@ -35,6 +35,8 @@ export const catalogSlice = createSlice ({
     },
     priceMaxFilter: (state, action) => {
       state.filters.priceMax = action.payload;
+      // eslint-disable-next-line no-console
+      console.log(action.payload);
     },
     categoryFilter: (state, action) => {
       if (state.filters.category.includes(action.payload)) {

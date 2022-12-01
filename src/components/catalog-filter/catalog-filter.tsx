@@ -63,17 +63,21 @@ function CatalogFilter ({filters, minCamerasPrice, maxCamerasPrice}: CatalogFilt
       setMaxPriceInputValue(String(minCamerasPrice));
     }
 
-    if(maxPriceInputNumber > maxCamerasPrice) {
+    if(maxPriceInputNumber > maxCamerasPrice || maxPriceInputNumber < maxCamerasPrice) {
       setMaxPriceInputValue(String(maxCamerasPrice));
     }
 
-    dispatch((priceMaxFilter(Number(maxPriceInputValue) < minCamerasPrice ? minCamerasPrice : maxPriceInputValue)));
+    if(Number(maxPriceInputValue) < minCamerasPrice) {
+      setMaxPriceInputValue(String(minCamerasPrice));
+    }
+
+
+    dispatch((priceMaxFilter(maxPriceInputValue ? maxPriceInputValue : '')));
   };
   useEffect(() => {
     if(maxPriceInputValue) {
       setMaxPriceInputValue(String(maxCamerasPrice));
     }
-
     if(maxCamerasPrice === 0) {
       setMaxPriceInputValue('');
     }

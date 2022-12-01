@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../consts/const';
 import { useAppSelector } from '../../hooks/hooks';
 import { getSearchedCameras } from '../../store/slices/searched-cameras-slice/selectors';
 import { HeaderNavigation } from './header-navigation/header-navigation';
@@ -19,11 +20,11 @@ function Header () {
         </Link>
         <HeaderNavigation />
         <SearchForm searchedCamerasList={searchedCamerasList} />
-        <a className="header__basket-link" href="#">
+        <Link className="header__basket-link" to={AppRoute.Basket}>
           <svg width="16" height="16" aria-hidden="true">
             <use xlinkHref="#icon-basket"></use>
           </svg>
-        </a>
+        </Link>
       </div>
     </header>
   );
