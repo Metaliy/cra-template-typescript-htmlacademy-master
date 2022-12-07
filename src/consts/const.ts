@@ -9,7 +9,9 @@ export enum NameSpace {
   SendedReview = 'SendedReview',
   Catalog = 'Catalog',
   Product = 'Product',
-  SearchedCameras = 'SearchedCameras'
+  SearchedCameras = 'SearchedCameras',
+  Basket = 'Basket',
+  AddItemModal = 'AddItemModal'
 }
 
 export const CAMERAS_ON_PAGE = '9';

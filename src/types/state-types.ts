@@ -48,6 +48,17 @@ export type ProductSliceType = {
   reviewModalOpenedStatus: boolean
 }
 
+export type BasketSliceType = {
+  addedItems: {
+    camera: CameraType,
+    camerasCount: number
+  }[]
+}
+
+export type AddItemModalSliceType = {
+  addItemModalOpenedStatus: boolean
+}
+
 export type CamerasSliceType = {
   cameras: CameraType[],
   camerasListLoadingStatus: LoadingStatus,
