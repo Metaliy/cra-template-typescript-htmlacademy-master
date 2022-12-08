@@ -3,7 +3,8 @@ import { NameSpace } from '../../../consts/const';
 import { BasketSliceType } from '../../../types/state-types';
 
 const initialState: BasketSliceType = {
-  addedItems: []
+  addedItems: [],
+  numberOfItemsAdded: 0
 };
 
 export const basketSlice = createSlice ({
@@ -19,8 +20,12 @@ export const basketSlice = createSlice ({
       if(!addedCamera) {
         state.addedItems.push(action.payload);
       }
+    },
+    addedItemsCount: (state) => {
+      const initialValue = 0;
+      state.numberOfItemsAdded = state.addedItems.reduce((accumulator, currentValue) => accumulator + currentValue.camerasCount, initialValue);
     }
   }
 });
 
-export const {addedOnBasketItems} = basketSlice.actions;
+export const {addedOnBasketItems, addedItemsCount} = basketSlice.actions;

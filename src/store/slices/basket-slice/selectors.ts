@@ -2,4 +2,13 @@ import { NameSpace } from '../../../consts/const';
 import { State } from '../../../types/state-types';
 
 
-export const getaddedOnBasketItems = (state: State): boolean => state[NameSpace.Product].reviewModalOpenedStatus;
+export const getaddedOnBasketItemsId = (state: State): number[] => {
+
+  const idsList: number[] = [];
+  state[NameSpace.Basket].addedItems.forEach((item) => {
+    idsList.push(item.camera.id);
+  });
+  return idsList;
+};
+
+export const getNumberOfItemsAdded = (state: State): number => state[NameSpace.Basket].numberOfItemsAdded;
