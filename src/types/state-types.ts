@@ -56,7 +56,8 @@ export type BasketSliceType = {
 }
 
 export type AddItemModalSliceType = {
-  addItemModalOpenedStatus: boolean
+  addItemModalOpenedStatus: boolean,
+  addedCamera?: CameraType
 }
 
 export type CamerasSliceType = {

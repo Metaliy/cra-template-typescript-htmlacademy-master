@@ -60,7 +60,7 @@ export const catalogSlice = createSlice ({
     filtersInitialState: (state) => {
       state.filters = initialState.filters;
       state.sort = initialState.sort;
-    },
+    }
   }
 });
 

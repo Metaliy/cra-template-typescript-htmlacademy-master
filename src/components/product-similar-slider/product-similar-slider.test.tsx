@@ -5,18 +5,19 @@ import { getUidCamerasList } from '../../mock/mock';
 import { ProductSimilarSlider } from './product-similar-slider';
 
 const fakesimilarCameras = getUidCamerasList(4);
+const camerasId = [1,2,3,4];
 
 
 describe('Product similar slider component', () => {
   it('should render "Product similar slider component"', () => {
-    renderFakeApp(<ProductSimilarSlider similarCamerasList={fakesimilarCameras}/>, {});
+    renderFakeApp(<ProductSimilarSlider similarCamerasList={fakesimilarCameras} camerasIdInTheBasket={camerasId}/>, {});
 
     expect(screen.getByTestId('product-similar-slider')).toBeInTheDocument();
     expect(screen.getByText(fakesimilarCameras[0].name)).toBeInTheDocument();
   });
 
   it('should click on next-button', async () => {
-    renderFakeApp(<ProductSimilarSlider similarCamerasList={fakesimilarCameras} />, {
+    renderFakeApp(<ProductSimilarSlider similarCamerasList={fakesimilarCameras} camerasIdInTheBasket={camerasId} />, {
     });
 
     await userEvent.click(screen.getByTestId('next-button'));
@@ -27,7 +28,7 @@ describe('Product similar slider component', () => {
   });
 
   it('should click on prev-button after click on next-button', async () => {
-    renderFakeApp(<ProductSimilarSlider similarCamerasList={fakesimilarCameras} />, {
+    renderFakeApp(<ProductSimilarSlider similarCamerasList={fakesimilarCameras} camerasIdInTheBasket={camerasId} />, {
     });
 
     expect(screen.getByTestId(`active-product-card-${fakesimilarCameras[0].id}`)).toBeInTheDocument();

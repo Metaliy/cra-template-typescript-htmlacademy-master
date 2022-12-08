@@ -23,9 +23,10 @@ import { getSimilarCameras, getSimilarCamerasListLoadingStatus } from '../../sto
 import { fetchCamerasReviewsAction } from '../../store/api-actions/reviews-api/reviews-api';
 import { fetchSelectedCameraAction } from '../../store/api-actions/selected-camera-api/selected-camera-api';
 import { fetchSimilarCamerasAction } from '../../store/api-actions/similar-cameras-api/similar-cameras-api';
-import { getAddItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/selectors';
+import { getAddedItem, getAddItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/selectors';
 import { AddItemModal } from '../../components/add-item-modal/add-item-modal';
-import { addItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
+import { addedItem, addItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
+import { getaddedOnBasketItemsId } from '../../store/slices/basket-slice/selectors';
 
 
 export function ProductPage():JSX.Element {
@@ -45,6 +46,8 @@ export function ProductPage():JSX.Element {
   const similarCamerasList = useAppSelector(getSimilarCameras);
   const reviewsList = useAppSelector(getReviewsList);
   const reviewSentStatus = useAppSelector(getReviewSentStatus);
+  const camerasIdInTheCart = useAppSelector(getaddedOnBasketItemsId);
+  const addedCamera = useAppSelector(getAddedItem);
 
   const reviewModalOpenedStatus = useAppSelector(getReviewModalOpenedStatus);
   const isAddItemModalOpened = useAppSelector(getAddItemModalOpenedStatus);
@@ -84,7 +87,11 @@ export function ProductPage():JSX.Element {
                     <h1 className="title title--h3">{selectedCamera.name}</h1>
                     <ProductRating maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
                     <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(selectedCamera.price)} ₽</p>
-                    <button className="btn btn--purple" type="button" onClick={() => dispatch(addItemModalOpenedStatus(true))}>
+                    <button className="btn btn--purple" type="button" onClick={() => {
+                      dispatch(addItemModalOpenedStatus(true));
+                      dispatch(addedItem(selectedCamera));
+                    }}
+                    >
                       <svg width="24" height="16" aria-hidden="true">
                         <use xlinkHref="#icon-add-basket"></use>
                       </svg>Добавить в корзину
@@ -97,7 +104,7 @@ export function ProductPage():JSX.Element {
             <div className="page-content__section">
               <section className="product-similar">
                 <div className="container">
-                  <ProductSimilarSlider similarCamerasList={similarCamerasList} />
+                  <ProductSimilarSlider similarCamerasList={similarCamerasList} camerasIdInTheBasket={camerasIdInTheCart} />
                 </div>
               </section>
             </div>
@@ -119,9 +126,9 @@ export function ProductPage():JSX.Element {
             :
             <ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={selectedCamera.id}/>}
 
-          {isAddItemModalOpened ?
+          {isAddItemModalOpened && addedCamera ?
             <RemoveScroll>
-              <AddItemModal addedCamera={selectedCamera} />
+              <AddItemModal addedCamera={addedCamera} />
             </RemoveScroll>
             :
             ''}

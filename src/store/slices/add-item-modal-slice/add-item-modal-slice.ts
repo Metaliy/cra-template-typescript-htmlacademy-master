@@ -12,8 +12,11 @@ export const addItemModalSlice = createSlice ({
   reducers: {
     addItemModalOpenedStatus: (state, action) => {
       state.addItemModalOpenedStatus = action.payload;
+    },
+    addedItem: (state, action) => {
+      state.addedCamera = action.payload;
     }
   }
 });
 
-export const {addItemModalOpenedStatus} = addItemModalSlice.actions;
+export const {addItemModalOpenedStatus, addedItem} = addItemModalSlice.actions;
