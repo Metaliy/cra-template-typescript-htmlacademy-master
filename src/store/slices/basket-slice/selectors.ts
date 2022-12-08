@@ -11,3 +11,4 @@ export const getaddedOnBasketItemsId = (state: State): number[] => {
   return idsList;
 };
 
+export const getNumberOfItemsAdded = (state: State): number => state[NameSpace.Basket].numberOfItemsAdded;
