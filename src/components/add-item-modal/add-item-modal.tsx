@@ -4,15 +4,16 @@ import { AddItemConfirmModal } from './add-item-confirm-modal/add-item-confirm-m
 import { AddItemSuccessModal } from './add-item-success-modal/add-item-success-popup';
 
 type AddItemModalProps = {
-  addedCamera: CameraType
+  addedCamera: CameraType,
+  isCatalog?: boolean
 }
 
-export function AddItemModal({addedCamera}: AddItemModalProps):JSX.Element {
+export function AddItemModal({addedCamera, isCatalog}: AddItemModalProps):JSX.Element {
 
   const [isCameraAdded, onSetIsCameraAdded] = useState(false);
 
   return (
-    isCameraAdded ? <AddItemSuccessModal /> :
+    isCameraAdded ? <AddItemSuccessModal isCatalog={isCatalog} /> :
       <AddItemConfirmModal camera={addedCamera} onSetIsCameraAddedHanlder={onSetIsCameraAdded}/>
   );
 }

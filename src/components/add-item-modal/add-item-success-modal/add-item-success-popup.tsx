@@ -4,7 +4,11 @@ import { AppRoute } from '../../../consts/const';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { addItemModalOpenedStatus } from '../../../store/slices/add-item-modal-slice/add-item-modal-slice';
 
-export function AddItemSuccessModal():JSX.Element {
+type AddItemSuccessModalProps = {
+  isCatalog?: boolean
+}
+
+export function AddItemSuccessModal({isCatalog}: AddItemSuccessModalProps):JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
@@ -17,7 +21,7 @@ export function AddItemSuccessModal():JSX.Element {
             <use xlinkHref="#icon-success"></use>
           </svg>
           <div className="modal__buttons">
-            <Link className="btn btn--transparent modal__btn" to={generatePath(AppRoute.Catalog, {id: '1'})} onClick={() => dispatch(addItemModalOpenedStatus(false))}>Продолжить покупки</Link>
+            <Link className="btn btn--transparent modal__btn" to={isCatalog ? '' : generatePath(AppRoute.Catalog, {id: '1'})} onClick={() => dispatch(addItemModalOpenedStatus(false))}>Продолжить покупки</Link>
             <button className="btn btn--purple modal__btn modal__btn--fit-width" onClick={() => browserHistory.push(AppRoute.Basket)}>Перейти в корзину</button>
           </div>
           <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => dispatch(addItemModalOpenedStatus(false))}>

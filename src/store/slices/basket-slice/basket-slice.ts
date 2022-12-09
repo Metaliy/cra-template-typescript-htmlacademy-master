@@ -24,8 +24,24 @@ export const basketSlice = createSlice ({
     addedItemsCount: (state) => {
       const initialValue = 0;
       state.numberOfItemsAdded = state.addedItems.reduce((accumulator, currentValue) => accumulator + currentValue.camerasCount, initialValue);
+    },
+    addedItemsCounters: (state, action) => {
+      const changedItem = state.addedItems.find((item) => item.camera.id === action.payload.id);
+      if(action.payload.isPlus && changedItem && changedItem.camerasCount <= 99) {
+        changedItem.camerasCount = changedItem.camerasCount + 1;
+      }
+      if(action.payload.isMinus && changedItem && changedItem.camerasCount >= 1) {
+        changedItem.camerasCount = changedItem.camerasCount - 1;
+      }
+    },
+    removedCamera: (state, action) => {
+      state.removedCamera = action.payload;
+    },
+    removedItemConfirm: (state, action) => {
+      const removedItemIndex = state.addedItems.findIndex((item) => item.camera.id === action.payload);
+      state.addedItems.splice(removedItemIndex, 1);
     }
   }
 });
 
-export const {addedOnBasketItems, addedItemsCount} = basketSlice.actions;
+export const {addedOnBasketItems, addedItemsCount, addedItemsCounters, removedCamera, removedItemConfirm} = basketSlice.actions;

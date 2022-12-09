@@ -117,7 +117,7 @@ function CatalogPage():JSX.Element {
 
           {isAddItemModalOpened && addedOnBasketCamera ?
             <RemoveScroll>
-              <AddItemModal addedCamera={addedOnBasketCamera} />
+              <AddItemModal addedCamera={addedOnBasketCamera} isCatalog />
             </RemoveScroll>
             :
             ''}

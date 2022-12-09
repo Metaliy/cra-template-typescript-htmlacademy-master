@@ -53,7 +53,8 @@ export type BasketSliceType = {
     camera: CameraType,
     camerasCount: number
   }[],
-  numberOfItemsAdded : number
+  numberOfItemsAdded : number,
+  removedCamera?: CameraType
 }
 
 export type AddItemModalSliceType = {
