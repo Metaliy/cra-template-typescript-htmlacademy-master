@@ -54,7 +54,11 @@ export type BasketSliceType = {
     camerasCount: number
   }[],
   numberOfItemsAdded : number,
-  removedCamera?: CameraType
+  removedCamera?: CameraType,
+  discountPercentage: string,
+  couponStatus: LoadingStatus,
+  couponName: string | null,
+  orderSentStatus: LoadingStatus
 }
 
 export type AddItemModalSliceType = {

@@ -1,10 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../../consts/const';
+import { LoadingStatus, NameSpace } from '../../../consts/const';
 import { BasketSliceType } from '../../../types/state-types';
+import { postCouponAction } from '../../api-actions/coupon-api/coupon-api';
+import { postCameraOrderAction } from '../../api-actions/order-api/order-api';
 
 const initialState: BasketSliceType = {
   addedItems: [],
-  numberOfItemsAdded: 0
+  numberOfItemsAdded: 0,
+  discountPercentage: '0',
+  couponStatus: LoadingStatus.Initial,
+  couponName: null,
+  orderSentStatus: LoadingStatus.Initial
 };
 
 export const basketSlice = createSlice ({
@@ -40,8 +46,33 @@ export const basketSlice = createSlice ({
     removedItemConfirm: (state, action) => {
       const removedItemIndex = state.addedItems.findIndex((item) => item.camera.id === action.payload);
       state.addedItems.splice(removedItemIndex, 1);
+    },
+    basketInitialState: (state) => {
+      state.addedItems = [];
+      state.numberOfItemsAdded = 0;
+      state.discountPercentage = '0';
+      state.couponStatus = LoadingStatus.Initial;
+      state.couponName = null;
+      state.orderSentStatus = LoadingStatus.Initial;
     }
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(postCouponAction.fulfilled, (state, action) => {
+        state.couponStatus = LoadingStatus.Fulfilled;
+        state.discountPercentage = action.payload.percentage;
+        state.couponName = action.payload.coupon;
+      })
+      .addCase(postCouponAction.rejected, (state) => {
+        state.couponStatus = LoadingStatus.Rejected;
+      })
+      .addCase(postCameraOrderAction.rejected, (state) => {
+        state.orderSentStatus = LoadingStatus.Rejected;
+      })
+      .addCase(postCameraOrderAction.fulfilled, (state) => {
+        state.orderSentStatus = LoadingStatus.Fulfilled;
+      });
   }
 });
 
-export const {addedOnBasketItems, addedItemsCount, addedItemsCounters, removedCamera, removedItemConfirm} = basketSlice.actions;
+export const {addedOnBasketItems, addedItemsCount, addedItemsCounters, removedCamera, removedItemConfirm, basketInitialState} = basketSlice.actions;

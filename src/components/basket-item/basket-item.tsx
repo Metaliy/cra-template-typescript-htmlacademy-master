@@ -1,6 +1,7 @@
 import { useAppDispatch } from '../../hooks/hooks';
 import { addedItemsCounters, removedCamera } from '../../store/slices/basket-slice/basket-slice';
 import { CameraType } from '../../types/server-data-types';
+import { getPriceWitchSpaces } from '../../utils/utils';
 
 type BasketItemProps = {
   camera: CameraType,
@@ -31,7 +32,7 @@ function BasketItem({camera, camerasCount, setRemoveCameraModalOpenStatusHandler
           <li className="basket-item__list-item">{level}</li>
         </ul>
       </div>
-      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{price} ₽</p>
+      <p className="basket-item__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(price)} ₽</p>
       <div className="quantity">
         <button className="btn-icon btn-icon--prev" aria-label="уменьшить количество товара" onClick={() => dispatch(addedItemsCounters({id: id, isMinus: true}))} disabled={camerasCount <= 1}>
           <svg width="7" height="12" aria-hidden="true">
@@ -46,7 +47,7 @@ function BasketItem({camera, camerasCount, setRemoveCameraModalOpenStatusHandler
           </svg>
         </button>
       </div>
-      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{price * camerasCount}</div>
+      <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{getPriceWitchSpaces(price * camerasCount)}</div>
       <button className="cross-btn" type="button" aria-label="Удалить товар" onClick={() => {
         setRemoveCameraModalOpenStatusHandler(true);
         dispatch(removedCamera(camera));

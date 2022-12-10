@@ -45,6 +45,15 @@ export type PostReviewType = {
   rating: number,
 };
 
+export type PostOrderType = {
+  camerasIds: number[],
+  coupon: string | null
+};
+
+export type PostCouponAction = {
+  coupon: string
+}
+
 export type CamerasPriceRangeType = {
   maxPrice: number;
   minPrice: number;

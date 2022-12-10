@@ -56,6 +56,16 @@ export function ProductPage():JSX.Element {
   const similarCamerasListLoadingStatus = useAppSelector(getSimilarCamerasListLoadingStatus);
   const reviewsListLoadingStatus = useAppSelector(getReviewsListLoadingStatus);
 
+  useEffect(() => {
+    const onEscButtonClick = (evt: { key: string; }) => {
+      if(evt.key === 'Escape') {
+        dispatch(addItemModalOpenedStatus(false));
+      }
+    };
+    window.addEventListener('keydown', onEscButtonClick);
+    return () => window.removeEventListener('keydown', onEscButtonClick);
+  }, [dispatch]);
+
 
   if(selectedCameraLoadingStatus === LoadingStatus.Initial || selectedCameraLoadingStatus === LoadingStatus.Pending ||
     similarCamerasListLoadingStatus === LoadingStatus.Pending || similarCamerasListLoadingStatus === LoadingStatus.Initial ||

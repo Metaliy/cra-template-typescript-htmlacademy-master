@@ -60,6 +60,16 @@ function CatalogPage():JSX.Element {
     dispatch(addItemModalOpenedStatus(false));
   }, [dispatch]);
 
+  useEffect(() => {
+    const onEscButtonClick = (evt: { key: string; }) => {
+      if(evt.key === 'Escape') {
+        dispatch(addItemModalOpenedStatus(false));
+      }
+    };
+    window.addEventListener('keydown', onEscButtonClick);
+    return () => window.removeEventListener('keydown', onEscButtonClick);
+  }, [dispatch]);
+
   const camerasLoadingStatus = useAppSelector(getCamerasListLoadingStatus);
   const promoCameraLoadingStatus = useAppSelector(getPromoCameraLoadingStatus);
 
