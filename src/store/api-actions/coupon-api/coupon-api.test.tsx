@@ -3,14 +3,16 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { createAPI } from '../../../services/api';
-import { getFakeCamerasReview, getFakePostedReview } from '../../../mock/mock';
 import { State } from '../../../types/state-types';
-import { postCameraReviewAction } from './sended-review-api';
+import { PostCouponActionType } from '../../../types/server-data-types';
+import { postCouponAction } from './coupon-api';
 
-const fakeReview = getFakeCamerasReview();
-const fakePostedReview = getFakePostedReview();
+const fakeCoupon: PostCouponActionType = {
+  coupon: 'camera-444'
+};
 
-describe('Product api', () => {
+
+describe('Coupon api', () => {
   const api = createAPI();
   const mockAPI = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
@@ -22,39 +24,38 @@ describe('Product api', () => {
     >(middlewares);
 
 
-  it('should dispatch postCameraReviewAction when POST /reviews', async () => {
+  it('should dispatch postCouponAction when POST /coupons', async () => {
     mockAPI
-      .onPost('/reviews', fakePostedReview)
-      .reply(200);
+      .onPost('/coupons', fakeCoupon)
+      .reply(200, 25);
 
     const store = mockStore();
 
-    await store.dispatch(postCameraReviewAction(fakePostedReview));
+    await store.dispatch(postCouponAction(fakeCoupon));
 
     const actions = store.getActions().map(({type}) => type);
 
-
     expect(actions).toEqual([
-      postCameraReviewAction.pending.type,
-      postCameraReviewAction.fulfilled.type
+      postCouponAction.pending.type,
+      postCouponAction.fulfilled.type
     ]);
   });
 
-  it('should dispatch postCameraReviewAction when POST /reviews error', async () => {
+
+  it('should dispatch postCouponAction when POST /coupons error', async () => {
     mockAPI
-      .onPost('/reviews', fakePostedReview);
+      .onPost('/coupons', fakeCoupon);
 
     const store = mockStore();
 
-    await store.dispatch(postCameraReviewAction(fakeReview));
+    await store.dispatch(postCouponAction(fakeCoupon));
 
     const actions = store.getActions().map(({type}) => type);
 
 
     expect(actions).toEqual([
-      postCameraReviewAction.pending.type,
-      postCameraReviewAction.rejected.type
+      postCouponAction.pending.type,
+      postCouponAction.rejected.type
     ]);
   });
 });
-

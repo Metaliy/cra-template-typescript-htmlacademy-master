@@ -11,7 +11,9 @@ export enum NameSpace {
   Product = 'Product',
   SearchedCameras = 'SearchedCameras',
   Basket = 'Basket',
-  AddItemModal = 'AddItemModal'
+  AddItemModal = 'AddItemModal',
+  Coupon = 'Coupon',
+  Order = 'Order'
 }
 
 export const CAMERAS_ON_PAGE = '9';

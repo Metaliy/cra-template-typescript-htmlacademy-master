@@ -15,7 +15,7 @@ export function AddItemConfirmModal({camera, onSetIsCameraAddedHanlder}: AddItem
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
-        <div className="modal__overlay" onClick={() => dispatch(addItemModalOpenedStatus(false))}></div>
+        <div className="modal__overlay" data-testid={'overaly'} onClick={() => dispatch(addItemModalOpenedStatus(false))}></div>
         <div className="modal__content">
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">
@@ -37,7 +37,7 @@ export function AddItemConfirmModal({camera, onSetIsCameraAddedHanlder}: AddItem
             </div>
           </div>
           <div className="modal__buttons">
-            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" onClick={() => {
+            <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" data-testid={'add-on-basket-button'} onClick={() => {
               dispatch(addedOnBasketItems({camera, camerasCount: 1}));
               onSetIsCameraAddedHanlder(true);
             }}
@@ -47,7 +47,7 @@ export function AddItemConfirmModal({camera, onSetIsCameraAddedHanlder}: AddItem
               </svg>Добавить в корзину
             </button>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" onClick={() => dispatch(addItemModalOpenedStatus(false))}>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" data-testid={'cross-button'} onClick={() => dispatch(addItemModalOpenedStatus(false))}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

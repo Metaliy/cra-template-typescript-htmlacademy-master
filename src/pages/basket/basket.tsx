@@ -12,14 +12,18 @@ import { OrderSuccessModal } from '../../components/order-success-modal/order-su
 import { AppPageNames, LoadingStatus } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { basketInitialState } from '../../store/slices/basket-slice/basket-slice';
-import { getAddedOnBasketItems, getCouponName, getCouponStatus, getDiscountPercentage, getOrderSentStatus, getRemovedCamera } from '../../store/slices/basket-slice/selectors';
+import { getAddedOnBasketItems, getRemovedCamera } from '../../store/slices/basket-slice/selectors';
+import { couponInitialState } from '../../store/slices/coupon-slice/coupon-slice';
+import { getDiscountPercentage, getCouponStatus, getCouponName } from '../../store/slices/coupon-slice/selectors';
+import { orderInitialState } from '../../store/slices/order-slice/order-slice';
+import { getOrderSentStatus } from '../../store/slices/order-slice/selectors';
 
 
 export function BasketPage():JSX.Element {
 
   const addedCamerasList = useAppSelector(getAddedOnBasketItems);
   const removedCamera = useAppSelector(getRemovedCamera);
-  const discountPercentage = Number(useAppSelector(getDiscountPercentage));
+  const discountPercentage = useAppSelector(getDiscountPercentage);
   const couponStatus = useAppSelector(getCouponStatus);
   const couponName = useAppSelector(getCouponName);
   const orderSentStatus = useAppSelector(getOrderSentStatus);
@@ -43,6 +47,8 @@ export function BasketPage():JSX.Element {
   useEffect(() => {
     if(orderSentStatus === LoadingStatus.Fulfilled) {
       dispatch(basketInitialState());
+      dispatch(couponInitialState());
+      dispatch(orderInitialState());
     }
   }, [orderSentStatus]);
 

@@ -50,7 +50,12 @@ export type PostOrderType = {
   coupon: string | null
 };
 
-export type PostCouponAction = {
+export type PostCouponActionType = {
+  coupon: string
+}
+
+export type PostCouponReturnedActionType = {
+  percentage: number,
   coupon: string
 }
 

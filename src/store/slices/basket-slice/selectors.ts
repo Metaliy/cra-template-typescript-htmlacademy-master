@@ -1,4 +1,4 @@
-import { LoadingStatus, NameSpace } from '../../../consts/const';
+import { NameSpace } from '../../../consts/const';
 import { CameraType } from '../../../types/server-data-types';
 import { State } from '../../../types/state-types';
 
@@ -16,12 +16,5 @@ export const getNumberOfItemsAdded = (state: State): number => state[NameSpace.B
 
 export const getAddedOnBasketItems = (state: State): { camera: CameraType; camerasCount: number; }[] => state[NameSpace.Basket].addedItems;
 
-export const getRemovedCamera = (state: State): CameraType | undefined => state[NameSpace.Basket].removedCamera;
+export const getRemovedCamera = (state: State): CameraType | null => state[NameSpace.Basket].removedCamera;
 
-export const getDiscountPercentage = (state: State): string => state[NameSpace.Basket].discountPercentage;
-
-export const getCouponStatus = (state: State): LoadingStatus => state[NameSpace.Basket].couponStatus;
-
-export const getCouponName = (state: State): string | null => state[NameSpace.Basket].couponName;
-
-export const getOrderSentStatus = (state: State): LoadingStatus => state[NameSpace.Basket].orderSentStatus;

@@ -2,11 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { toast } from 'react-toastify';
 import {ToastMessages } from '../../../consts/const';
-import { PostCouponAction } from '../../../types/server-data-types';
+import { PostCouponActionType, PostCouponReturnedActionType } from '../../../types/server-data-types';
 import { AppDispatch, State } from '../../../types/state-types';
 
 
-export const postCouponAction = createAsyncThunk<{percentage: string, coupon: string}, PostCouponAction, {
+export const postCouponAction = createAsyncThunk<PostCouponReturnedActionType, PostCouponActionType, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance

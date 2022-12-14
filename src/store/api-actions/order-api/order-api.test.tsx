@@ -3,14 +3,21 @@ import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
 import { createAPI } from '../../../services/api';
-import { getFakeCamerasReview, getFakePostedReview } from '../../../mock/mock';
 import { State } from '../../../types/state-types';
-import { postCameraReviewAction } from './sended-review-api';
+import { postCameraOrderAction } from './order-api';
 
-const fakeReview = getFakeCamerasReview();
-const fakePostedReview = getFakePostedReview();
+const fakeOrderCamerasListCamera = {
+  camerasIds: [1, 2, 3, 4],
+  coupon: 'coupon-333'
+};
 
-describe('Product api', () => {
+const fakeIncorrectOrderCamerasListCamera = {
+  camerasIds: [],
+  coupon: ''
+};
+
+
+describe('Order api', () => {
   const api = createAPI();
   const mockAPI = new MockAdapter(api);
   const middlewares = [thunk.withExtraArgument(api)];
@@ -22,38 +29,38 @@ describe('Product api', () => {
     >(middlewares);
 
 
-  it('should dispatch postCameraReviewAction when POST /reviews', async () => {
+  it('should dispatch postCameraOrderAction when POST /orders', async () => {
     mockAPI
-      .onPost('/reviews', fakePostedReview)
+      .onPost('/orders', fakeOrderCamerasListCamera)
       .reply(200);
 
     const store = mockStore();
 
-    await store.dispatch(postCameraReviewAction(fakePostedReview));
+    await store.dispatch(postCameraOrderAction(fakeOrderCamerasListCamera));
 
     const actions = store.getActions().map(({type}) => type);
 
 
     expect(actions).toEqual([
-      postCameraReviewAction.pending.type,
-      postCameraReviewAction.fulfilled.type
+      postCameraOrderAction.pending.type,
+      postCameraOrderAction.fulfilled.type
     ]);
   });
 
-  it('should dispatch postCameraReviewAction when POST /reviews error', async () => {
+  it('should dispatch postCameraOrderAction when POST /orders error', async () => {
     mockAPI
-      .onPost('/reviews', fakePostedReview);
+      .onPost('/orders', fakeOrderCamerasListCamera);
 
     const store = mockStore();
 
-    await store.dispatch(postCameraReviewAction(fakeReview));
+    await store.dispatch(postCameraOrderAction(fakeIncorrectOrderCamerasListCamera));
 
     const actions = store.getActions().map(({type}) => type);
 
 
     expect(actions).toEqual([
-      postCameraReviewAction.pending.type,
-      postCameraReviewAction.rejected.type
+      postCameraOrderAction.pending.type,
+      postCameraOrderAction.rejected.type
     ]);
   });
 });

@@ -37,7 +37,7 @@ function ProductCard ({camera, isActive, isAdded}:ProductCardPropsType):JSX.Elem
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button" disabled={isAdded} onClick={() => {
+        <button className="btn btn--purple product-card__btn" data-testid={'add-item-modal-open-button'} type="button" disabled={isAdded} onClick={() => {
           dispatch(addItemModalOpenedStatus(true));
           dispatch(addedItem(camera));
         }}

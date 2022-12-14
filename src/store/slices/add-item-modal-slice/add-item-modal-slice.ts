@@ -3,7 +3,8 @@ import { NameSpace } from '../../../consts/const';
 import { AddItemModalSliceType } from '../../../types/state-types';
 
 const initialState: AddItemModalSliceType = {
-  addItemModalOpenedStatus: false
+  addItemModalOpenedStatus: false,
+  addedCamera: null
 };
 
 export const addItemModalSlice = createSlice ({

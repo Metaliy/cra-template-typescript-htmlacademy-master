@@ -5,4 +5,4 @@ import { State } from '../../../types/state-types';
 
 export const getAddItemModalOpenedStatus = (state: State): boolean => state[NameSpace.AddItemModal].addItemModalOpenedStatus;
 
-export const getAddedItem = (state: State): CameraType | undefined => state[NameSpace.AddItemModal].addedCamera;
+export const getAddedItem = (state: State): CameraType | null => state[NameSpace.AddItemModal].addedCamera;

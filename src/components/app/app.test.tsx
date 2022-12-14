@@ -13,6 +13,10 @@ const fakeCamera = getFakeCamera();
 const fakeCameraList = [getFakeCamera(), getFakeCamera()];
 const fakesimilarCameras = [getFakeCamera(), getFakeCamera()];
 const fakePromoCamera = getFakePromoCamera();
+const fakeAddedOnBasketCamera = {
+  camera: getFakeCamera(),
+  camerasCount: 2
+};
 
 
 const mockState = {
@@ -62,6 +66,23 @@ const mockState = {
   [NameSpace.SearchedCameras]: {
     searchedCameras: [],
     searchedCamerasListLoadingStatus: LoadingStatus.Fulfilled
+  },
+  [NameSpace.Basket]: {
+    addedItems: [fakeAddedOnBasketCamera],
+    numberOfItemsAdded: 0,
+    removedCamera: null
+  },
+  [NameSpace.AddItemModal]: {
+    addItemModalOpenedStatus: false,
+    addedCamera: null
+  },
+  [NameSpace.Coupon]: {
+    discountPercentage: 0,
+    couponStatus: LoadingStatus.Initial,
+    couponName: null
+  },
+  [NameSpace.Order]: {
+    orderSentStatus: LoadingStatus.Initial
   }
 };
 
@@ -83,13 +104,42 @@ const store = mockStore({
     reviewSentStatus: LoadingStatus.Initial,
   },
   [NameSpace.Catalog]: {
-    currentPage: 1
+    currentPage: 1,
+    sort: {
+      sortType: SortTypeParameter.Price,
+      order:  SortOrderParameter.LowToHigh
+    },
+    filters: {
+      priceMin: [],
+      priceMax: [],
+      category: [],
+      filterType: [],
+      level: []
+    }
   },
   [NameSpace.Product]: {
     reviewModalOpenedStatus: false
   },
   [NameSpace.SearchedCameras]: {
     searchedCameras: [],
+    searchedCamerasListLoadingStatus: LoadingStatus.Fulfilled
+  },
+  [NameSpace.Basket]: {
+    addedItems: [fakeAddedOnBasketCamera],
+    numberOfItemsAdded: 0,
+    removedCamera: null
+  },
+  [NameSpace.AddItemModal]: {
+    addItemModalOpenedStatus: false,
+    addedCamera: null
+  },
+  [NameSpace.Coupon]: {
+    discountPercentage: 0,
+    couponStatus: LoadingStatus.Initial,
+    couponName: null
+  },
+  [NameSpace.Order]: {
+    orderSentStatus: LoadingStatus.Initial
   }
 });
 

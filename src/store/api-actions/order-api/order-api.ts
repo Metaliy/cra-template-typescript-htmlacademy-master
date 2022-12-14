@@ -15,8 +15,6 @@ export const postCameraOrderAction = createAsyncThunk<void, PostOrderType, {
   async (order, {extra: api}) => {
     try {
       await api.post('/orders', order);
-      // eslint-disable-next-line no-console
-      console.log(order);
     } catch (error) {
       toast.error(ToastMessages.PostOrderError);
       throw error;

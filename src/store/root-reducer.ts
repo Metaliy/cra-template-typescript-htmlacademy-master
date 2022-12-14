@@ -4,6 +4,8 @@ import { addItemModalSlice } from './slices/add-item-modal-slice/add-item-modal-
 import { basketSlice } from './slices/basket-slice/basket-slice';
 import { camerasSlice } from './slices/cameras-slice/cameras-slice';
 import { catalogSlice } from './slices/catalog-slice/catalog-slice';
+import { couponSlice } from './slices/coupon-slice/coupon-slice';
+import { orderSlice } from './slices/order-slice/order-slice';
 import { productSlice } from './slices/product-slice/product-slice';
 import { promoSlice } from './slices/promo-slice/promo-slice';
 import { reviewsSlice } from './slices/reviews-slice/reviews-slice';
@@ -24,5 +26,7 @@ export const rootReducer = combineReducers({
   [NameSpace.SearchedCameras]: searchedCamerasSlice.reducer,
   [NameSpace.Basket]: basketSlice.reducer,
   [NameSpace.AddItemModal]: addItemModalSlice.reducer,
+  [NameSpace.Coupon]: couponSlice.reducer,
+  [NameSpace.Order]: orderSlice.reducer
 });
 

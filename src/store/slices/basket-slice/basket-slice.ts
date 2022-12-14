@@ -1,16 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { LoadingStatus, NameSpace } from '../../../consts/const';
+import { NameSpace } from '../../../consts/const';
 import { BasketSliceType } from '../../../types/state-types';
-import { postCouponAction } from '../../api-actions/coupon-api/coupon-api';
-import { postCameraOrderAction } from '../../api-actions/order-api/order-api';
 
 const initialState: BasketSliceType = {
   addedItems: [],
   numberOfItemsAdded: 0,
-  discountPercentage: '0',
-  couponStatus: LoadingStatus.Initial,
-  couponName: null,
-  orderSentStatus: LoadingStatus.Initial
+  removedCamera: null
 };
 
 export const basketSlice = createSlice ({
@@ -50,28 +45,8 @@ export const basketSlice = createSlice ({
     basketInitialState: (state) => {
       state.addedItems = [];
       state.numberOfItemsAdded = 0;
-      state.discountPercentage = '0';
-      state.couponStatus = LoadingStatus.Initial;
-      state.couponName = null;
-      state.orderSentStatus = LoadingStatus.Initial;
+      state.removedCamera = null;
     }
-  },
-  extraReducers(builder) {
-    builder
-      .addCase(postCouponAction.fulfilled, (state, action) => {
-        state.couponStatus = LoadingStatus.Fulfilled;
-        state.discountPercentage = action.payload.percentage;
-        state.couponName = action.payload.coupon;
-      })
-      .addCase(postCouponAction.rejected, (state) => {
-        state.couponStatus = LoadingStatus.Rejected;
-      })
-      .addCase(postCameraOrderAction.rejected, (state) => {
-        state.orderSentStatus = LoadingStatus.Rejected;
-      })
-      .addCase(postCameraOrderAction.fulfilled, (state) => {
-        state.orderSentStatus = LoadingStatus.Fulfilled;
-      });
   }
 });
 

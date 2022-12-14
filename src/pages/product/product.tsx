@@ -97,7 +97,7 @@ export function ProductPage():JSX.Element {
                     <h1 className="title title--h3">{selectedCamera.name}</h1>
                     <ProductRating maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
                     <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(selectedCamera.price)} ₽</p>
-                    <button className="btn btn--purple" type="button" onClick={() => {
+                    <button className="btn btn--purple" type="button" data-testid="add-item-modal-open-button" onClick={() => {
                       dispatch(addItemModalOpenedStatus(true));
                       dispatch(addedItem(selectedCamera));
                     }}

@@ -3,6 +3,7 @@ import { getFakeCamera } from '../../mock/mock';
 import { screen } from '@testing-library/react';
 import { ProductCard } from './product-card';
 import { NameSpace, LoadingStatus } from '../../consts/const';
+import userEvent from '@testing-library/user-event';
 
 const fakeCamera = getFakeCamera();
 
@@ -29,5 +30,13 @@ describe('Product card component', () => {
 
     expect(screen.getByTestId(`active-product-card-${fakeCamera.id}`)).toBeInTheDocument();
     expect(screen.getByText(fakeCamera.name)).toBeInTheDocument();
+  });
+
+  it('should click on add item button', async () => {
+    renderFakeApp(<ProductCard camera={fakeCamera} isActive/>, {
+      initialState: mockState
+    });
+
+    await userEvent.click(screen.getByText('Купить'));
   });
 });
