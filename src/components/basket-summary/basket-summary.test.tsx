@@ -39,9 +39,6 @@ describe('BasketSummary component', () => {
 
     const [action] = store.getActions();
 
-    // eslint-disable-next-line no-console
-    console.log(action);
-
     expect(action.type).toBe('data/postCameraOrderAction/pending');
   });
 });
