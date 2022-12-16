@@ -1,21 +1,17 @@
-import { useAppDispatch } from '../../../hooks/hooks';
-import { addItemModalOpenedStatus } from '../../../store/slices/add-item-modal-slice/add-item-modal-slice';
-import { addedOnBasketItems } from '../../../store/slices/basket-slice/basket-slice';
 import { CameraType } from '../../../types/server-data-types';
 
 type AddItemConfirmModalProps = {
   camera: CameraType,
-  onSetIsCameraAddedHanlder: CallableFunction
+  onSubmitButtonClick: CallableFunction,
+  onCloseClick: CallableFunction
 }
 
-export function AddItemConfirmModal({camera, onSetIsCameraAddedHanlder}: AddItemConfirmModalProps):JSX.Element {
-
-  const dispatch = useAppDispatch();
+export function AddItemConfirmModal({camera, onSubmitButtonClick, onCloseClick}: AddItemConfirmModalProps):JSX.Element {
 
   return (
     <div className="modal is-active">
       <div className="modal__wrapper">
-        <div className="modal__overlay" data-testid={'overaly'} onClick={() => dispatch(addItemModalOpenedStatus(false))}></div>
+        <div className="modal__overlay" data-testid={'overaly'} onClick={() => onCloseClick(false)}></div>
         <div className="modal__content">
           <p className="title title--h4">Добавить товар в корзину</p>
           <div className="basket-item basket-item--short">
@@ -38,8 +34,7 @@ export function AddItemConfirmModal({camera, onSetIsCameraAddedHanlder}: AddItem
           </div>
           <div className="modal__buttons">
             <button className="btn btn--purple modal__btn modal__btn--fit-width" type="button" data-testid={'add-on-basket-button'} onClick={() => {
-              dispatch(addedOnBasketItems({camera, camerasCount: 1}));
-              onSetIsCameraAddedHanlder(true);
+              onSubmitButtonClick({camera, camerasCount: 1});
             }}
             >
               <svg width="24" height="16" aria-hidden="true">
@@ -47,7 +42,7 @@ export function AddItemConfirmModal({camera, onSetIsCameraAddedHanlder}: AddItem
               </svg>Добавить в корзину
             </button>
           </div>
-          <button className="cross-btn" type="button" aria-label="Закрыть попап" data-testid={'cross-button'} onClick={() => dispatch(addItemModalOpenedStatus(false))}>
+          <button className="cross-btn" type="button" aria-label="Закрыть попап" data-testid={'cross-button'} onClick={() => onCloseClick(false)}>
             <svg width="10" height="10" aria-hidden="true">
               <use xlinkHref="#icon-close"></use>
             </svg>

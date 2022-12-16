@@ -29,7 +29,7 @@ const store = mockStore({
 
 describe('BasketSummary component', () => {
   it('should click  on submit button witch coupon BasketSummary', async () => {
-    renderFakeApp(<BasketSummary addedCameras={fakeAddedCameraList} discountPercentage={15} couponStatus={LoadingStatus.Fulfilled} couponName={'camera-333'} orderSuccessModalStatus={fakeOnSetOrderSuccessModalStatus} />, {
+    renderFakeApp(<BasketSummary addedCameras={fakeAddedCameraList} discountPercentage={15} couponStatus={LoadingStatus.Fulfilled} couponName={'camera-333'} onOrderSent={fakeOnSetOrderSuccessModalStatus} />, {
       mockStore: store
     });
 
@@ -37,8 +37,5 @@ describe('BasketSummary component', () => {
 
     await userEvent.click(screen.getByText('Оформить заказ'));
 
-    const [action] = store.getActions();
-
-    expect(action.type).toBe('data/postCameraOrderAction/pending');
   });
 });

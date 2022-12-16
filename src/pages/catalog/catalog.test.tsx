@@ -44,7 +44,7 @@ const store = mockStore({
     addedItems: []
   },
   [NameSpace.AddItemModal]: {
-    addItemModalOpenedStatus: false
+    isAddItemModalOpened: false
   }
 });
 

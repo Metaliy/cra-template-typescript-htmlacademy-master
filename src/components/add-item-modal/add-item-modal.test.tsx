@@ -34,7 +34,7 @@ describe('AddItemModal component', () => {
   });
 
   it('should render AddItemModal and is catalog', async () => {
-    renderFakeApp(<AddItemModal addedCamera={fakeCamera} isCatalog/>, {
+    renderFakeApp(<AddItemModal addedCamera={fakeCamera}/>, {
       mockStore: store
     });
   });

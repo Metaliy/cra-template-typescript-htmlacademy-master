@@ -37,33 +37,33 @@ describe('Review modal success component', () => {
     expect(screen.getByTestId('review-modal-success')).toBeInTheDocument();
   });
 
-  it('should close review modal if user clicks on cross-btn', async () => {
+  it('should close review modal success if user clicks on cross-btn', async () => {
     renderFakeApp(<ReviewModalSuccess/>, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('cross-btn'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/reviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModal');
   });
 
-  it('should close review modal if user clicks on back-to-button', async () => {
+  it('should close review modal success if user clicks on back-to-button', async () => {
     renderFakeApp(<ReviewModalSuccess />, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('back-to-button'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/reviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModal');
   });
 
-  it('should close review modal if user clicks on modal-overlay', async () => {
+  it('should close review modal success if user clicks on modal-overlay', async () => {
     renderFakeApp(<ReviewModalSuccess />, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('modal-overlay'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/reviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModal');
   });
 });

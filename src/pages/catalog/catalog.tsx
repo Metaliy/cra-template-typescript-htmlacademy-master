@@ -24,8 +24,8 @@ import { filtersInitialState } from '../../store/slices/catalog-slice/catalog-sl
 import { RemoveScroll } from 'react-remove-scroll';
 import { AddItemModal } from '../../components/add-item-modal/add-item-modal';
 import { getAddedItem, getAddItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/selectors';
-import { addItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
-import { getaddedOnBasketItemsId } from '../../store/slices/basket-slice/selectors';
+import { getAddedOnBasketItemsId } from '../../store/slices/basket-slice/selectors';
+import { addItemPopup } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
 
 
 function CatalogPage():JSX.Element {
@@ -36,7 +36,7 @@ function CatalogPage():JSX.Element {
   const camerasCount = useAppSelector(getTotalCamerasCount);
   const minCamerasPrice = useAppSelector(getMinCamerasPrice);
   const maxCamerasPrice = useAppSelector(getMaxCamerasPrice);
-  const camerasIdInTheCart = useAppSelector(getaddedOnBasketItemsId);
+  const camerasIdInTheCart = useAppSelector(getAddedOnBasketItemsId);
   const isRendered = useRef(false);
 
 
@@ -44,7 +44,7 @@ function CatalogPage():JSX.Element {
 
   const sortParameters = useAppSelector(getSortParameters);
   const filterParameters = useAppSelector(getFiltersParameters);
-  const isAddItemModalOpened = useAppSelector(getAddItemModalOpenedStatus);
+  const isAddItemModalOpen = useAppSelector(getAddItemModalOpenedStatus);
 
   const [, setSearchParams] = useSearchParams();
 
@@ -57,18 +57,20 @@ function CatalogPage():JSX.Element {
   useEffect(() => {
     dispatch(fetchPromoCameraAction());
     dispatch(filtersInitialState());
-    dispatch(addItemModalOpenedStatus(false));
+    dispatch(addItemPopup(false));
   }, [dispatch]);
 
-  useEffect(() => {
+  const escButtonClickHandler = () => {
     const onEscButtonClick = (evt: { key: string; }) => {
       if(evt.key === 'Escape') {
-        dispatch(addItemModalOpenedStatus(false));
+        dispatch(addItemPopup(false));
       }
     };
     window.addEventListener('keydown', onEscButtonClick);
     return () => window.removeEventListener('keydown', onEscButtonClick);
-  }, [dispatch]);
+  };
+
+  escButtonClickHandler();
 
   const camerasLoadingStatus = useAppSelector(getCamerasListLoadingStatus);
   const promoCameraLoadingStatus = useAppSelector(getPromoCameraLoadingStatus);
@@ -125,9 +127,9 @@ function CatalogPage():JSX.Element {
         </main>
         <FocusLock returnFocus={{ preventScroll: false }}>
 
-          {isAddItemModalOpened && addedOnBasketCamera ?
+          {isAddItemModalOpen && addedOnBasketCamera ?
             <RemoveScroll>
-              <AddItemModal addedCamera={addedOnBasketCamera} isCatalog />
+              <AddItemModal addedCamera={addedOnBasketCamera} />
             </RemoveScroll>
             :
             ''}

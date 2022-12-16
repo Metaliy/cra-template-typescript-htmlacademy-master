@@ -25,28 +25,27 @@ const store = mockStore({
   },
 });
 
+const fakefn = jest.fn();
+
 
 describe('AddItemSuccessModal component', () => {
   it('should render AddItemSuccessModal', () => {
-    renderFakeApp(<AddItemSuccessModal />, {
+    renderFakeApp(<AddItemSuccessModal onCloseClick={fakefn} />, {
       mockStore: store
     });
   });
 
-  it('should click on overlay', async () => {
-    renderFakeApp(<AddItemSuccessModal isCatalog/>, {
+  it('should AddItemSuccessModal click on overlay', async () => {
+    renderFakeApp(<AddItemSuccessModal onCloseClick={fakefn}/>, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('overaly'));
 
-    const [action] = store.getActions();
-    expect(action.type).toBe('AddItemModal/addItemModalOpenedStatus');
-
   });
 
   it('should click on back-to-catalog-button', async () => {
-    renderFakeApp(<AddItemSuccessModal/>, {
+    renderFakeApp(<AddItemSuccessModal onCloseClick={fakefn}/>, {
       mockStore: store
     });
 
@@ -55,7 +54,7 @@ describe('AddItemSuccessModal component', () => {
   });
 
   it('should click on go-to-basket-button', async () => {
-    renderFakeApp(<AddItemSuccessModal />, {
+    renderFakeApp(<AddItemSuccessModal onCloseClick={fakefn} />, {
       mockStore: store
     });
 
@@ -63,15 +62,12 @@ describe('AddItemSuccessModal component', () => {
 
   });
 
-  it('should click on cross-button', async () => {
-    renderFakeApp(<AddItemSuccessModal />, {
+  it('should AddItemSuccessModal click on cross-button', async () => {
+    renderFakeApp(<AddItemSuccessModal onCloseClick={fakefn} />, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('cross-button'));
-
-    const [action] = store.getActions();
-    expect(action.type).toBe('AddItemModal/addItemModalOpenedStatus');
 
   });
 

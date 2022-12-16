@@ -3,7 +3,7 @@ import { NameSpace } from '../../../consts/const';
 import { AddItemModalSliceType } from '../../../types/state-types';
 
 const initialState: AddItemModalSliceType = {
-  addItemModalOpenedStatus: false,
+  isAddItemModal: false,
   addedCamera: null
 };
 
@@ -11,8 +11,8 @@ export const addItemModalSlice = createSlice ({
   name: NameSpace.AddItemModal,
   initialState,
   reducers: {
-    addItemModalOpenedStatus: (state, action) => {
-      state.addItemModalOpenedStatus = action.payload;
+    addItemPopup: (state, action) => {
+      state.isAddItemModal = action.payload;
     },
     addedItem: (state, action) => {
       state.addedCamera = action.payload;
@@ -20,4 +20,4 @@ export const addItemModalSlice = createSlice ({
   }
 });
 
-export const {addItemModalOpenedStatus, addedItem} = addItemModalSlice.actions;
+export const {addItemPopup, addedItem} = addItemModalSlice.actions;

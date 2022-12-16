@@ -6,12 +6,12 @@ import { getSearchedCameras } from '../../store/slices/searched-cameras-slice/se
 import { HeaderNavigation } from './header-navigation/header-navigation';
 import { SearchForm } from './search-form/search-form';
 import { addedItemsCount } from '../../store/slices/basket-slice/basket-slice';
-import { getaddedOnBasketItemsId, getNumberOfItemsAdded } from '../../store/slices/basket-slice/selectors';
+import { getAddedOnBasketItemsId, getNumberOfItemsAdded } from '../../store/slices/basket-slice/selectors';
 
 function Header () {
 
   const searchedCamerasList = useAppSelector(getSearchedCameras);
-  const camerasOnBasket = useAppSelector(getaddedOnBasketItemsId);
+  const camerasOnBasket = useAppSelector(getAddedOnBasketItemsId);
   const addedCamerasCount = useAppSelector(getNumberOfItemsAdded);
 
   const dispatch = useAppDispatch();

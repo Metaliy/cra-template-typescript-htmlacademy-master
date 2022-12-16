@@ -1,5 +1,5 @@
 import { AddItemModalSliceType } from '../../../types/state-types';
-import { addedItem, addItemModalOpenedStatus, addItemModalSlice } from './add-item-modal-slice';
+import { addedItem, addItemPopup, addItemModalSlice } from './add-item-modal-slice';
 import { getFakeCamera } from '../../../mock/mock';
 
 const fakeCamera = getFakeCamera();
@@ -11,7 +11,7 @@ describe('Reducer test: addItemModalSlice', () => {
 
   beforeEach(() => {
     mockState = {
-      addItemModalOpenedStatus: false,
+      isAddItemModal: false,
       addedCamera: null
     };
   });
@@ -22,12 +22,12 @@ describe('Reducer test: addItemModalSlice', () => {
       .toEqual(mockState);
   });
 
-  it('Update addItemModalOpenedStatus if dispatched addItemModalOpenedStatus',
+  it('Update isAddItemModalOpened if dispatched isAddItemModalOpened',
     () => {
-      expect(addItemModalSlice.reducer(mockState, addItemModalOpenedStatus(true)))
+      expect(addItemModalSlice.reducer(mockState, addItemPopup(true)))
         .toEqual({
           ...mockState,
-          addItemModalOpenedStatus: true
+          isAddItemModal: true
         });
     });
 

@@ -21,28 +21,30 @@ const mockState = {
   }
 };
 
-const fakeOrderSuccessModalStatus = jest.fn();
+const fakeCloseButtonClick = jest.fn();
 
-describe('Order succes modal component', () => {
-  it('should render "Order succes modal component"', () => {
-    renderFakeApp(<BasketRemoveModal camera={fakeCamera} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+const fakeSubmitButtonClick = jest.fn();
+
+describe('BasketRemoveModal component', () => {
+  it('should render BasketRemoveModal', () => {
+    renderFakeApp(<BasketRemoveModal camera={fakeCamera} onCloseButtonClick={fakeCloseButtonClick} onSubmitButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
   });
 
-  it('should click on overlay', async () => {
-    renderFakeApp(<BasketRemoveModal camera={fakeCamera} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+  it('should BasketRemoveModal click on overlay', async () => {
+    renderFakeApp(<BasketRemoveModal camera={fakeCamera} onCloseButtonClick={fakeCloseButtonClick} onSubmitButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
 
     await userEvent.click(screen.getByTestId('overaly'));
 
-    expect(fakeOrderSuccessModalStatus).toBeCalledTimes(1);
+    expect(fakeCloseButtonClick).toBeCalledTimes(1);
 
   });
 
   it('should click on confirm-button', async () => {
-    renderFakeApp(<BasketRemoveModal camera={fakeCamera} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<BasketRemoveModal camera={fakeCamera} onCloseButtonClick={fakeCloseButtonClick} onSubmitButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
 
@@ -51,7 +53,7 @@ describe('Order succes modal component', () => {
   });
 
   it('should click on continue-button', async () => {
-    renderFakeApp(<BasketRemoveModal camera={fakeCamera} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<BasketRemoveModal camera={fakeCamera} onCloseButtonClick={fakeCloseButtonClick} onSubmitButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
 
@@ -59,8 +61,8 @@ describe('Order succes modal component', () => {
 
   });
 
-  it('should click on cross-button', async () => {
-    renderFakeApp(<BasketRemoveModal camera={fakeCamera} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+  it('should BasketRemoveModal click on cross-button', async () => {
+    renderFakeApp(<BasketRemoveModal camera={fakeCamera} onCloseButtonClick={fakeCloseButtonClick} onSubmitButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
 

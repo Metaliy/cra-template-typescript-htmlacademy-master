@@ -45,7 +45,7 @@ export type FetchCamerasActionResponsedType = {
 }
 
 export type ProductSliceType = {
-  reviewModalOpenedStatus: boolean
+  isReviewModal: boolean
 }
 
 export type BasketSliceType = {
@@ -68,7 +68,7 @@ export type OrderSliceType = {
 }
 
 export type AddItemModalSliceType = {
-  addItemModalOpenedStatus: boolean,
+  isAddItemModal: boolean,
   addedCamera: CameraType | null
 }
 

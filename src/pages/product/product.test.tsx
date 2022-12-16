@@ -33,7 +33,7 @@ const store = mockStore({
     searchedCameras: [],
   },
   [NameSpace.AddItemModal]: {
-    addItemModalOpenedStatus: false
+    isAddItemModal: false
   },
   [NameSpace.SelectedCamera]: {
     selectedCamera: fakeCamera,

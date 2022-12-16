@@ -27,13 +27,13 @@ const fakeOrderSuccessModalStatus = jest.fn();
 
 describe('BasketItem component', () => {
   it('should render BasketItem', () => {
-    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} onDeleteButtonClick={fakeOrderSuccessModalStatus}/>, {
       mockStore: store
     });
   });
 
   it('should click on plus-item-button', async () => {
-    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} onDeleteButtonClick={fakeOrderSuccessModalStatus}/>, {
       mockStore: store
     });
 
@@ -42,7 +42,7 @@ describe('BasketItem component', () => {
   });
 
   it('should click on minus-item-button', async () => {
-    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} onDeleteButtonClick={fakeOrderSuccessModalStatus}/>, {
       mockStore: store
     });
 
@@ -51,7 +51,7 @@ describe('BasketItem component', () => {
   });
 
   it('should click on open-confirm-delete-item-modal-button', async () => {
-    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} setRemoveCameraModalOpenStatusHandler={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<BasketItem camera={fakeCamera} camerasCount={2} onDeleteButtonClick={fakeOrderSuccessModalStatus}/>, {
       mockStore: store
     });
 

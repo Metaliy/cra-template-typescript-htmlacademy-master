@@ -1,6 +1,6 @@
 import FocusLock from 'react-focus-lock';
 import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { generatePath, useParams } from 'react-router-dom';
 import { Breadcrumbs } from '../../components/breadcrumbs/breadcrumbs';
 import { Footer } from '../../components/footer/footer';
 import { Header } from '../../components/header/header';
@@ -10,11 +10,11 @@ import { ProductSimilarSlider } from '../../components/product-similar-slider/pr
 import { ProductTabs } from '../../components/product-tabs/product-tabs';
 import { ReviewBlock } from '../../components/review-block/review-block';
 import { ReviewModal } from '../../components/review-block/review-modal/review-modal';
-import { AppPageNames, LoadingStatus, MAX_RATING } from '../../consts/const';
+import { AppPageNames, AppRoute, LoadingStatus, MAX_RATING } from '../../consts/const';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getPriceWitchSpaces } from '../../utils/utils';
 import { RemoveScroll } from 'react-remove-scroll';
-import { getReviewModalOpenedStatus } from '../../store/slices/product-slice/selectors';
+import { getReviewModal } from '../../store/slices/product-slice/selectors';
 import { ProductRating } from '../../components/rating/product-rating/product-rating';
 import { getReviewsList, getReviewsListLoadingStatus } from '../../store/slices/reviews-slice/selectors';
 import { getSelectedCamera, getSelectedCameraLoadingStatus } from '../../store/slices/selected-camera-slice/selectors';
@@ -25,8 +25,8 @@ import { fetchSelectedCameraAction } from '../../store/api-actions/selected-came
 import { fetchSimilarCamerasAction } from '../../store/api-actions/similar-cameras-api/similar-cameras-api';
 import { getAddedItem, getAddItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/selectors';
 import { AddItemModal } from '../../components/add-item-modal/add-item-modal';
-import { addedItem, addItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
-import { getaddedOnBasketItemsId } from '../../store/slices/basket-slice/selectors';
+import { addedItem, addItemPopup } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
+import { getAddedOnBasketItemsId } from '../../store/slices/basket-slice/selectors';
 
 
 export function ProductPage():JSX.Element {
@@ -34,6 +34,8 @@ export function ProductPage():JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const productId = Number(id);
+
+  const backToCatalogPath = generatePath(AppRoute.Catalog, {id: '1'});
 
 
   useEffect(() => {
@@ -46,25 +48,27 @@ export function ProductPage():JSX.Element {
   const similarCamerasList = useAppSelector(getSimilarCameras);
   const reviewsList = useAppSelector(getReviewsList);
   const reviewSentStatus = useAppSelector(getReviewSentStatus);
-  const camerasIdInTheCart = useAppSelector(getaddedOnBasketItemsId);
+  const camerasIdInTheCart = useAppSelector(getAddedOnBasketItemsId);
   const addedCamera = useAppSelector(getAddedItem);
 
-  const reviewModalOpenedStatus = useAppSelector(getReviewModalOpenedStatus);
+  const isReviewModalOpen = useAppSelector(getReviewModal);
   const isAddItemModalOpened = useAppSelector(getAddItemModalOpenedStatus);
 
   const selectedCameraLoadingStatus = useAppSelector(getSelectedCameraLoadingStatus);
   const similarCamerasListLoadingStatus = useAppSelector(getSimilarCamerasListLoadingStatus);
   const reviewsListLoadingStatus = useAppSelector(getReviewsListLoadingStatus);
 
-  useEffect(() => {
+  const escButtonClickHandler = () => {
     const onEscButtonClick = (evt: { key: string; }) => {
       if(evt.key === 'Escape') {
-        dispatch(addItemModalOpenedStatus(false));
+        dispatch(addItemPopup(false));
       }
     };
     window.addEventListener('keydown', onEscButtonClick);
     return () => window.removeEventListener('keydown', onEscButtonClick);
-  }, [dispatch]);
+  };
+
+  escButtonClickHandler();
 
 
   if(selectedCameraLoadingStatus === LoadingStatus.Initial || selectedCameraLoadingStatus === LoadingStatus.Pending ||
@@ -98,7 +102,7 @@ export function ProductPage():JSX.Element {
                     <ProductRating maxRating={MAX_RATING} rating={selectedCamera.rating} reviewCount={selectedCamera.reviewCount} />
                     <p className="product__price"><span className="visually-hidden">Цена:</span>{getPriceWitchSpaces(selectedCamera.price)} ₽</p>
                     <button className="btn btn--purple" type="button" data-testid="add-item-modal-open-button" onClick={() => {
-                      dispatch(addItemModalOpenedStatus(true));
+                      dispatch(addItemPopup(true));
                       dispatch(addedItem(selectedCamera));
                     }}
                     >
@@ -129,16 +133,16 @@ export function ProductPage():JSX.Element {
           </svg>
         </a>
         <FocusLock returnFocus={{ preventScroll: false }}>
-          {reviewModalOpenedStatus ?
+          {isReviewModalOpen ?
             <RemoveScroll>
-              <ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={selectedCamera.id} />
+              <ReviewModal reviewModalOpenedStatus={isReviewModalOpen} reviewSentStatus={reviewSentStatus} cameraId={selectedCamera.id} />
             </RemoveScroll>
             :
-            <ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={selectedCamera.id}/>}
+            <ReviewModal reviewModalOpenedStatus={isReviewModalOpen} reviewSentStatus={reviewSentStatus} cameraId={selectedCamera.id}/>}
 
           {isAddItemModalOpened && addedCamera ?
             <RemoveScroll>
-              <AddItemModal addedCamera={addedCamera} />
+              <AddItemModal addedCamera={addedCamera} redirectPath={backToCatalogPath} />
             </RemoveScroll>
             :
             ''}

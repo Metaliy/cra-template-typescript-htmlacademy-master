@@ -1,7 +1,7 @@
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, MAX_RATING } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addedItem, addItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
+import { addedItem, addItemPopup } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
 import { CameraType } from '../../types/server-data-types';
 import { getPriceWitchSpaces } from '../../utils/utils';
 import { ProductRating } from '../rating/product-rating/product-rating';
@@ -38,7 +38,7 @@ function ProductCard ({camera, isActive, isAdded}:ProductCardPropsType):JSX.Elem
       </div>
       <div className="product-card__buttons">
         <button className="btn btn--purple product-card__btn" data-testid={'add-item-modal-open-button'} type="button" disabled={isAdded} onClick={() => {
-          dispatch(addItemModalOpenedStatus(true));
+          dispatch(addItemPopup(true));
           dispatch(addedItem(camera));
         }}
         >Купить

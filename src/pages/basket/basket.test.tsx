@@ -29,7 +29,7 @@ const store = mockStore({
     addedItems: [{camera: fakeCamera, camerasCount: 2}]
   },
   [NameSpace.AddItemModal]: {
-    addItemModalOpenedStatus: false
+    addItemModal: false
   },
   [NameSpace.Coupon]: {
     discountPercentage: 0,
@@ -49,7 +49,7 @@ const storeWitchCameras = mockStore({
     addedItems: []
   },
   [NameSpace.AddItemModal]: {
-    addItemModalOpenedStatus: false
+    addItemModal: false
   },
   [NameSpace.Coupon]: {
     discountPercentage: 0,

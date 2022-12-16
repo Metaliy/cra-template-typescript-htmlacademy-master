@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoadingStatus } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
 import { postCouponAction } from '../../store/api-actions/coupon-api/coupon-api';
@@ -14,10 +14,10 @@ type BasketSummaryProps = {
   discountPercentage: number,
   couponStatus: LoadingStatus,
   couponName: string | null,
-  orderSuccessModalStatus: CallableFunction
+  onOrderSent: CallableFunction
 }
 
-export function BasketSummary({addedCameras, discountPercentage, couponStatus, couponName, orderSuccessModalStatus}: BasketSummaryProps):JSX.Element {
+export function BasketSummary({addedCameras, discountPercentage, couponStatus, couponName, onOrderSent}: BasketSummaryProps):JSX.Element {
 
   const initialSummaryPrice = 0;
   const summaryPrice = addedCameras.reduce((accumulator, currentValue) => accumulator + (currentValue.camera.price * currentValue.camerasCount), initialSummaryPrice);
@@ -34,12 +34,13 @@ export function BasketSummary({addedCameras, discountPercentage, couponStatus, c
     coupon: couponName
   };
 
-  addedCameras.forEach((item) => {
-    for (let i = 0; i < item.camerasCount; i++) {
-      orderedCameras.camerasIds.push(item.camera.id);
-    }
-  });
-
+  useEffect(() => {
+    addedCameras.forEach((item) => {
+      for (let i = 0; i < item.camerasCount; i++) {
+        orderedCameras.camerasIds.push(item.camera.id);
+      }
+    });
+  }, [addedCameras, dispatch, orderedCameras.camerasIds]);
 
   return (
     <div className="basket__summary">
@@ -68,9 +69,9 @@ export function BasketSummary({addedCameras, discountPercentage, couponStatus, c
         <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${orderDiscount > 0 ? 'basket__summary-value--bonus' : ''}`}>{getPriceWitchSpaces(orderDiscount)} ₽</span></p>
         <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{getPriceWitchSpaces(summaryPrice - orderDiscount)} ₽</span></p>
         <button className="btn btn--purple" type="submit" onClick={() => {
-          orderSuccessModalStatus(true);
+          onOrderSent(true);
           dispatch(postCameraOrderAction(orderedCameras));
-        }} disabled={orderedCameras.camerasIds.length === 0}
+        }} disabled={addedCameras.length === 0}
         >Оформить заказ
         </button>
       </div>

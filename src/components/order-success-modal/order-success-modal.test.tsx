@@ -18,28 +18,29 @@ const mockState = {
   }
 };
 
-const fakeOrderSuccessModalStatus = jest.fn();
+const fakeCloseButtonClick = jest.fn();
+const fakeSubmitButtonClick = jest.fn();
 
-describe('Order succes modal component', () => {
-  it('should render "Order succes modal component"', () => {
-    renderFakeApp(<OrderSuccessModal orderSuccessModalStatus={fakeOrderSuccessModalStatus}/>, {
+describe('OrderSuccessModal component', () => {
+  it('should render OrderSuccessModal', () => {
+    renderFakeApp(<OrderSuccessModal onCloseClick={fakeCloseButtonClick} onBackButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
   });
 
-  it('should click on overlay', async () => {
-    renderFakeApp(<OrderSuccessModal orderSuccessModalStatus={fakeOrderSuccessModalStatus}/>, {
+  it('should OrderSuccessModal click on overlay', async () => {
+    renderFakeApp(<OrderSuccessModal onCloseClick={fakeCloseButtonClick} onBackButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
 
     await userEvent.click(screen.getByTestId('overaly'));
 
-    expect(fakeOrderSuccessModalStatus).toBeCalledTimes(1);
+    expect(fakeCloseButtonClick).toBeCalledTimes(1);
 
   });
 
   it('should click on back-to-catalog-button', async () => {
-    renderFakeApp(<OrderSuccessModal orderSuccessModalStatus={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<OrderSuccessModal onCloseClick={fakeCloseButtonClick} onBackButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
 
@@ -47,8 +48,8 @@ describe('Order succes modal component', () => {
 
   });
 
-  it('should click on cross-button', async () => {
-    renderFakeApp(<OrderSuccessModal orderSuccessModalStatus={fakeOrderSuccessModalStatus}/>, {
+  it('should OrderSuccessModal click on cross-button', async () => {
+    renderFakeApp(<OrderSuccessModal onCloseClick={fakeCloseButtonClick} onBackButtonClick={fakeSubmitButtonClick}/>, {
       initialState: mockState
     });
 

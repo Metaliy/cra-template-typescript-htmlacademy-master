@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../../consts/const';
 import { useAppDispatch } from '../../../hooks/hooks';
@@ -36,11 +36,6 @@ function SearchForm ({searchedCamerasList}: SearchFormProps) {
     setIsResetButtonVisible(false);
   };
 
-  useEffect(() => {
-    dispatch(emptySearchedCameraList());
-  }, [dispatch]);
-
-
   return (
     <div className={searchedCamerasList.length ? 'form-search list-opened' : 'form-search'}>
       <form data-testid="search-form" onReset={() => onFormReset()}>
@@ -55,7 +50,7 @@ function SearchForm ({searchedCamerasList}: SearchFormProps) {
             searchedCamerasList.map((camera) =>
               (
                 <li className="form-search__select-item" tabIndex={1} key={camera.id} data-testid="search-form-list-item">
-                  <Link to={generatePath(AppRoute.Product, {id: String(camera.id)})}>
+                  <Link to={generatePath(AppRoute.Product, {id: String(camera.id)})} onClick={() => dispatch(emptySearchedCameraList())}>
                     {camera.name}
                   </Link>
                 </li>

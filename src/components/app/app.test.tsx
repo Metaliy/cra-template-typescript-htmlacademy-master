@@ -73,7 +73,7 @@ const mockState = {
     removedCamera: null
   },
   [NameSpace.AddItemModal]: {
-    addItemModalOpenedStatus: false,
+    addItemModal: false,
     addedCamera: null
   },
   [NameSpace.Coupon]: {
@@ -130,7 +130,7 @@ const store = mockStore({
     removedCamera: null
   },
   [NameSpace.AddItemModal]: {
-    addItemModalOpenedStatus: false,
+    addItemModal: false,
     addedCamera: null
   },
   [NameSpace.Coupon]: {

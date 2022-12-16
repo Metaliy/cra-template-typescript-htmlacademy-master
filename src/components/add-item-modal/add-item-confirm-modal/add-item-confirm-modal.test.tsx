@@ -33,44 +33,36 @@ const store = mockStore({
 
 describe('AddItemConfirmModal component', () => {
   it('should render AddItemConfirmModal', () => {
-    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSetIsCameraAddedHanlder={fakeOrderSuccessModalStatus} />, {
+    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSubmitButtonClick={fakeOrderSuccessModalStatus} onCloseClick={fakeOrderSuccessModalStatus} />, {
       mockStore: store
     });
   });
 
-  it('should click on overlay', async () => {
-    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSetIsCameraAddedHanlder={fakeOrderSuccessModalStatus}/>, {
+  it('should AddItemConfirmModal click on overlay', async () => {
+    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSubmitButtonClick={fakeOrderSuccessModalStatus} onCloseClick={fakeOrderSuccessModalStatus}/>, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('overaly'));
 
-    const [action] = store.getActions();
-    expect(action.type).toBe('AddItemModal/addItemModalOpenedStatus');
-
   });
 
   it('should click on add-on-basket-button', async () => {
-    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSetIsCameraAddedHanlder={fakeOrderSuccessModalStatus}/>, {
+    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSubmitButtonClick={fakeOrderSuccessModalStatus} onCloseClick={fakeOrderSuccessModalStatus}/>, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('add-on-basket-button'));
 
-    const [action] = store.getActions();
-    expect(action.type).toBe('AddItemModal/addItemModalOpenedStatus');
 
   });
 
-  it('should click on cross-button', async () => {
-    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSetIsCameraAddedHanlder={fakeOrderSuccessModalStatus}/>, {
+  it('should AddItemConfirmModal click on cross-button', async () => {
+    renderFakeApp(<AddItemConfirmModal camera={fakeCamera} onSubmitButtonClick={fakeOrderSuccessModalStatus} onCloseClick={fakeOrderSuccessModalStatus}/>, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('cross-button'));
-
-    const [action] = store.getActions();
-    expect(action.type).toBe('AddItemModal/addItemModalOpenedStatus');
 
   });
 

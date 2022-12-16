@@ -1,16 +1,16 @@
 import { useAppDispatch } from '../../hooks/hooks';
-import { addedItemsCounters, removedCamera } from '../../store/slices/basket-slice/basket-slice';
+import { addedItemsCounters } from '../../store/slices/basket-slice/basket-slice';
 import { CameraType } from '../../types/server-data-types';
 import { getPriceWitchSpaces } from '../../utils/utils';
 
 type BasketItemProps = {
   camera: CameraType,
   camerasCount: number,
-  setRemoveCameraModalOpenStatusHandler: CallableFunction
+  onDeleteButtonClick: CallableFunction
 }
 
 
-function BasketItem({camera, camerasCount, setRemoveCameraModalOpenStatusHandler}: BasketItemProps):JSX.Element {
+function BasketItem({camera, camerasCount, onDeleteButtonClick}: BasketItemProps):JSX.Element {
   const {name, price, id, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x, level, category, vendorCode} = camera;
 
   const dispatch = useAppDispatch();
@@ -48,11 +48,7 @@ function BasketItem({camera, camerasCount, setRemoveCameraModalOpenStatusHandler
         </button>
       </div>
       <div className="basket-item__total-price"><span className="visually-hidden">Общая цена:</span>{getPriceWitchSpaces(price * camerasCount)}</div>
-      <button className="cross-btn" type="button" aria-label="Удалить товар" data-testid={'open-confirm-delete-item-modal-button'} onClick={() => {
-        setRemoveCameraModalOpenStatusHandler(true);
-        dispatch(removedCamera(camera));
-      }}
-      >
+      <button className="cross-btn" type="button" aria-label="Удалить товар" data-testid={'open-confirm-delete-item-modal-button'} onClick={() => onDeleteButtonClick(camera) }>
         <svg width="10" height="10" aria-hidden="true">
           <use xlinkHref="#icon-close"></use>
         </svg>

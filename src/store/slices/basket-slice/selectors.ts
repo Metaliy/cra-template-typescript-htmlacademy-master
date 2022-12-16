@@ -3,7 +3,7 @@ import { CameraType } from '../../../types/server-data-types';
 import { State } from '../../../types/state-types';
 
 
-export const getaddedOnBasketItemsId = (state: State): number[] => {
+export const getAddedOnBasketItemsId = (state: State): number[] => {
 
   const idsList: number[] = [];
   state[NameSpace.Basket].addedItems.forEach((item) => {
