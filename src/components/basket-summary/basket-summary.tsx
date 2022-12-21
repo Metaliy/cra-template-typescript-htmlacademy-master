@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { LoadingStatus } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
 import { postCouponAction } from '../../store/api-actions/coupon-api/coupon-api';
@@ -34,13 +34,13 @@ export function BasketSummary({addedCameras, discountPercentage, couponStatus, c
     coupon: couponName
   };
 
-  useEffect(() => {
+  const getCamerasIdListForOrder = () => {
     addedCameras.forEach((item) => {
       for (let i = 0; i < item.camerasCount; i++) {
         orderedCameras.camerasIds.push(item.camera.id);
       }
     });
-  }, [addedCameras, dispatch, orderedCameras.camerasIds]);
+  };
 
   return (
     <div className="basket__summary">
@@ -69,6 +69,7 @@ export function BasketSummary({addedCameras, discountPercentage, couponStatus, c
         <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${orderDiscount > 0 ? 'basket__summary-value--bonus' : ''}`}>{getPriceWitchSpaces(orderDiscount)} ₽</span></p>
         <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{getPriceWitchSpaces(summaryPrice - orderDiscount)} ₽</span></p>
         <button className="btn btn--purple" type="submit" onClick={() => {
+          getCamerasIdListForOrder();
           onOrderSent(true);
           dispatch(postCameraOrderAction(orderedCameras));
         }} disabled={addedCameras.length === 0}

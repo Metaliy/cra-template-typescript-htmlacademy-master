@@ -17,7 +17,7 @@ export function AddItemModal({addedCamera, redirectPath}: AddItemModalProps):JSX
 
   const [addedItem, setAddedItem] = useState();
 
-  const closeModalClickHandler = () => dispatch(addItemPopup(false));
+  const handleCloseModalClick = () => dispatch(addItemPopup(false));
 
   useEffect(() => {
     if(addedItem){
@@ -26,7 +26,7 @@ export function AddItemModal({addedCamera, redirectPath}: AddItemModalProps):JSX
   }, [dispatch, addedItem]);
 
   return (
-    addedItem ? <AddItemSuccessModal onCloseClick={closeModalClickHandler} redirectPath={redirectPath} /> :
-      <AddItemConfirmModal camera={addedCamera} onSubmitButtonClick={setAddedItem} onCloseClick={closeModalClickHandler}/>
+    addedItem ? <AddItemSuccessModal onCloseClick={handleCloseModalClick} redirectPath={redirectPath} /> :
+      <AddItemConfirmModal camera={addedCamera} onSubmitButtonClick={setAddedItem} onCloseClick={handleCloseModalClick}/>
   );
 }

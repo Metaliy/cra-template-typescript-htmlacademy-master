@@ -50,7 +50,7 @@ describe('Review block component', () => {
     expect(screen.getByTestId('review-block')).toBeInTheDocument();
   });
 
-  it('should click on modalStatusHandler', async () => {
+  it('should click on HandlemodalStatus', async () => {
     renderFakeApp(<ReviewBlock reviewsList={fakeReviewList}/>, {
       mockStore: store
     });

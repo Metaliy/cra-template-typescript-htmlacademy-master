@@ -13,7 +13,7 @@ function ReviewModalWithForm ({cameraId, reviewModalStatus, reviewSentStatus}: R
 
   const dispatch = useAppDispatch();
 
-  const escButtonClickHandler = () => {
+  const handleEscButtonClick = () => {
     const onEscButtonClick = (evt: { key: string; }) => {
       if(evt.key === 'Escape') {
         dispatch(reviewModal(false));
@@ -23,7 +23,7 @@ function ReviewModalWithForm ({cameraId, reviewModalStatus, reviewSentStatus}: R
     return () => window.removeEventListener('keydown', onEscButtonClick);
   };
 
-  escButtonClickHandler();
+  handleEscButtonClick();
 
   return (
     <div className={`modal ${reviewModalStatus ? 'is-active' : ''}`} data-testid="review-modal">

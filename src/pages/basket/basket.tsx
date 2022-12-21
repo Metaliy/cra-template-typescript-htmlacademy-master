@@ -47,7 +47,7 @@ export function BasketPage():JSX.Element {
     dispatch(removedItemConfirm(cameraId));
   };
 
-  const escButtonClickHandler = () => {
+  const handleEscButtonClick = () => {
     const onEscButtonClick = (evt: { key: string; }) => {
       if(evt.key === 'Escape') {
         setOpenCameraModal(false);
@@ -58,7 +58,7 @@ export function BasketPage():JSX.Element {
     return () => window.removeEventListener('keydown', onEscButtonClick);
   };
 
-  escButtonClickHandler();
+  handleEscButtonClick();
 
   useEffect(() => {
     if(orderSentStatus === LoadingStatus.Fulfilled) {

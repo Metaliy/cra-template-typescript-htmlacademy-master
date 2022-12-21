@@ -60,7 +60,7 @@ function CatalogPage():JSX.Element {
     dispatch(addItemPopup(false));
   }, [dispatch]);
 
-  const escButtonClickHandler = () => {
+  const handlEscButtonClick = () => {
     const onEscButtonClick = (evt: { key: string; }) => {
       if(evt.key === 'Escape') {
         dispatch(addItemPopup(false));
@@ -70,7 +70,7 @@ function CatalogPage():JSX.Element {
     return () => window.removeEventListener('keydown', onEscButtonClick);
   };
 
-  escButtonClickHandler();
+  handlEscButtonClick();
 
   const camerasLoadingStatus = useAppSelector(getCamerasListLoadingStatus);
   const promoCameraLoadingStatus = useAppSelector(getPromoCameraLoadingStatus);

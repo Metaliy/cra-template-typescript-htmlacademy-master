@@ -58,7 +58,7 @@ export function ProductPage():JSX.Element {
   const similarCamerasListLoadingStatus = useAppSelector(getSimilarCamerasListLoadingStatus);
   const reviewsListLoadingStatus = useAppSelector(getReviewsListLoadingStatus);
 
-  const escButtonClickHandler = () => {
+  const handleEscButtonClick = () => {
     const onEscButtonClick = (evt: { key: string; }) => {
       if(evt.key === 'Escape') {
         dispatch(addItemPopup(false));
@@ -68,7 +68,7 @@ export function ProductPage():JSX.Element {
     return () => window.removeEventListener('keydown', onEscButtonClick);
   };
 
-  escButtonClickHandler();
+  handleEscButtonClick();
 
 
   if(selectedCameraLoadingStatus === LoadingStatus.Initial || selectedCameraLoadingStatus === LoadingStatus.Pending ||
