@@ -29,17 +29,18 @@ export function BasketSummary({addedCameras, discountPercentage, couponStatus, c
 
   const dispatch = useAppDispatch();
 
-  const orderedCameras: PostOrderType = {
-    camerasIds: [],
-    coupon: couponName
-  };
 
   const getCamerasIdListForOrder = () => {
+    const orderedCameras: PostOrderType = {
+      camerasIds: [],
+      coupon: couponName
+    };
     addedCameras.forEach((item) => {
       for (let i = 0; i < item.camerasCount; i++) {
         orderedCameras.camerasIds.push(item.camera.id);
       }
     });
+    return orderedCameras;
   };
 
   return (
@@ -69,9 +70,8 @@ export function BasketSummary({addedCameras, discountPercentage, couponStatus, c
         <p className="basket__summary-item"><span className="basket__summary-text">Скидка:</span><span className={`basket__summary-value ${orderDiscount > 0 ? 'basket__summary-value--bonus' : ''}`}>{getPriceWitchSpaces(orderDiscount)} ₽</span></p>
         <p className="basket__summary-item"><span className="basket__summary-text basket__summary-text--total">К оплате:</span><span className="basket__summary-value basket__summary-value--total">{getPriceWitchSpaces(summaryPrice - orderDiscount)} ₽</span></p>
         <button className="btn btn--purple" type="submit" onClick={() => {
-          getCamerasIdListForOrder();
           onOrderSent(true);
-          dispatch(postCameraOrderAction(orderedCameras));
+          dispatch(postCameraOrderAction(getCamerasIdListForOrder()));
         }} disabled={addedCameras.length === 0}
         >Оформить заказ
         </button>
