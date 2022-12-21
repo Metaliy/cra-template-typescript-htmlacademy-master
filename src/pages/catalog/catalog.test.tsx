@@ -1,5 +1,6 @@
 import { configureMockStore } from '@jedmao/redux-mock-store';
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import thunk from 'redux-thunk';
 import { LoadingStatus, NameSpace, SortOrderParameter, SortTypeParameter } from '../../consts/const';
 import { renderFakeApp } from '../../mock/fake-app/fake-app';
@@ -39,6 +40,12 @@ const store = mockStore({
   [NameSpace.SearchedCameras]: {
     searchedCameras: [],
   },
+  [NameSpace.Basket]: {
+    addedItems: []
+  },
+  [NameSpace.AddItemModal]: {
+    isAddItemModalOpened: false
+  }
 });
 
 const mockState = {
@@ -62,5 +69,13 @@ describe('Catalog page', () => {
     });
 
     expect(await screen.findByTestId('loader-component')).toBeInTheDocument();
+  });
+
+  it('should tap esc button on catalog page"', async () => {
+    renderFakeApp(<CatalogPage/>, {
+      mockStore: store
+    });
+    await userEvent.keyboard('{Escape}');
+
   });
 });

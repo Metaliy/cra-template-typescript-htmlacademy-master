@@ -4,10 +4,11 @@ import { CameraType } from '../../types/server-data-types';
 import { ProductCard } from '../product-card/product-card';
 
 type ProductSimilarSliderProps = {
-  similarCamerasList: CameraType[]
+  similarCamerasList: CameraType[],
+  camerasIdInTheBasket: number[]
 }
 
-function ProductSimilarSlider ({similarCamerasList}: ProductSimilarSliderProps) {
+function ProductSimilarSlider ({similarCamerasList, camerasIdInTheBasket}: ProductSimilarSliderProps) {
 
   const [visibleCardStartIndex, setVisibleCardIndex] = useState(0);
 
@@ -23,7 +24,7 @@ function ProductSimilarSlider ({similarCamerasList}: ProductSimilarSliderProps) 
         <div className="product-similar__slider">
           <div className="product-similar__slider-list">
             {similarCamerasList.slice(visibleCardStartIndex, visibleCardEndIndex).map((camera) => (
-              <ProductCard camera={camera} key={camera.id} isActive />
+              <ProductCard camera={camera} key={camera.id} isActive isAdded={camerasIdInTheBasket.includes(camera.id)} />
             ))}
           </div>
           <button className="slider-controls slider-controls--prev" type="button" aria-label="Предыдущий слайд" data-testid="prev-button" onClick={() => setVisibleCardIndex(visibleCardStartIndex - VISIBLE_CARD_COUNT)} disabled={visibleCardStartIndex === 0}>

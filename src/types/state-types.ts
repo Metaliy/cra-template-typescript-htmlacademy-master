@@ -45,7 +45,31 @@ export type FetchCamerasActionResponsedType = {
 }
 
 export type ProductSliceType = {
-  reviewModalOpenedStatus: boolean
+  isReviewModal: boolean
+}
+
+export type BasketSliceType = {
+  addedItems: {
+    camera: CameraType,
+    camerasCount: number
+  }[],
+  numberOfItemsAdded : number,
+  removedCamera: CameraType | null,
+}
+
+export type CouponSliceType = {
+  discountPercentage: number,
+  couponStatus: LoadingStatus,
+  couponName: string | null,
+}
+
+export type OrderSliceType = {
+  orderSentStatus: LoadingStatus
+}
+
+export type AddItemModalSliceType = {
+  isAddItemModal: boolean,
+  addedCamera: CameraType | null
 }
 
 export type CamerasSliceType = {

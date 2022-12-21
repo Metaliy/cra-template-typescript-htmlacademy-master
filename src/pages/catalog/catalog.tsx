@@ -1,4 +1,4 @@
-
+import FocusLock from 'react-focus-lock';
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Banner } from '../../components/banner/banner';
@@ -21,6 +21,11 @@ import { getCameras, getTotalCamerasCount, getCamerasListLoadingStatus, getMinCa
 import { getCurrentPage, getFiltersParameters, getSortParameters } from '../../store/slices/catalog-slice/selectors';
 import { getPromoCamera, getPromoCameraLoadingStatus } from '../../store/slices/promo-slice/selectors';
 import { filtersInitialState } from '../../store/slices/catalog-slice/catalog-slice';
+import { RemoveScroll } from 'react-remove-scroll';
+import { AddItemModal } from '../../components/add-item-modal/add-item-modal';
+import { getAddedItem, getAddItemModalOpenedStatus } from '../../store/slices/add-item-modal-slice/selectors';
+import { getAddedOnBasketItemsId } from '../../store/slices/basket-slice/selectors';
+import { addItemPopup } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
 
 
 function CatalogPage():JSX.Element {
@@ -31,12 +36,15 @@ function CatalogPage():JSX.Element {
   const camerasCount = useAppSelector(getTotalCamerasCount);
   const minCamerasPrice = useAppSelector(getMinCamerasPrice);
   const maxCamerasPrice = useAppSelector(getMaxCamerasPrice);
+  const camerasIdInTheCart = useAppSelector(getAddedOnBasketItemsId);
   const isRendered = useRef(false);
+
 
   const dispatch = useAppDispatch();
 
   const sortParameters = useAppSelector(getSortParameters);
   const filterParameters = useAppSelector(getFiltersParameters);
+  const isAddItemModalOpen = useAppSelector(getAddItemModalOpenedStatus);
 
   const [, setSearchParams] = useSearchParams();
 
@@ -49,11 +57,25 @@ function CatalogPage():JSX.Element {
   useEffect(() => {
     dispatch(fetchPromoCameraAction());
     dispatch(filtersInitialState());
+    dispatch(addItemPopup(false));
   }, [dispatch]);
+
+  const handlEscButtonClick = () => {
+    const onEscButtonClick = (evt: { key: string; }) => {
+      if(evt.key === 'Escape') {
+        dispatch(addItemPopup(false));
+      }
+    };
+    window.addEventListener('keydown', onEscButtonClick);
+    return () => window.removeEventListener('keydown', onEscButtonClick);
+  };
+
+  handlEscButtonClick();
 
   const camerasLoadingStatus = useAppSelector(getCamerasListLoadingStatus);
   const promoCameraLoadingStatus = useAppSelector(getPromoCameraLoadingStatus);
 
+  const addedOnBasketCamera = useAppSelector(getAddedItem);
 
   if((promoCameraLoadingStatus === LoadingStatus.Initial ||
     camerasLoadingStatus === LoadingStatus.Initial ||
@@ -91,7 +113,7 @@ function CatalogPage():JSX.Element {
 
                     <CatalogSort type={sortParameters.sortType} order={sortParameters.order}/>
 
-                    {camerasList.length !== 0 ? <ProductCardList camerasList={camerasList}/> : <EmptyProductListMessage />}
+                    {camerasList.length !== 0 ? <ProductCardList camerasList={camerasList} camerasIdInTheBasket={camerasIdInTheCart}/> : <EmptyProductListMessage />}
 
 
                     {camerasCount !== 0 ? <Pagination camerasCount={camerasCount} currentPage={currentPage} /> : ''}
@@ -103,6 +125,15 @@ function CatalogPage():JSX.Element {
             </section>
           </div>
         </main>
+        <FocusLock returnFocus={{ preventScroll: false }}>
+
+          {isAddItemModalOpen && addedOnBasketCamera ?
+            <RemoveScroll>
+              <AddItemModal addedCamera={addedOnBasketCamera} />
+            </RemoveScroll>
+            :
+            ''}
+        </FocusLock>
         <Footer />
       </div>
     </>

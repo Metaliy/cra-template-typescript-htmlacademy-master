@@ -50,14 +50,14 @@ describe('Review block component', () => {
     expect(screen.getByTestId('review-block')).toBeInTheDocument();
   });
 
-  it('should click on modalStatusHandler', async () => {
+  it('should click on HandlemodalStatus', async () => {
     renderFakeApp(<ReviewBlock reviewsList={fakeReviewList}/>, {
       mockStore: store
     });
 
     await userEvent.click(screen.getByTestId('modal-open-button'));
     const [action] = store.getActions();
-    expect(action.type).toBe('Product/reviewModalOpenedStatus');
+    expect(action.type).toBe('Product/reviewModal');
   });
 
   it('should click on show-more-reviews-button', async () => {

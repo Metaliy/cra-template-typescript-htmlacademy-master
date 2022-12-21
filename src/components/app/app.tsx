@@ -1,7 +1,7 @@
 import { Route } from 'react-router';
 import { generatePath, Navigate, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts/const';
-import { BasketPage } from '../../pages/basket/basker';
+import { BasketPage } from '../../pages/basket/basket';
 import { CatalogPage } from '../../pages/catalog/catalog';
 
 import { NotFoundPage } from '../../pages/not-found/not-found';

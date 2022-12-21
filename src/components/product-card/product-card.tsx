@@ -1,5 +1,7 @@
 import { generatePath, Link } from 'react-router-dom';
 import { AppRoute, MAX_RATING } from '../../consts/const';
+import { useAppDispatch } from '../../hooks/hooks';
+import { addedItem, addItemPopup } from '../../store/slices/add-item-modal-slice/add-item-modal-slice';
 import { CameraType } from '../../types/server-data-types';
 import { getPriceWitchSpaces } from '../../utils/utils';
 import { ProductRating } from '../rating/product-rating/product-rating';
@@ -7,11 +9,14 @@ import { ProductRating } from '../rating/product-rating/product-rating';
 
 type ProductCardPropsType = {
   camera: CameraType,
-  isActive?: boolean
+  isActive?: boolean,
+  isAdded?: boolean
 }
 
-function ProductCard ({camera, isActive}:ProductCardPropsType):JSX.Element {
+function ProductCard ({camera, isActive, isAdded}:ProductCardPropsType):JSX.Element {
   const {id, name, price, rating, reviewCount, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x} = camera;
+
+  const dispatch = useAppDispatch();
 
   return (
     <div className={isActive ? 'product-card is-active' : 'product-card'} data-testid={isActive ? `active-product-card-${id}` : 'product-card'}>
@@ -32,7 +37,11 @@ function ProductCard ({camera, isActive}:ProductCardPropsType):JSX.Element {
         </p>
       </div>
       <div className="product-card__buttons">
-        <button className="btn btn--purple product-card__btn" type="button">Купить
+        <button className="btn btn--purple product-card__btn" data-testid={'add-item-modal-open-button'} type="button" disabled={isAdded} onClick={() => {
+          dispatch(addItemPopup(true));
+          dispatch(addedItem(camera));
+        }}
+        >Купить
         </button>
         <Link className="btn btn--transparent" to={generatePath(AppRoute.Product, {id: String(id)})}>Подробнее
         </Link>

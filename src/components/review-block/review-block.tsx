@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { VISIBLE_REVIEWS_COUNT } from '../../consts/const';
 import { useAppDispatch } from '../../hooks/hooks';
-import { reviewModalOpenedStatus } from '../../store/slices/product-slice/product-slice';
+import { reviewModal } from '../../store/slices/product-slice/product-slice';
 import { ReviewType } from '../../types/server-data-types';
 import { ReviewCard } from './review-card/review-card';
 
@@ -24,7 +24,7 @@ function ReviewBlock({reviewsList}: ReviewBlockProps):JSX.Element {
       <div className="container">
         <div className="page-content__headed">
           <h2 className="title title--h3">Отзывы</h2>
-          <button className="btn" type="button" onClick={() => dispatch(reviewModalOpenedStatus(true))} data-testid="modal-open-button">Оставить свой отзыв</button>
+          <button className="btn" type="button" onClick={() => dispatch(reviewModal(true))} data-testid="modal-open-button">Оставить свой отзыв</button>
         </div>
         <ul className="review-block__list">
           {sortedByDateReviewsList.slice(0, visibleReviewCount).map((review) => (

@@ -20,7 +20,7 @@ const mockState = {
 };
 
 
-describe('Review modal component', () => {
+describe('ReviewModal component', () => {
   it('should render "Review modal component"', () => {
     renderFakeApp(<ReviewModal reviewModalOpenedStatus={reviewModalOpenedStatus} reviewSentStatus={reviewSentStatus} cameraId={cameraId}/>, {
       initialState: mockState

@@ -36,14 +36,14 @@ describe('Review modal form component', () => {
     expect(screen.getByTestId('review-modal')).toBeInTheDocument();
   });
 
-  it('should close review modal if user clicks on cross-btn', async () => {
+  it('should close review modal form if user clicks on cross-btn', async () => {
     renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId} />, {});
 
     await userEvent.click(screen.getByTestId('cross-btn'));
 
   });
 
-  it('should close review modal if user clicks on modal-overlay not sended', async () => {
+  it('should close review modal form if user clicks on modal-overlay not sended', async () => {
     renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
 
@@ -63,7 +63,7 @@ describe('Review modal form component', () => {
   });
 
 
-  it('should close review modal if user press on esc button and rerivew sended', async () => {
+  it('should close review modal form if user press on esc button and rerivew sended', async () => {
     renderFakeApp(<ReviewModalWithForm reviewSentStatus={reviewSentStatus} reviewModalStatus={reviewModalOpenedStatus} cameraId={cameraId}/>, {});
 
     await userEvent.type(screen.getByPlaceholderText(/Введите ваше имя/i), 'testtesttest');
@@ -89,7 +89,7 @@ describe('Review modal form component', () => {
     await userEvent.click(screen.getByTestId('submit'));
 
     const [action] = store.getActions();
-    expect(action.type).toBe('data/postCameraReviewAction/pending');
+    expect(action.type).toBe('Product/reviewModal');
   });
 
 });

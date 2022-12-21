@@ -3,17 +3,17 @@ import { NameSpace } from '../../../consts/const';
 import { ProductSliceType } from '../../../types/state-types';
 
 const initialState: ProductSliceType = {
-  reviewModalOpenedStatus: false
+  isReviewModal: false
 };
 
 export const productSlice = createSlice ({
   name: NameSpace.Product,
   initialState,
   reducers: {
-    reviewModalOpenedStatus: (state, action) => {
-      state.reviewModalOpenedStatus = action.payload;
+    reviewModal: (state, action) => {
+      state.isReviewModal = action.payload;
     }
   }
 });
 
-export const {reviewModalOpenedStatus} = productSlice.actions;
+export const {reviewModal} = productSlice.actions;

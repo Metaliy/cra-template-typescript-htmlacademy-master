@@ -9,7 +9,11 @@ export enum NameSpace {
   SendedReview = 'SendedReview',
   Catalog = 'Catalog',
   Product = 'Product',
-  SearchedCameras = 'SearchedCameras'
+  SearchedCameras = 'SearchedCameras',
+  Basket = 'Basket',
+  AddItemModal = 'AddItemModal',
+  Coupon = 'Coupon',
+  Order = 'Order'
 }
 
 export const CAMERAS_ON_PAGE = '9';
@@ -64,6 +68,8 @@ export enum ToastMessages {
   PromoCameraLoadError = 'Произошла ошибка загрузки промо камеры, попробуйте снова',
   ReviewsLoadError = 'Произошла ошибка загрузки комментариев, попробуйте снова',
   PostError = 'Произошла ошибка отправки комментария, попробуйте снова',
+  PostCouponError = 'Введённый промокод не верен',
+  PostOrderError = 'Произошла ошибка отправки заказа, попробуйте снова'
 }
 
 export const enum LoadingStatus {

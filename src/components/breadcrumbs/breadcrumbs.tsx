@@ -11,6 +11,9 @@ function Breadcrumbs({pageName, productName}:BreadcrumbsProps):JSX.Element {
 
   const generatePath = () => {
     const pathNames = [AppPageNames.Main];
+    if(pageName.name === AppPageNames.Basket.name) {
+      pathNames.push(AppPageNames.Catalog);
+    }
     if (pageName.name && pageName.name !== AppPageNames.Product.name) {
       pathNames.push(pageName);
     }

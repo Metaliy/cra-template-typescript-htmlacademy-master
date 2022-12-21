@@ -2,8 +2,6 @@ import {Action} from 'redux';
 import thunk, {ThunkDispatch} from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import {configureMockStore} from '@jedmao/redux-mock-store';
-
-
 import { createAPI } from '../../../services/api';
 import { getFakeCamerasReview, getFakePostedReview } from '../../../mock/mock';
 import { State } from '../../../types/state-types';
