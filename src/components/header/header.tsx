@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { getSearchedCameras } from '../../store/slices/searched-cameras-slice/selectors';
 import { HeaderNavigation } from './header-navigation/header-navigation';
 import { SearchForm } from './search-form/search-form';
-import { addedItemsCount } from '../../store/slices/basket-slice/basket-slice';
+import { addedItemsCountSum } from '../../store/slices/basket-slice/basket-slice';
 import { getAddedOnBasketItemsId, getNumberOfItemsAdded } from '../../store/slices/basket-slice/selectors';
 
 function Header () {
@@ -17,7 +17,7 @@ function Header () {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(addedItemsCount());
+    dispatch(addedItemsCountSum());
   }, [dispatch, camerasOnBasket]);
 
   return (

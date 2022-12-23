@@ -118,3 +118,6 @@ export const enum FilterLevelParameter {
   NonProfessional = 'Любительский',
   Professional = 'Профессиональный'
 }
+
+export const MAX_ADDED_CAMERAS = 99;
+export const MIN_ADDED_CAMERAS = 1;
