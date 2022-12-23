@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../../consts/const';
+import { MAX_ADDED_CAMERAS, MIN_ADDED_CAMERAS, NameSpace } from '../../../consts/const';
 import { BasketSliceType } from '../../../types/state-types';
 
 const initialState: BasketSliceType = {
@@ -22,7 +22,7 @@ export const basketSlice = createSlice ({
         state.addedItems.push(action.payload);
       }
     },
-    addedItemsCount: (state) => {
+    addedItemsCountSum: (state) => {
       const initialValue = 0;
       state.numberOfItemsAdded = state.addedItems.reduce((accumulator, currentValue) => accumulator + currentValue.camerasCount, initialValue);
     },
@@ -46,8 +46,22 @@ export const basketSlice = createSlice ({
       state.addedItems = [];
       state.numberOfItemsAdded = 0;
       state.removedCamera = null;
+    },
+    addedItemsCount: (state, action) => {
+      const changedItem = state.addedItems.find((item) => item.camera.id === action.payload.id);
+      if(changedItem && changedItem.camerasCount > 99) {
+        changedItem.camerasCount = MAX_ADDED_CAMERAS;
+        return;
+      }
+      if(changedItem && changedItem.camerasCount < 1 && !changedItem.camerasCount) {
+        changedItem.camerasCount = MIN_ADDED_CAMERAS;
+        return;
+      }
+      if(changedItem) {
+        changedItem.camerasCount = action.payload.count;
+      }
     }
   }
 });
 
-export const {addedOnBasketItems, addedItemsCount, addedItemsCounters, removedCamera, removedItemConfirm, basketInitialState} = basketSlice.actions;
+export const {addedOnBasketItems, addedItemsCountSum, addedItemsCounters, removedCamera, removedItemConfirm, basketInitialState, addedItemsCount} = basketSlice.actions;

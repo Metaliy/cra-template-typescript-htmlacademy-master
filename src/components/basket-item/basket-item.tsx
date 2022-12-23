@@ -1,5 +1,6 @@
+import { useState, useEffect } from 'react';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addedItemsCounters } from '../../store/slices/basket-slice/basket-slice';
+import { addedItemsCount, addedItemsCounters } from '../../store/slices/basket-slice/basket-slice';
 import { CameraType } from '../../types/server-data-types';
 import { getPriceWitchSpaces } from '../../utils/utils';
 
@@ -14,6 +15,13 @@ function BasketItem({camera, camerasCount, onDeleteButtonClick}: BasketItemProps
   const {name, price, id, previewImg, previewImgWebp, previewImgWebp2x, previewImg2x, level, category, vendorCode} = camera;
 
   const dispatch = useAppDispatch();
+
+  const [minPriceInputValue, setMinPriceInputValue] = useState(camerasCount);
+
+  useEffect(() => {
+    setMinPriceInputValue(camerasCount);
+  }, [dispatch, camerasCount]);
+
 
   return (
     <li className="basket-item">
@@ -40,7 +48,17 @@ function BasketItem({camera, camerasCount, onDeleteButtonClick}: BasketItemProps
           </svg>
         </button>
         <label className="visually-hidden" htmlFor="counter1"></label>
-        <input type="number" id="counter1" value={camerasCount} min="1" max="99" aria-label="количество товара" readOnly></input>
+        <input
+          type="number"
+          id="counter1"
+          min="1"
+          max="99"
+          aria-label="количество товара"
+          value={minPriceInputValue}
+          onChange={(evt) =>
+            dispatch(addedItemsCount({id: id, count: evt.target.value}))}
+        >
+        </input>
         <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара" data-testid={'minus-item-button'} onClick={() => dispatch(addedItemsCounters({id: id, isPlus: true}))} disabled={camerasCount >= 99}>
           <svg width="7" height="12" aria-hidden="true">
             <use xlinkHref="#icon-arrow"></use>
