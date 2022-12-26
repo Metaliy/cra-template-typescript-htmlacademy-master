@@ -27,11 +27,14 @@ function BasketItem({camera, camerasCount, onDeleteButtonClick}: BasketItemProps
     if (camerasItemInputValue > MAX_ADDED_CAMERAS) {
       setCamerasItemInputValue(MAX_ADDED_CAMERAS);
       dispatch(addedItemsCount({id: id, count: MAX_ADDED_CAMERAS}));
+      return;
     }
-    if (camerasItemInputValue < MIN_ADDED_CAMERAS) {
+    if (camerasItemInputValue < MIN_ADDED_CAMERAS || !camerasItemInputValue) {
       setCamerasItemInputValue(MIN_ADDED_CAMERAS);
       dispatch(addedItemsCount({id: id, count: MIN_ADDED_CAMERAS}));
+      return;
     }
+    dispatch(addedItemsCount({id: id, count: camerasItemInputValue}));
   };
 
 
