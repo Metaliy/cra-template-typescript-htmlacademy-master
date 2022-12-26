@@ -49,7 +49,7 @@ export const basketSlice = createSlice ({
     },
     addedItemsCount: (state, action) => {
       const changedItem = state.addedItems.find((item) => item.camera.id === action.payload.id);
-      if(changedItem) {
+      if(changedItem && changedItem.camerasCount) {
         changedItem.camerasCount = action.payload.count;
       }
     }
