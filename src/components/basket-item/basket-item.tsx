@@ -3,6 +3,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { addedItemsCount, addedItemsCounters } from '../../store/slices/basket-slice/basket-slice';
 import { CameraType } from '../../types/server-data-types';
 import { getPriceWitchSpaces } from '../../utils/utils';
+import { MAX_ADDED_CAMERAS, MIN_ADDED_CAMERAS } from '../../consts/const';
 
 type BasketItemProps = {
   camera: CameraType,
@@ -16,11 +17,22 @@ function BasketItem({camera, camerasCount, onDeleteButtonClick}: BasketItemProps
 
   const dispatch = useAppDispatch();
 
-  const [minPriceInputValue, setMinPriceInputValue] = useState(camerasCount);
+  const [camerasItemInputValue, setCamerasItemInputValue] = useState(camerasCount);
 
   useEffect(() => {
-    setMinPriceInputValue(camerasCount);
+    setCamerasItemInputValue(camerasCount);
   }, [dispatch, camerasCount]);
+
+  const validateCamerasCount = () => {
+    if (camerasItemInputValue > MAX_ADDED_CAMERAS) {
+      setCamerasItemInputValue(MAX_ADDED_CAMERAS);
+      dispatch(addedItemsCount({id: id, count: MAX_ADDED_CAMERAS}));
+    }
+    if (camerasItemInputValue < MIN_ADDED_CAMERAS) {
+      setCamerasItemInputValue(MIN_ADDED_CAMERAS);
+      dispatch(addedItemsCount({id: id, count: MIN_ADDED_CAMERAS}));
+    }
+  };
 
 
   return (
@@ -54,9 +66,11 @@ function BasketItem({camera, camerasCount, onDeleteButtonClick}: BasketItemProps
           min="1"
           max="99"
           aria-label="количество товара"
-          value={minPriceInputValue}
+          value={camerasItemInputValue}
+          onBlur={() => validateCamerasCount()}
+          onKeyDown={(evt) => evt.key === 'Enter' ? validateCamerasCount() : ''}
           onChange={(evt) =>
-            dispatch(addedItemsCount({id: id, count: evt.target.value}))}
+            setCamerasItemInputValue(Number(evt.target.value))}
         >
         </input>
         <button className="btn-icon btn-icon--next" aria-label="увеличить количество товара" data-testid={'minus-item-button'} onClick={() => dispatch(addedItemsCounters({id: id, isPlus: true}))} disabled={camerasCount >= 99}>

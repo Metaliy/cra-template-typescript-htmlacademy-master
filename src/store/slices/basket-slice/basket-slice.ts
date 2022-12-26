@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { MAX_ADDED_CAMERAS, MIN_ADDED_CAMERAS, NameSpace } from '../../../consts/const';
+import { NameSpace } from '../../../consts/const';
 import { BasketSliceType } from '../../../types/state-types';
 
 const initialState: BasketSliceType = {
@@ -49,14 +49,6 @@ export const basketSlice = createSlice ({
     },
     addedItemsCount: (state, action) => {
       const changedItem = state.addedItems.find((item) => item.camera.id === action.payload.id);
-      if(changedItem && changedItem.camerasCount > 99) {
-        changedItem.camerasCount = MAX_ADDED_CAMERAS;
-        return;
-      }
-      if(changedItem && changedItem.camerasCount < 1 && !changedItem.camerasCount) {
-        changedItem.camerasCount = MIN_ADDED_CAMERAS;
-        return;
-      }
       if(changedItem) {
         changedItem.camerasCount = action.payload.count;
       }
